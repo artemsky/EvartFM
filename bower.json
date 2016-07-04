@@ -1,0 +1,21 @@
+{
+  "name": "EvartFM",
+  "description": "",
+  "main": "",
+  "authors": [
+    "artemsky <mr.artemsky@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/artemsky/EvartFM",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.7"
+  }
+}
