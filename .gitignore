@@ -1,6 +1,10 @@
 /vendor
 /node_modules
 /public/storage
+/bower_components
+/.vagrant
+/.idea
+/icecast/music/*.mp3
 Homestead.yaml
 Homestead.json
 .env
