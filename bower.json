@@ -16,6 +16,10 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.5.7"
+    "angular": "^1.5.7",
+    "bootstrap": "^3.3.6",
+    "iCheck": "^1.0.2",
+    "Ionicons": "ionicons#^2.0.1",
+    "font-awesome": "^4.6.3"
   }
 }
