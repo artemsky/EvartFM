@@ -1,5 +1,5 @@
 .login-page {
-  background: #063d4a;
+  background: #246196;
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -172,19 +172,11 @@
     opacity: 1;
     transform: scale(10);
   }
-
-  /* Keyframes */
-  @-webkit-keyframes buttonFadeInUp {
-    0% {
-      bottom: 30px;
-      opacity: 0;
-    }
+  .card .button-container button:active.login-error:before, .card .button-container button:focus.login-error:before {
+    background: #d43f3a;
   }
-  @keyframes buttonFadeInUp {
-    0% {
-      bottom: 30px;
-      opacity: 0;
-    }
+  .card .button-container button:active.login-success:before, .card .button-container button:focus.login-success:before {
+    background: #81be00;
   }
 
 }

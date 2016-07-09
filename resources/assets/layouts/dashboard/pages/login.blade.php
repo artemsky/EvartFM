@@ -17,12 +17,12 @@
                     <h1 class="title">Admin Panel</h1>
                     <form action="{{route('login')}}" method="post">
                         <div class="input-container">
-                            <input type="text" id="login" required="required" name="login" />
+                            <input type="text" id="login" required="required" name="login"/>
                             <label for="Username">Username</label>
                             <div class="bar"></div>
                         </div>
                         <div class="input-container">
-                            <input type="password" id="password" required="required" name="password" />
+                            <input type="password" id="password" required="required" name="password"/>
                             <label for="Password">Password</label>
                             <div class="bar"></div>
                         </div>

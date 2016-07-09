@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Http\Request;
@@ -8,6 +9,16 @@ use Illuminate\Support\Facades\Lang;
 
 class UserController extends Controller{
     public function postSignIn(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'login' => 'required|min:4|max:16',
+            'password' => 'required|min:6|max:32',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->getMessageBag(), 406);
+        }
+
         if(Auth::attempt([
             'login' => $request['login'],
             'password' => $request['password']
@@ -16,6 +27,8 @@ class UserController extends Controller{
                 'redirect' => route('home')
             ], 200);
         }
+
+
 
         return response()->json([
             'msg' => Lang::get('auth.failed')
