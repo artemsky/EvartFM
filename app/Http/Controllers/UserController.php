@@ -1,9 +1,10 @@
 <?php
 namespace App\Http\Controllers;
 
-
+use Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class UserController extends Controller{
     public function postSignIn(Request $request){
@@ -11,8 +12,14 @@ class UserController extends Controller{
             'login' => $request['login'],
             'password' => $request['password']
         ])){
-            return redirect()->route('/');
+            return response()->json([
+                'redirect' => route('home')
+            ], 200);
         }
+
+        return response()->json([
+            'msg' => Lang::get('auth.failed')
+        ], 422);
     }
     public function postRegister(Request $request){
         $login = $request['login'];
@@ -25,8 +32,11 @@ class UserController extends Controller{
         
         $user->save();
 
-        return redirect()->back();
-        
-
+        Auth::login($user);
+        return redirect()->route('home');
+    }
+    
+    public function getDashboard(){
+        return view('dashboard.pages.home');
     }
 }

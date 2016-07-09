@@ -4,6 +4,9 @@
     <link rel="stylesheet" href="{{ URL::to('css/dashboard.css') }}">
 @endsection
 
+@section('scripts')
+    <script src="{{ URL::to('js/login.js') }}"></script>
+@endsection
 
 @section('body-class', 'login-page')
 

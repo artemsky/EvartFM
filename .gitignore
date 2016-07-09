@@ -10,4 +10,5 @@ Homestead.json
 .env
 evartfm.sql
 puphpet/config-custom.yaml
-
+.phpstorm.meta.php
+_ide_helper.php

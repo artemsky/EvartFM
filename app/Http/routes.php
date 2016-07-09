@@ -14,9 +14,15 @@
 
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard.pages.home');
+    Route::get('/dashboard', [
+        'as' => 'home',
+        'uses' => 'UserController@getDashboard'
+    ]);
+
+    Route::get('/login', function(){
+        return view('dashboard.pages.login');
     });
+
 
     Route::post('/login', [
         'as' => 'login',
