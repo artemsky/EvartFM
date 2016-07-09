@@ -148,7 +148,7 @@ gulp.task('cls', (done) => {
 
 //Copy dependencies
 gulp.task('copydeps', () => {
-    return gulp.src(`${dir.src}/dependencies/**/*.*`)
+    return gulp.src([`${dir.src}/dependencies/**`, `${dir.src}/dependencies/.htaccess`])
         .pipe(gulp.dest(dir.release));
 });
 

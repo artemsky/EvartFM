@@ -39,7 +39,6 @@
 
     </head>
     <body class="@yield('body-class')">
-        @include('controls.nav')
         <main role="main">
             <div class="container">
                 @yield('content')

@@ -11,11 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.index');
-});
 
-Route::get('/dashboard', function () {
-    return view('dashboard/index');
-});
 
+Route::group(['middleware' => 'web'], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard.index');
+    });
+
+    Route::post('/login', [
+        'as' => 'login',
+        'uses' => 'UserController@postSignIn'
+    ]);
+
+    Route::post('/register', [
+        'as' => 'register',
+        'uses' => 'UserController@postRegister'
+    ]);
+});

@@ -9,29 +9,25 @@
 
 @section('content')
         <div class="row">
-            <div class="pen-title">
-                <h1>EvartFM Dashboard</h1>
-            </div>
-            <div class="container">
                 <div class="card"></div>
                 <div class="card">
-                    <h1 class="title">Sign In</h1>
-                    <form>
+                    <h1 class="title">Dashboard</h1>
+                    <form action="{{route('login')}}" method="post">
                         <div class="input-container">
-                            <input type="text" id="Username" required="required"/>
+                            <input type="text" id="login" required="required" name="login" />
                             <label for="Username">Username</label>
                             <div class="bar"></div>
                         </div>
                         <div class="input-container">
-                            <input type="password" id="Password" required="required"/>
+                            <input type="password" id="password" required="required" name="password" />
                             <label for="Password">Password</label>
                             <div class="bar"></div>
                         </div>
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="button-container">
-                            <button><span>Go</span></button>
+                            <button type="submit"><span>Go</span></button>
                         </div>
                     </form>
                 </div>
-            </div>
         </div>
 @endsection
