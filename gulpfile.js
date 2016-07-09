@@ -152,6 +152,12 @@ gulp.task('copydeps', () => {
         .pipe(gulp.dest(dir.release));
 });
 
+//Copy layouts
+gulp.task('layouts', () => {
+    return gulp.src(`${dir.src}/layouts/**`)
+        .pipe(gulp.dest('./resources/views/'));
+});
+
 //Images
 gulp.task('images', () => {
     return gulp.src(`${dir.src}/${dir.img}/**/*.(png|jpg|jpeg|ico|gif)`, {since: gulp.lastRun('images')})
@@ -286,6 +292,7 @@ gulp.task('watch', () =>{
     gulp.watch(`${dir.src}/${dir.img}/**/*.*`, gulp.series('images'));
     gulp.watch(`${dir.src}/${dir.js}/**/*.*`, gulp.series('javascript'));
     gulp.watch(`${dir.src}/${dir.fonts}/**/*.*`, gulp.series('fonts'));
+    gulp.watch(`${dir.src}/layouts/**/*.*`, gulp.series('layouts'));
     gulp.watch('./bower_components/**/*.*', gulp.series('bower'));
 });
 

@@ -1,4 +1,4 @@
-@extends('controls.main')
+@extends('dashboard.main')
 
 @section('styles')
     <link rel="stylesheet" href="{{ URL::to('css/dashboard.css') }}">
@@ -11,7 +11,7 @@
         <div class="row">
                 <div class="card"></div>
                 <div class="card">
-                    <h1 class="title">Dashboard</h1>
+                    <h1 class="title">Admin Panel</h1>
                     <form action="{{route('login')}}" method="post">
                         <div class="input-container">
                             <input type="text" id="login" required="required" name="login" />

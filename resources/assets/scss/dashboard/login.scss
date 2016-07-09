@@ -3,13 +3,16 @@
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  display: table-cell;
+  vertical-align: middle;
+  height: 100vh;
+  width: 100vw;
   /* Container */
   .container {
     position: relative;
     max-width: 360px;
+    min-width: 280px;
     width: 100%;
-    margin: 50px auto 100px;
   }
   .container.active .card:first-child {
     background: #f2f2f2;
@@ -52,7 +55,6 @@
     color:#063d4a;
     font-size: 32px;
     font-weight: 600;
-    text-transform: uppercase;
   }
   .card .input-container {
     position: relative;
