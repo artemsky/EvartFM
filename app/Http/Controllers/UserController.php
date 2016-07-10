@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-
+use DB;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 use App\User;
@@ -82,9 +82,10 @@ class UserController extends Controller{
         return view('dashboard.pages.user.add');
     }
 
-    public function getRoleRoutes(){
-        return view('dashboard.pages.user.all', ['routes' => [
-            "add" => route('adduser')
-        ]]);
+    public function getAllUsers(){
+
+        $users = DB::table('users')->get();
+
+        return view('dashboard.pages.user.all', ['users' => $users]);
     }
 }

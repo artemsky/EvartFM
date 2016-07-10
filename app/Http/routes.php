@@ -26,7 +26,7 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::get('/', [
             'as' => 'user',
-            'uses' => 'UserController@getRoleRoutes',
+            'uses' => 'UserController@getAllUsers',
         ]);
 
         Route::get('/add', [

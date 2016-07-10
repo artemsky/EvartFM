@@ -15,7 +15,8 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 {{--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>--}}
-                <li><a href="#">Add Users</a></li>
+                <li><a href="{{route('user')}}">All Users</a></li>
+                <li><a href="{{route('adduser')}}">Add Users</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{route('logout')}}">Logout</a></li>
