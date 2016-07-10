@@ -18,6 +18,7 @@ class RoleMiddleware
         if (! $request->user()->hasRole($role)) {
             return redirect('/dashboard');
         }
+
         return $next($request);
     }
 }

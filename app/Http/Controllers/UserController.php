@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
-use Illuminate\Routing\Route;
 
 class UserController extends Controller{
     public function postSignIn(Request $request){
@@ -17,9 +16,9 @@ class UserController extends Controller{
             'password' => 'required|min:6|max:32',
         ]);
 
-        if ($validator->fails()) {
+        if($validator->fails())
             return response()->json($validator->getMessageBag(), 406);
-        }
+
 
         if(Auth::attempt([
             'login' => $request['login'],
@@ -35,18 +34,35 @@ class UserController extends Controller{
         ], 422);
     }
     public function postRegister(Request $request){
-        $login = $request['login'];
-        $password = bcrypt($request['password']);
-        
-        $user = new User();
-        $user->login = $login;
-        $user->password = $password;
-        $user->role = 'super';
-        
-        $user->save();
 
-        Auth::login($user);
-        return redirect()->route('home');
+        $validator = Validator::make($request->all(), [
+            'login' => 'required|unique:users|min:4|max:16',
+            'password' => 'required|min:6|max:32|confirmed',
+            'password_confirmation' => 'required',
+            'role' => 'required|in:super,admin,writer,dj',
+            'email' => 'email'
+        ]);
+
+        if($validator->fails())
+            return response()->json($validator->getMessageBag(), 406);
+
+
+//        $password = $request['password'];
+//        $passwordRepeat = $request['passwordrepeat'];
+//        if($password !== $passwordRepeat)
+//            return response()->json(['passwordrepeat' => trans('passwords.repeat')], 406);
+
+
+        $user = new User();
+        $user->login = $request['login'];
+        $user->password = bcrypt($request['password']);
+        $user->role = $request['role'];
+        $user->name = $request['name'];
+        $user->email = $request['email'];
+
+        $user->save();
+        
+        return response()->json(['msg' => 'Successfully Added']);
     }
     
     public function getDashboardPage(){

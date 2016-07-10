@@ -22,14 +22,21 @@ Route::group(['middleware' => 'web'], function () {
 
 
 
-    Route::group(['middleware' => 'role:super'], function () {
-        Route::get('/dashboard/user/add', function () {
-            return view('dashboard.pages.user.add');
-        })->name("adduser");
-        Route::get('/dashboard/user', [
+    Route::group(['prefix' => '/dashboard/user', 'middleware' => ['auth', 'role:super']], function () {
+
+        Route::get('/', [
             'as' => 'user',
             'uses' => 'UserController@getRoleRoutes',
-            'middleware' => 'auth'
+        ]);
+
+        Route::get('/add', [
+            'as' => 'adduser',
+            'uses' => 'UserController@getAddUsers'
+        ]);
+
+        Route::post('/register', [
+            'as' => 'register',
+            'uses' => 'UserController@postRegister'
         ]);
     });
     
@@ -51,8 +58,5 @@ Route::group(['middleware' => 'web'], function () {
         'uses' => 'UserController@postSignIn'
     ]);
 
-    Route::post('/register', [
-        'as' => 'register',
-        'uses' => 'UserController@postRegister'
-    ]);
+
 });
