@@ -39,6 +39,7 @@
 
     </head>
     <body class="@yield('body-class')">
+        @yield('navigation')
         <main role="main">
             <div class="container">
                 @yield('content')

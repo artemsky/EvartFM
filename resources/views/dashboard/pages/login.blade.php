@@ -15,7 +15,7 @@
                 <div class="card"></div>
                 <div class="card">
                     <h1 class="title">Admin Panel</h1>
-                    <form action="{{route('login')}}" method="post">
+                    <form action="{{route('signIn')}}" method="post">
                         <div class="input-container">
                             <input type="text" id="login" required="required" name="login"/>
                             <label for="Username">Username</label>

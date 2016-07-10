@@ -49,7 +49,16 @@ class UserController extends Controller{
         return redirect()->route('home');
     }
     
-    public function getDashboard(){
+    public function getDashboardPage(){
         return view('dashboard.pages.home');
+    }
+
+    public function getLoginPage(){
+        return view('dashboard.pages.login');
+    }
+
+    public function getLogout(){
+        Auth::logout();
+        return redirect()->route('login');
     }
 }

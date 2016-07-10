@@ -16,16 +16,26 @@
 Route::group(['middleware' => 'web'], function () {
     Route::get('/dashboard', [
         'as' => 'home',
-        'uses' => 'UserController@getDashboard'
+        'uses' => 'UserController@getDashboardPage',
+        'middleware' => 'auth'
     ]);
 
-    Route::get('/login', function(){
-        return view('dashboard.pages.login');
-    });
+
+    Route::get('/login', [
+        'as' => 'login',
+        'uses' => 'UserController@getLoginPage',
+        'middleware' => 'guest'
+    ]);
+
+    Route::get('/logout', [
+        'as' => 'logout',
+        'uses' => 'UserController@getLogout'
+    ]);
+    
 
 
     Route::post('/login', [
-        'as' => 'login',
+        'as' => 'signIn',
         'uses' => 'UserController@postSignIn'
     ]);
 
