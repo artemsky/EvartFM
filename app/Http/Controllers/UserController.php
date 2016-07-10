@@ -1,11 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
+
 use Validator;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Routing\Route;
 
 class UserController extends Controller{
     public function postSignIn(Request $request){
@@ -27,8 +29,6 @@ class UserController extends Controller{
                 'redirect' => route('home')
             ], 200);
         }
-
-
 
         return response()->json([
             'msg' => Lang::get('auth.failed')
@@ -60,5 +60,15 @@ class UserController extends Controller{
     public function getLogout(){
         Auth::logout();
         return redirect()->route('login');
+    }
+    
+    public function getAddUsers(){
+        return view('dashboard.pages.user.add');
+    }
+
+    public function getRoleRoutes(){
+        return view('dashboard.pages.user.all', ['routes' => [
+            "add" => route('adduser')
+        ]]);
     }
 }

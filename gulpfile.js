@@ -119,6 +119,12 @@ const gulp = require('gulp'),
                 "development": ["./css/font-awesome.css", "./fonts/**"],
                 "production": ["./css/font-awesome.min.css", "./fonts/**"]
             }
+        },
+        "bootstrap-select":{
+            "main":{
+                "development": ["./dist/css/bootstrap-select.css", "./dist/css/bootstrap-select.js"],
+                "production": ["./dist/css/bootstrap-select.min.css", "./dist/css/bootstrap-select.min.js"]
+            }
         }
     };
 

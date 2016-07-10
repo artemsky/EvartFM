@@ -20,6 +20,7 @@
     "bootstrap": "^3.3.6",
     "iCheck": "^1.0.2",
     "Ionicons": "ionicons#^2.0.1",
-    "font-awesome": "^4.6.3"
+    "font-awesome": "^4.6.3",
+    "bootstrap-select": "^1.10.0"
   }
 }

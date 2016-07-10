@@ -21,6 +21,18 @@ Route::group(['middleware' => 'web'], function () {
     ]);
 
 
+
+    Route::group(['middleware' => 'role:super'], function () {
+        Route::get('/dashboard/user/add', function () {
+            return view('dashboard.pages.user.add');
+        })->name("adduser");
+        Route::get('/dashboard/user', [
+            'as' => 'user',
+            'uses' => 'UserController@getRoleRoutes',
+            'middleware' => 'auth'
+        ]);
+    });
+    
     Route::get('/login', [
         'as' => 'login',
         'uses' => 'UserController@getLoginPage',
