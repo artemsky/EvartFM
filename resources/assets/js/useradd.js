@@ -47,7 +47,6 @@ $(function(){
     button.click(function(e){
         e.preventDefault();
         requestOptions.data = form.serialize();
-        console.log(requestOptions);
         $.ajax(url, requestOptions);
     });
 });

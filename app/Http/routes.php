@@ -29,6 +29,21 @@ Route::group(['middleware' => 'web'], function () {
             'uses' => 'UserController@getAllUsers',
         ]);
 
+        Route::post('/edit', [
+            'as' => 'useredit',
+            'uses' => 'UserController@postEditUser',
+        ]);
+
+        Route::post('/update', [
+            'as' => 'userupdate',
+            'uses' => 'UserController@postUpdateUser',
+        ]);
+
+        Route::post('/delete', [
+            'as' => 'userdelete',
+            'uses' => 'UserController@postDeleteUser',
+        ]);
+
         Route::get('/add', [
             'as' => 'adduser',
             'uses' => 'UserController@getAddUsers'
