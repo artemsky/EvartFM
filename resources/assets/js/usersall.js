@@ -101,8 +101,9 @@ $(function () {
         requestOptions.data = id + modal.find("form :input").filter(function(index, element) {
             return $.trim($(element).val()).length > 0;
         }).serialize();
-        if(requestOptions.data.length > 0)
-            $.ajax(URLUpdateUser, requestOptions);
+        console.log(requestOptions.data);
+        // if(requestOptions.data.length > 0)
+        //     $.ajax(URLUpdateUser, requestOptions);
     });
 
     var URLDeleteUser = "user/delete",
