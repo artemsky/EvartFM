@@ -56,11 +56,25 @@ Route::group(['middleware' => 'web'], function () {
     });
 
 
-    Route::group(['prefix' => '/dashboard/news/{sort?}/{order?}', 'middleware' => ['auth', 'role:super,writer']], function () {
-        Route::get('/', [
+    Route::group(['prefix' => '/dashboard/news', 'middleware' => ['auth', 'role:super,writer']], function () {
+        Route::get('/{sort?}/{order?}', [
             'as' => 'allnews',
             'uses' => 'NewsController@getAllNews',
         ])->where(['sort' => 'asc|desc', 'order' => 'id|created_at|updated_at|title_long|title_short']);
+
+        Route::post('/update', [
+            'as' => 'newsUpdate',
+            'uses' => 'NewsController@postUpdateNews'
+        ]);
+
+        Route::post('/add', [
+            'as' => 'newsAdd',
+            'uses' => 'NewsController@postAddNews'
+        ]);
+
+//        Route::get('/rename', [
+//            'uses' => 'NewsController@rename'
+//        ]);
 
     });
     

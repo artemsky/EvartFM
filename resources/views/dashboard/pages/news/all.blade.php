@@ -5,6 +5,7 @@
 @endsection
 
 @section('styles')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ URL::asset('css/dashboard.css') }}">
 @endsection
 
@@ -26,7 +27,7 @@
                 </ul>
             </li>
             <li role="presentation" class="dropdown text-center" >
-                <button type="button" class="btn btn-info">Add new</button>
+                <button type="button" class="btn btn-info new-item">Add new</button>
             </li>
             <li role="presentation" class="dropdown" id="orderby">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -47,7 +48,7 @@
     <div class="row">
         @foreach($news as $newsItem)
             <div class="col-xs-12 col-md-offset-1 col-md-10">
-                <article data-id="{{$newsItem->id}}" style="background-image: url({{ asset('news/'.$newsItem->image_url) }})" data-text="Edit">
+                <article data-id="{{$newsItem->id}}" style="background-image: url({{ asset($newsItem->image_url) }})" data-text="Edit">
                     <div class="col-md-10">
                         <div class="row">
                             <p class="title_long">{{$newsItem->title_long}}</p>
@@ -78,30 +79,32 @@
                     <h4 class="modal-title">ID #<span></span></h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form data-update="{{route('newsUpdate')}}" data-add="{{route('newsAdd')}}">
+                        <input type="hidden" name="id" id="id">
                         <div class="form-group">
                             <label for="long">Long Title</label>
-                            <input type="text" class="form-control" id="long" placeholder="Full Title">
+                            <input type="text" class="form-control" id="long" placeholder="Full Title" name="title_long">
                             <p class="help-block">Max length: 300</p>
                         </div>
                         <div class="form-group">
                             <label for="short">Short Title</label>
-                            <input type="text" class="form-control" id="short" placeholder="Short Title">
+                            <input type="text" class="form-control" id="short" placeholder="Short Title" name="title_short">
                             <p class="help-block">Max length: 100</p>
                         </div>
                         <div class="form-group">
                             <label for="article">News Text</label>
-                            <textarea class="form-control" rows="12" id="article"></textarea>
+                            <textarea class="form-control" rows="12" id="article" name="article"></textarea>
                             <p class="help-block">Max length: 2500</p>
                         </div>
                         <div class="form-group">
                             <label for="image">Select Image</label>
-                            <input type="file" id="image">
+                            <input type="file" id="image" name="image_url">
                             <p class="help-block">PNG, JPEG, JPG and not more than 1MB.</p>
+                            <img class="img-thumbnail" src="" alt="" id="preview">
                         </div>
                         <div class="form-group">
                             <label for="date">Date</label>
-                            <input class="form-control" type="date" id="date">
+                            <input class="form-control" type="date" id="date" name="created_at">
                         </div>
                     </form>
                 </div>
