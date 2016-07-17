@@ -54,6 +54,15 @@ Route::group(['middleware' => 'web'], function () {
             'uses' => 'UserController@postRegister'
         ]);
     });
+
+
+    Route::group(['prefix' => '/dashboard/news/{sort?}/{order?}', 'middleware' => ['auth', 'role:super,writer']], function () {
+        Route::get('/', [
+            'as' => 'allnews',
+            'uses' => 'NewsController@getAllNews',
+        ])->where(['sort' => 'asc|desc', 'order' => 'id|created_at|updated_at|title_long|title_short']);
+
+    });
     
     Route::get('/login', [
         'as' => 'login',
