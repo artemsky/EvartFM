@@ -22,7 +22,6 @@ class Authenticate
                 return response('Unauthorized.', 401);
             } else {
                 return redirect()->route('login');
-                return redirect()->back();
             }
         }
         return $next($request);

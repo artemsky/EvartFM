@@ -8,15 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 
 class UserController extends Controller{
+
     use Traits\SuperUserActions;
     use Traits\Validate;
     public function postSignIn(Request $request){
+
 
         $this->isValid($request, [
             'login' => 'required|min:4|max:16',
             'password' => 'required|min:6|max:32',
         ]);
-
         if(Auth::attempt([
             'login' => $request['login'],
             'password' => $request['password']

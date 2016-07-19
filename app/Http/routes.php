@@ -93,7 +93,8 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('/login', [
         'as' => 'signIn',
-        'uses' => 'UserController@postSignIn'
+        'uses' => 'UserController@postSignIn',
+        'middleware' => 'throttle:3,1'
     ]);
 
 
