@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
+    use Traits\Validate;
     public function getAllNews($sort = 'desc', $order = 'id'){
         $news = DB::table('news')
             ->orderBy($order, $sort)
@@ -18,17 +19,15 @@ class NewsController extends Controller
     }
 
     public function postUpdateNews(Request $request){
-        $validator = Validator::make($request->all(), [
+
+        $this->isValid($request, [
             'id' => 'required|exists:news,id',
             'title_short' => 'max:100',
             'title_long' => 'required|max:300',
             'article' => 'required|max:2500',
             'created_at' => 'date',
             'image_url' => 'image'
-        ]);
-
-        if($validator->fails())
-            return response()->json($validator->getMessageBag(), 406);
+        ]);;
 
 
         $newsItem = News::find($request['id']);
@@ -54,17 +53,14 @@ class NewsController extends Controller
     }
 
     public function postAddNews(Request $request){
-        $validator = Validator::make($request->all(), [
+
+        $this->isValid($request, [
             'title_short' => 'max:100',
             'title_long' => 'required|max:300',
             'article' => 'required|max:2500',
             'created_at' => 'date',
             'image_url' => 'required|image'
         ]);
-
-        if($validator->fails())
-            return response()->json($validator->getMessageBag(), 406);
-
 
         $newsItem = new News();
         $newsItem->title_short = $request['title_short'];

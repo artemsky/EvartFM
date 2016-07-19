@@ -5,6 +5,7 @@ use DB;
 use Illuminate\Http\Request;
 use Validator;
 trait SuperUserActions{
+    use Validate;
     public function getAllUsers(){
 
         $users = DB::table('users')->get();
@@ -14,12 +15,9 @@ trait SuperUserActions{
 
     public function postEditUser(Request $request){
 
-        $validator = Validator::make($request->all(), [
+        $this->isValid($request, [
             'Uid' => 'required|exists:users,id'
         ]);
-
-        if($validator->fails())
-            return response()->json($validator->getMessageBag(), 406);
 
         $user = DB::table('users')->select('id', 'login', 'role', 'name', 'email')->where('id', $request['Uid'])->first();
 
@@ -28,16 +26,13 @@ trait SuperUserActions{
 
     public function postUpdateUser(Request $request){
 
-        $validator = Validator::make($request->all(), [
+        $this->isValid($request, [
             'login' => 'unique:users|min:4|max:16',
             'password' => 'min:6|max:32|confirmed',
             'password_confirmation' => 'min:6|max:32',
             'role' => 'in:super,admin,writer,dj',
             'email' => 'email'
         ]);
-
-        if($validator->fails())
-            return response()->json($validator->getMessageBag(), 406);
 
 
         $data = [];
@@ -53,12 +48,11 @@ trait SuperUserActions{
         return response()->json($data, 200);
     }
     public function postDeleteUser(Request $request){
-        $validator = Validator::make($request->all(), [
+
+        $this->isValid($request, [
             'Uid' => 'required|exists:users,id'
         ]);
 
-        if($validator->fails())
-            return response()->json($validator->getMessageBag(), 406);
 
         DB::table('users')
             ->where('id', $request['Uid'])
