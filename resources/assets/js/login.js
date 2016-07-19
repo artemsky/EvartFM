@@ -25,7 +25,9 @@ $(function(){
                 }
             }
             if(response.status === 429){
-                console.log(response)
+                tooltipOptions.placement = 'top';
+                tooltipOptions.title = response.responseText;
+                $('.title').tooltip(tooltipOptions).tooltip('show');
             }
         },
         onSuccess = function(response){
