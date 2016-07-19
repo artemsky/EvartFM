@@ -5,7 +5,6 @@ use DB;
 use Illuminate\Http\Request;
 use Validator;
 trait SuperUserActions{
-    use Validate;
     public function getAllUsers(){
 
         $users = DB::table('users')->get();
