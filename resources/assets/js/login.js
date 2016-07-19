@@ -24,6 +24,9 @@ $(function(){
                     $('.title').tooltip(tooltipOptions).tooltip('show');
                 }
             }
+            if(response.status === 429){
+                console.log(response)
+            }
         },
         onSuccess = function(response){
             button.addClass("login-success");

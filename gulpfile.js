@@ -166,7 +166,7 @@ gulp.task('layouts', () => {
 
 //Images
 gulp.task('images', () => {
-    return gulp.src(`${dir.src}/${dir.img}/**/*.(png|jpg|jpeg|ico|gif)`, {since: gulp.lastRun('images')})
+    return gulp.src(`${dir.src}/${dir.img}/**/*.*`, {since: gulp.lastRun('images')})
     .pipe(newer(`${dir.release}/${dir.img}`))
     .pipe(imagemin())
     .pipe(gulp.dest(`${dir.release}/${dir.img}`))
