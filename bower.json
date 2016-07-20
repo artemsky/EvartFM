@@ -23,6 +23,7 @@
     "font-awesome": "^4.6.3",
     "bootstrap-select": "^1.10.0",
     "clndr": "^1.4.5",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "malihu-custom-scrollbar-plugin": "^3.1.5"
   }
 }

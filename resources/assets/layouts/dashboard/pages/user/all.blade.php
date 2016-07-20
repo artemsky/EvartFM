@@ -1,13 +1,13 @@
 @extends('dashboard.main')
 
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js" onerror="onErrorLoader(this, '{{ URL::to('css/bootstrap-select.css') }}')"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/bootstrap-select/dist/css/bootstrap-select.css') }}')"></script>
     <script src="{{ URL::to('js/usersall.js') }}"></script>
 @endsection
 
 @section('styles')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" onerror="onErrorLoader(this, '{{ URL::to('js/bootstrap-select.js') }}')">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" onerror="onErrorLoader(this, '{{ URL::to('vendor/bootstrap-select/dist/js/bootstrap-select.js') }}')">
     <link rel="stylesheet" href="{{ URL::asset('css/dashboard.css') }}">
 @endsection
 

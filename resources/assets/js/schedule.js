@@ -9,34 +9,19 @@ $(function(){
     // Call this from the developer console and you can control both instances
     moment.locale("en-gb");
 
-    // Assuming you've got the appropriate language files,
-    // clndr will respect whatever moment's language is set to.
-    // moment.locale('ru');
-
-    // Here's some magic to make sure the dates are happening this month.
-    var thisMonth = moment().format('YYYY-MM');
-    // Events to load into calendar
-    var eventArray = [
-        {
-            title: 'Multi-Day Event',
-            endDate: thisMonth + '-14',
-            startDate: thisMonth + '-10'
-        }, {
-            endDate: thisMonth + '-23',
-            startDate: thisMonth + '-21',
-            title: 'Another Multi-Day Event'
-        }, {
-            date: thisMonth + '-27',
-            title: 'Single Day Event'
-        }
-    ];
     var currentMonth = moment().format('YYYY-MM');
     var nextMonth    = moment().add('month', 1).format('YYYY-MM');
     var events = [
-        { date: currentMonth + '-' + '10', title: 'Persian Kitten Auction', location: 'Center for Beautiful Cats' },
-        { date: currentMonth + '-' + '19', title: 'Cat Frisbee', location: 'Jefferson Park' },
-        { date: currentMonth + '-' + '23', title: 'Kitten Demonstration', location: 'Center for Beautiful Cats' },
-        { date: nextMonth + '-' + '07',    title: 'Small Cat Photo Session', location: 'Center for Cat Photography' }
+        { date: currentMonth + '-' + '10 20:00:00', title: 'Persian Kitten Auction', location: 'Center for Beautiful Cats' },
+        { date: currentMonth + '-' + '19 21:00:00', title: 'Cat Frisbee', location: 'Jefferson Park' },
+        { date: currentMonth + '-' + '23 18:00:00', title: 'Kitten Demonstration', location: 'Center for Beautiful Cats' },
+        { date: currentMonth + '-' + '23 18:00:00', title: 'Kitten Demonstration', location: 'Center for Beautiful Cats' },
+        { date: currentMonth + '-' + '23 19:00:00', title: 'Kitten Demonstration', location: 'Center for Beautiful Cats' },
+        { date: currentMonth + '-' + '23 20:00:00', title: 'Kitten Demonstration', location: 'Center for Beautiful Cats' },
+        { date: currentMonth + '-' + '23 21:00:00', title: 'Kitten Demonstration', location: 'Center for Beautiful Cats' },
+        { date: currentMonth + '-' + '23 22:00:00', title: 'Kitten Demonstration', location: 'Center for Beautiful Cats' },
+        { date: currentMonth + '-' + '23 23:00:00', title: 'Kitten Demonstration', location: 'Center for Beautiful Cats' },
+        { date: nextMonth + '-' + '07 17:30:00',    title: 'Small Cat Photo Session', location: 'Center for Cat Photography' }
     ];
 
     var clndr = {};
@@ -86,13 +71,18 @@ $(function(){
         },
         showAdjacentMonths: true,
         adjacentDaysChangeMonth: false,
+        trackSelectedDate: true,
+        //selectedDate: moment().format("YYYY-MM-DD"),
         daysOfTheWeek: (function(){
             var result = [];
             for (var i = 0; i < 7; i++) {
                 result.push(moment().weekday(i).format('ddd'));
             }
             return result;
-        })()
+        })(),
+        ready: function(){
+            $(".event-items").height($(".clndr-grid").height()).show().mCustomScrollbar();
+        }
     });
 
 

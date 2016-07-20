@@ -112,5 +112,17 @@
       "development": "./underscore.js",
       "production": "./underscore-min.js"
     }
+  },
+  "malihu-custom-scrollbar-plugin":{
+    "main":{
+      "development": ["./jquery.mCustomScrollbar.js", "./jquery.mCustomScrollbar.css", "./mCSB_buttons.png"],
+      "production": ["./jquery.mCustomScrollbar.concat.min.js", "./jquery.mCustomScrollbar.min.css", "./mCSB_buttons.png"]
+    }
+  },
+  "jquery-mousewheel":{
+    "main":{
+      "development": "./jquery.mousewheel.js",
+      "production": "./jquery.mousewheel.min.js"
+    }
   }
 }
