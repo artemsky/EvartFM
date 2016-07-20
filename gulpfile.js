@@ -19,6 +19,7 @@ const gulp = require('gulp'),
     replace = require('gulp-replace-task'),
     sassLint = require('gulp-sass-lint'),
     spritesmith = require("gulp-spritesmith"),
+    overrides = require('./boweroverrides.json'),
 
     dir = {
         src: './resources/assets/',
@@ -28,104 +29,6 @@ const gulp = require('gulp'),
         css: 'css/',
         fonts: 'fonts/',
         scss: 'scss/'
-    },
-    overrides = {
-        "bootstrap": {
-            "main": {
-                "development": ["./dist/js/bootstrap.js", "./dist/css/bootstrap.css", './dist/fonts/**'],
-                "production": ["./dist/js/bootstrap.min.js", "./dist/css/bootstrap.min.css", './dist/fonts/**']
-            }
-        },
-        "jquery":{
-            "main":{
-                "development": "./dist/jquery.js",
-                "production": "./dist/jquery.min.js"
-            }
-        },
-        "wow":{
-            "main":{
-                "development": "./dist/wow.js",
-                "production": "./dist/wow.min.js"
-            }
-        },
-        "animate.css":{
-            "main":{
-                "development": "./animate.css",
-                "production": "./animate.min.css"
-            }
-        },
-        "owl.carousel":{
-            "main":{
-                "development" : [
-                    "./dist/owl.carousel.js",
-                    "./dist/assets/owl.carousel.css"
-                ],
-                "production" : [
-                    "./dist/owl.carousel.min.js",
-                    "./dist/assets/owl.carousel.min.css"
-                ]
-            }
-        },
-        "perfect-scrollbar":{
-            "main":{
-                "development" : [
-                    "./js/perfect-scrollbar.jquery.js",
-                    "./css/perfect-scrollbar.css"
-                ],
-                "production" : [
-                    "./js/perfect-scrollbar.jquery.min.js",
-                    "./css/perfect-scrollbar.min.css"
-                ]
-            }
-        },
-        "rangeslider.js":{
-            "main":{
-                "development": "./dist/rangeslider.js",
-                "production": "./dist/rangeslider.min.js"
-            }
-        },
-        "jquery.countdown":{
-            "main":{
-                "development": "./dist/jquery.countdown.js",
-                "production": "./dist/jquery.countdown.min.js"
-            }
-        },
-        "lodash":{
-            "main":{
-                "development": "./dist/lodash.js",
-                "production": "./dist/lodash.min.js"
-            }
-        },
-        "angular":{
-            "main":{
-                "development": "./angular.js",
-                "production": "./angular.min.js"
-            }
-        },
-        "iCheck":{
-            "main":{
-                "development": ["./icheck.js", "./skins/square/blue.css", "./skins/square/blue.png", "./skins/square/blue@2x.png"],
-                "production": ["./icheck.min.js", "./skins/square/blue.css", "./skins/square/blue.png", "./skins/square/blue@2x.png"]
-            }
-        },
-        "Ionicons":{
-            "main":{
-                "development": ["./css/ionicons.css", "./fonts/**"],
-                "production": ["./css/ionicons.min.css", "./fonts/**"]
-            }
-        },
-        "font-awesome":{
-            "main":{
-                "development": ["./css/font-awesome.css", "./fonts/**"],
-                "production": ["./css/font-awesome.min.css", "./fonts/**"]
-            }
-        },
-        "bootstrap-select":{
-            "main":{
-                "development": ["./dist/css/bootstrap-select.css", "./dist/css/bootstrap-select.js"],
-                "production": ["./dist/css/bootstrap-select.min.css", "./dist/css/bootstrap-select.min.js"]
-            }
-        }
     };
 
 /*******************************************************************
@@ -199,7 +102,7 @@ return gulp.src(`${dir.src}/${dir.fonts}/**/*.ttf`, {since: gulp.lastRun('fonts'
 gulp.task('bower', () => {
     const jsFilter = filter('**/*.js', {restore: true}),
     styleFilter = filter('**/*.css', {restore: true}),
-    imageFilter = filter('**/*.(jpg|jpeg|png)', {restore: true}),
+    imageFilter = filter('**/*.{jpg,jpeg,png}', {restore: true}),
     fontFilter = filter('**/*.{eot,ttf,woff,woff2}');
 
     return gulp.src(mainBowerFiles({ "overrides": overrides }), { cwd: './bower_components' })

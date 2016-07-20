@@ -21,6 +21,8 @@
     "iCheck": "^1.0.2",
     "Ionicons": "ionicons#^2.0.1",
     "font-awesome": "^4.6.3",
-    "bootstrap-select": "^1.10.0"
+    "bootstrap-select": "^1.10.0",
+    "clndr": "^1.4.5",
+    "underscore": "^1.8.3"
   }
 }

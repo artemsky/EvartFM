@@ -1,0 +1,382 @@
+@mixin clearfix {
+  display: inline-block;
+}
+@mixin noselect() {
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+}
+.page-schedule {
+  @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+
+  .clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+  }
+
+
+
+  html[xmlns] .clearfix {
+    display: block;
+  }
+
+  * html .clearfix {
+    height: 1%;
+  }
+
+
+
+  h4 {
+    width: 75%;
+    text-align: center;
+    font-family: 'Droid Sans Mono';
+    font-weight: normal;
+    color: white;
+    font-size: 14px;
+    margin: 0 auto 1em auto;
+    padding: 1em;
+    background: #b63642;
+  }
+
+  h5 {
+    font-size: 1em;
+    font-weight: bold;
+  }
+
+  p {
+    text-align: center;
+    font-family: 'Droid Sans Mono';
+    margin: 3em auto 1em auto;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid #414141;
+    background: #f4f4f4;
+  }
+
+  .left-align {
+    text-align: left;
+  }
+
+  .right-align {
+    text-align: right;
+  }
+
+  //////////////////////////////////
+
+  $clndr-border: 1px solid #000;
+
+  .schedule {
+    margin: 30px auto;
+    max-width: 300px;
+    font-family: 'Droid Sans Mono';
+    font-size: 14px;
+
+    .clndr {
+      .clndr-controls {
+        @include clearfix();
+        width: 100%;
+        position: relative;
+        margin-bottom: 10px;
+
+        .month {
+          float: left;
+          width: 33%;
+          text-align: center;
+        }
+
+        .clndr-control-button {
+          float: left;
+          width: 33%;
+
+          &.rightalign {
+            text-align: right;
+            width: 34%;
+          }
+          .clndr-next-button {
+            cursor: pointer;
+            @include noselect;
+            &:hover {
+              background: #ddd;
+            }
+            &.inactive {
+              opacity: 0.5;
+              &:hover {
+                background: none;
+                cursor: default;
+              }
+            }
+          }
+          .clndr-previous-button {
+            cursor: pointer;
+            @include noselect();
+            &:hover {
+              background: #ddd;
+            }
+            &.inactive {
+              opacity: 0.5;
+              &:hover {
+                background: none;
+                cursor: default;
+              }
+            }
+          }
+        }
+      }
+
+      .clndr-table {
+        table-layout: fixed;
+        width: 100%;
+
+        .header-days {
+          height: 30px;
+          font-size: 10px;
+          background: #0D70A6;
+
+          .header-day {
+            vertical-align: middle;
+            text-align: center;
+            border-left: $clndr-border;
+            border-top: $clndr-border;
+
+            color: #fff;
+
+            &:last-child {
+              border-right: $clndr-border;
+            }
+          }
+        }
+
+        tr {
+          //height: 85px;
+
+          td {
+            vertical-align: top;
+          }
+
+          .day {
+            border-left: $clndr-border;
+            border-top: $clndr-border;
+            width: 100%;
+            height: inherit;
+
+            &:hover {
+              background: #eee;
+            }
+
+            &.today, &.my-today {
+              background: #9AD6E3;
+              &:hover {
+                background: darken(#9AD6E3, 10%);
+              }
+              &.event {
+                background: mix(#B4E09F, #9AD6E3);
+              }
+            }
+
+            &.event, &.my-event {
+              background: #B4E09F;
+              &:hover {
+                background: darken(#B4E09F, 10%);
+              }
+            }
+
+            &.inactive, &.my-inactive {
+              background: #ddd;
+            }
+
+            &:last-child {
+              border-right: $clndr-border;
+            }
+
+            .day-contents {
+              box-sizing: border-box;
+              // width: 100%;
+              // height: 100%;
+              padding: 10px;
+              font-size: 12px;
+              text-align: center;
+              font-weight: bold;
+              cursor: pointer;
+            }
+          }
+
+          .empty, .adjacent-month, .my-empty, .my-adjacent-month {
+            border-left: $clndr-border;
+            border-top: $clndr-border;
+            width: 100%;
+            height: inherit;
+            background: #eee;
+
+            &:hover {
+              background: #ddd;
+            }
+
+            &:last-child {
+              border-right: $clndr-border;
+            }
+          }
+
+          &:last-child {
+            .day, .my-day {
+              border-bottom: $clndr-border;
+            }
+
+            .empty, .my-empty {
+              border-bottom: $clndr-border;
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  .clndr-next-button, .clndr-previous-button, .clndr-next-year-button, .clndr-previous-year-button {
+    @include noselect();
+
+    &.inactive {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}
+$light-gray: #eee;
+$dark-gray: #ccc;
+$dark-blue: #155394;
+$blue: #79baff;
+#full-clndr
+{
+  width: 100%;
+  background-color: $light-gray;
+  font-weight: 700;
+  -moz-box-shadow: 0px 4px 0 darken($dark-gray, 5%);
+  -webkit-box-shadow: 0px 4px 0 darken($dark-gray, 5%);
+  box-shadow: 0px 4px 0 darken($dark-gray, 5%);
+
+  .clndr-controls
+  {
+    padding: 14px;
+    background-color: $dark-gray;
+    color: white;
+    text-align: center;
+
+    .clndr-previous-button
+    {
+      float: left;
+      text-align: left;
+    }
+
+    .clndr-next-button
+    {
+      float: right;
+      text-align: right;
+    }
+
+    .clndr-previous-button, .clndr-next-button
+    {
+      width: 30px;
+      cursor: pointer;
+      @include noselect();
+      &:hover
+      {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .clndr-grid
+  {
+    float: left;
+    width: 65%;
+    border-right: 2px solid white;
+
+    .days-of-the-week
+    {
+      width: 100%;
+      background-color: $dark-blue;
+
+      .header-day
+      {
+        float: left;
+        width: 14.2857%;
+        padding: 14px;
+        text-align: center;
+        color: white;
+      }
+    }
+
+    .days
+    {
+      width: 100%;
+
+      .day, .empty
+      {
+        float: left;
+        width: 14.2857%;
+        height: 66px;
+        padding: 24px 0;
+
+        text-align: center;
+        color: #4f4f4f;
+        background-color: $light-gray;
+        border-bottom: 2px solid white;
+
+        //background-image: url('./triangle.svg');
+        background-size: cover;
+        background-position: center;
+
+        &.event
+        {
+          .day-number
+          {
+            padding-bottom: 4px;
+            border-bottom: 2px solid $dark-blue;
+          }
+        }
+
+        &.adjacent-month
+        {
+          .day-number
+          {
+            opacity: 0.3;
+          }
+        }
+      }
+
+      .today
+      {
+        background-color: white;
+        background-image: none;
+      }
+
+    }
+  }
+
+  .event-listing
+  {
+    float: left;
+    width: 35%;
+
+    .event-listing-title
+    {
+      padding: 14px;
+      background-color: $blue;
+      text-align: center;
+      color: white;
+      letter-spacing: 1px;
+    }
+    .event-item
+    {
+      padding: 14px;
+      color: #4f4f4f;
+    }
+    .event-item-location
+    {
+      font-weight: 400;
+    }
+  }
+}

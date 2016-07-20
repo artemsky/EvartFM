@@ -10,10 +10,8 @@ use App\Http\Requests;
 class EventsController extends Controller
 {
     use Traits\Validate;
-    public function postAddEvent(Request $request){
-        $this->isValid($request, [
 
-        ]);
-
+    public function getIndex(){
+        return view('dashboard.pages.schedule.index');
     }
 }

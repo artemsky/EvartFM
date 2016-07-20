@@ -72,10 +72,18 @@ Route::group(['middleware' => 'web'], function () {
             'uses' => 'NewsController@postAddNews'
         ]);
 
+
 //        Route::get('/rename', [
 //            'uses' => 'NewsController@rename'
 //        ]);
 
+    });
+
+    Route::group(['prefix' => '/dashboard/schedule', 'middleware' => ['auth', 'role:super,writer']], function () {
+        Route::get('/', [
+            'as' => 'schedule.index',
+            'uses' => 'EventsController@getIndex',
+        ]);
     });
     
     Route::get('/login', [

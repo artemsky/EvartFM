@@ -18,6 +18,7 @@
                 <li><a href="{{route('user')}}">All Users</a></li>
                 <li><a href="{{route('adduser')}}">Add Users</a></li>
                 <li><a href="{{route('allnews')}}">All News</a></li>
+                <li><a href="{{route('schedule.index')}}">Schedule</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{route('logout')}}">Logout</a></li>
