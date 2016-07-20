@@ -24,7 +24,7 @@
             <div class="event-listing-title month-title">
                 <span class="glyphicon glyphicon-plus pull-right"></span>
                 <span class="glyphicon glyphicon-chevron-up pull-left"></span>
-                <span>EVENTS THIS MONTH</span>
+                <span class="event-title">EVENTS THIS MONTH</span>
             </div>
             <div class="event-items">
                 @{{% _.each(eventsThisMonth, function(event) { %}}
@@ -40,7 +40,7 @@
             <div class="event-listing-title day-title">
                 <span class="glyphicon glyphicon-plus pull-right"></span>
                 <span class="glyphicon glyphicon-chevron-down pull-left"></span>
-                <span>EVENTS THIS DAY</span>
+                <span class="event-title">EVENTS THIS DAY</span>
             </div>
             <div class="day-events"></div>
 
