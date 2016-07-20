@@ -100,32 +100,32 @@ return gulp.src(`${dir.src}/${dir.fonts}/**/*.ttf`, {since: gulp.lastRun('fonts'
 
 //Copy bower dependencies
 gulp.task('bower', () => {
-    const jsFilter = filter('**/*.js', {restore: true}),
-    styleFilter = filter('**/*.css', {restore: true}),
-    imageFilter = filter('**/*.{jpg,jpeg,png}', {restore: true}),
-    fontFilter = filter('**/*.{eot,ttf,woff,woff2}');
+    // const jsFilter = filter('**/*.js', {restore: true}),
+    // styleFilter = filter('**/*.css', {restore: true}),
+    // imageFilter = filter('**/*.{jpg,jpeg,png}', {restore: true}),
+    // fontFilter = filter('**/*.{eot,ttf,woff,woff2}');
 
-    return gulp.src(mainBowerFiles({ "overrides": overrides }), { cwd: './bower_components' })
-        //Javascript
-        .pipe(jsFilter)
-        .pipe(newer(`${dir.release+dir.js}`))
-        .pipe(gulp.dest(`${dir.release+dir.js}`))
-        .pipe(jsFilter.restore)
-        //CSS
-        .pipe(styleFilter)
-        .pipe(newer(`${dir.release+dir.css}`))
-        .pipe(gulp.dest(`${dir.release+dir.css}`))
-        .pipe(styleFilter.restore)
-        //Img
-        .pipe(imageFilter)
-        .pipe(newer(`${dir.release+dir.img}`))
-        .pipe(gulp.dest(`${dir.release+dir.img}`))
-        .pipe(imageFilter.restore)
-        //Fonts
-        .pipe(fontFilter)
-        .pipe(newer(`${dir.release+dir.fonts}`))
-        .pipe(gulp.dest(`${dir.release+dir.fonts}`))
-
+    return gulp.src(mainBowerFiles({ "overrides": overrides}), { base: './bower_components' })
+        // //Javascript
+        // .pipe(jsFilter)
+        // .pipe(newer(`${dir.release+dir.js}`))
+        // .pipe(gulp.dest(`${dir.release+dir.js}`))
+        // .pipe(jsFilter.restore)
+        // //CSS
+        // .pipe(styleFilter)
+        // .pipe(newer(`${dir.release+dir.css}`))
+        // .pipe(gulp.dest(`${dir.release+dir.css}`))
+        // .pipe(styleFilter.restore)
+        // //Img
+        // .pipe(imageFilter)
+        // .pipe(newer(`${dir.release+dir.img}`))
+        // .pipe(gulp.dest(`${dir.release+dir.img}`))
+        // .pipe(imageFilter.restore)
+        // //Fonts
+        // .pipe(fontFilter)
+        // .pipe(newer(`${dir.release+dir.fonts}`))
+        // .pipe(gulp.dest(`${dir.release+dir.fonts}`))
+        .pipe(gulp.dest(`${dir.release}/vendor`))
 
 });
 
