@@ -1,14 +1,17 @@
-var clndr = {};
+
 $(function(){
     "use strict";
 
+    //Set underscore template setting as {{%%}} for better code reading
     _.templateSettings = {
         evaluate    : /\{\{%([\s\S]+?)%\}\}/g,
         interpolate : /\{\{%=([\s\S]+?)%\}\}/g,
         escape      : /\{\{%-([\s\S]+?)%\}\}/g
     };
-    // Call this from the developer console and you can control both instances
+    //Set moment locale
     moment.locale("en-gb");
+
+    //events
     var currentMonth = moment().format('YYYY-MM');
     var nextMonth    = moment().add('month', 1).format('YYYY-MM');
     var events = [
@@ -24,23 +27,29 @@ $(function(){
         { date: nextMonth + '-' + '07 17:30:00',    title: 'Small Cat Photo Session', location: 'Center for Cat Photography', id: 51 },
         { date: currentMonth + '-' + '20 17:30:00',    title: 'Small Cat Photo Session', location: 'Center for Cat Photography', id: 52 }
     ];
+    //!events
 
+    //read events template
     var dayEventsTemplate = $('#day-events').html();
-    clndr = $('#full-clndr').clndr({ //Start clndr
+
+    //Init calendar
+    var clndr = $('#full-clndr').clndr({
         template: $('#full-clndr-template').html(),
         events: events,
         clickEvents: {
             click: function (target) {
-                $(".day-events").mCustomScrollbar("destroy");
-                $(".event-items").slideUp();
-                $(".day-events").slideDown();
                 var template = _.template(dayEventsTemplate);
-                $(".day-events").html(template({eventsThisDay: target.events}))
-                    .height( $(".clndr-grid .days").height() - $(".clndr-grid .days-of-the-week").height() );
-                    $(".day-events").mCustomScrollbar("destroy").mCustomScrollbar({
+                $(".day-events")
+                    .mCustomScrollbar("destroy")
+                    .slideDown()
+                    .html(template({eventsThisDay: target.events}))
+                    .height( $(".clndr-grid .days").height() - $(".clndr-grid .days-of-the-week").height() )
+                    .mCustomScrollbar({
                         scrollButtons:{enable:true},
                         theme:"minimal-dark"
                     });
+                $(".event-items").slideUp();
+
             },
             onMonthChange: function () {
                 this.options.ready();
@@ -62,124 +71,107 @@ $(function(){
             }
             return result;
         })(),
-        ready: function(){
-            $(".event-listing-title").on("click", ".glyphicon-chevron-up, .glyphicon-chevron-down", function(){
+        ready: function(){ //ready
+            var eventListingTitle = $(".event-listing-title");
+            //Init block Open/Close event
+            eventListingTitle.on("click", ".glyphicon-chevron-up, .glyphicon-chevron-down", function(){
                 var el = {};
-                if($(this).parent().hasClass("month-title"))
+                var block = {
+                    open: "glyphicon-chevron-up",
+                    close: "glyphicon-chevron-down"
+                };
+                var $this = $(this);
+                if($this.parent().hasClass("month-title"))
                     el = $(".day-title [class *=glyphicon-chevron]").eq(0);
                  else
                     el = $(".month-title [class *=glyphicon-chevron]").eq(0);
 
-                if(el.hasClass("glyphicon-chevron-up"))
-                    el.removeClass("glyphicon-chevron-up")
-                        .addClass("glyphicon-chevron-down")
+                if(el.hasClass(block.open))
+                    el.removeClass(block.open).addClass(block.close);
                 else
-                    el.removeClass("glyphicon-chevron-down")
-                        .addClass("glyphicon-chevron-up");
+                    el.removeClass(block.close).addClass(block.open);
 
-                if($(this).hasClass("glyphicon-chevron-up"))
-                    $(this).removeClass("glyphicon-chevron-up").addClass("glyphicon-chevron-down");
+                if($this.hasClass(block.open))
+                    $this.removeClass(block.open).addClass(block.close);
                 else
-                    $(this).removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-up");
+                    $this.removeClass(block.close).addClass(block.open);
+
                 $(".event-items, .day-events").slideToggle();
 
-
-
             });
+
+            //Init modal window
             var modal = $("#modal");
-            $(".event-listing").on('click', '.event-item', function(){
-                modal.find(".modal-title").text("Edit event");
-                modal.find("form").get(0).reset();
-                var datetimepickerOptions = {
-                    step: 30,
-                    value: $(this).find(".event-item-time").attr("data-datetime")
-                };
+            var datetimepickerOptions = {
+                step: 30
+            };
+            var datetimePickerInit = function(options){
+                var dtPicker = $('#datetimepicker');
                 $('#repeat-day').iCheck('uncheck')
                     .iCheck({
                         checkboxClass: 'icheckbox_square-blue',
                         radioClass: 'iradio_square-blue',
                         increaseArea: '20%', // optional
                     }).on("ifUnchecked", function(){
-                    $('#datetimepicker')
+                    dtPicker
                         .datetimepicker('destroy')
                         .datetimepicker();
                 }).on("ifChecked", function(){
-                    $('#datetimepicker')
+                    dtPicker
                         .datetimepicker('destroy')
                         .datetimepicker({
                             datepicker:false,
                             format:'H:i'
                         });
                 });
-                $('#datetimepicker')
+                dtPicker
                     .datetimepicker('destroy')
-                    .datetimepicker(datetimepickerOptions);
+                    .datetimepicker(options);
+                modal.modal('show');
+            };
 
+            //Init modal window "Edit event"
+            $(".event-listing").on('click', '.event-item', function(){
+                modal.find("form").get(0).reset();
+                modal.find(".modal-title").text("Edit event");
+
+                datetimepickerOptions.value = $(this).find(".event-item-time").attr("data-datetime");
                 modal.find("#Title").val($(this).find(".event-item-name").text());
                 modal.find("#Description").val($(this).find(".event-item-location").text());
 
-                modal.modal('show');
+                datetimePickerInit(datetimepickerOptions);
             });
 
-
-            $(".event-listing-title").on("click", ".glyphicon-plus", function(){
+            //Init modal window "Add event"
+            eventListingTitle.on("click", ".glyphicon-plus", function(){
                 modal.find("form").get(0).reset();
                 modal.find(".modal-title").text("Add event");
-                var datetimepickerOptions = {
-                    step: 30
-                };
+
                 if($(this).parent().hasClass("day-title")){
                     datetimepickerOptions.value = (function(){
                         var time = " " + moment().format("HH:mm");
                         var el = $(clndr.element).find(".selected");
-                        var result = "";
-
                         if(el.length > 0)
-                            result =  el.attr("data-id") + time;
+                            return el.attr("data-id") + time;
                         else
-                            result =  $(clndr.element).find("today").attr("data-id") + time;
-                        $('#datetimepicker').val(result);
-                        return result;
-
+                            return $(clndr.element).find("today").attr("data-id") + time;
                     })();
                 }
-                $('#repeat-day').iCheck('uncheck')
-                    .iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue',
-                    increaseArea: '20%', // optional
-                }).on("ifUnchecked", function(){
-                    $('#datetimepicker')
-                        .datetimepicker('destroy')
-                        .datetimepicker();
-                }).on("ifChecked", function(){
-                    $('#datetimepicker')
-                        .datetimepicker('destroy')
-                        .datetimepicker({
-                            datepicker:false,
-                            format:'H:i'
-                        });
-                });
-                $('#datetimepicker')
-                    .datetimepicker('destroy')
-                    .datetimepicker(datetimepickerOptions);
 
-                modal.modal('show');
+                datetimePickerInit(datetimepickerOptions);
             });
 
-            $(".clndr")
-                .height($(".clndr").height());
+            var calendar = $(".clndr");
+            calendar.height(calendar.height());
 
-        },
-        doneRendering: function(){
+        },//!ready
+        doneRendering: function(){ //doneRendering
             $(".event-items")
                 .height( $(".clndr-grid .days").height() - $(".clndr-grid .days-of-the-week").height() )
                 .mCustomScrollbar({
                 scrollButtons:{enable:true},
                 theme:"minimal-dark"
             })
-        }
-    });//End clndr
-
-
+        }//!doneRendering
+    });
 });
