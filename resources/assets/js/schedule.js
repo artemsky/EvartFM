@@ -41,6 +41,9 @@ $(function(){
                         scrollButtons:{enable:true},
                         theme:"minimal-dark"
                     });
+            },
+            onMonthChange: function () {
+                this.options.ready();
             }
         },
         forceSixRows: true,
@@ -80,11 +83,48 @@ $(function(){
                     $(this).removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-up");
                 $(".event-items, .day-events").slideToggle();
 
+
+
+            });
+            var modal = $("#modal");
+            $(".event-listing").on('click', '.event-item', function(){
+                modal.find(".modal-title").text("Edit event");
+                modal.find("form").get(0).reset();
+                var datetimepickerOptions = {
+                    step: 30,
+                    value: $(this).find(".event-item-time").attr("data-datetime")
+                };
+                $('#repeat-day').iCheck('uncheck')
+                    .iCheck({
+                        checkboxClass: 'icheckbox_square-blue',
+                        radioClass: 'iradio_square-blue',
+                        increaseArea: '20%', // optional
+                    }).on("ifUnchecked", function(){
+                    $('#datetimepicker')
+                        .datetimepicker('destroy')
+                        .datetimepicker();
+                }).on("ifChecked", function(){
+                    $('#datetimepicker')
+                        .datetimepicker('destroy')
+                        .datetimepicker({
+                            datepicker:false,
+                            format:'H:i'
+                        });
+                });
+                $('#datetimepicker')
+                    .datetimepicker('destroy')
+                    .datetimepicker(datetimepickerOptions);
+
+                modal.find("#Title").val($(this).find(".event-item-name").text());
+                modal.find("#Description").val($(this).find(".event-item-location").text());
+
+                modal.modal('show');
             });
 
-            var modal = $("#modal");
+
             $(".event-listing-title").on("click", ".glyphicon-plus", function(){
                 modal.find("form").get(0).reset();
+                modal.find(".modal-title").text("Add event");
                 var datetimepickerOptions = {
                     step: 30
                 };
@@ -129,11 +169,9 @@ $(function(){
 
             $(".clndr")
                 .height($(".clndr").height());
-            this.today();
 
         },
         doneRendering: function(){
-            console.log("Render");
             $(".event-items")
                 .height( $(".clndr-grid .days").height() - $(".clndr-grid .days-of-the-week").height() )
                 .mCustomScrollbar({

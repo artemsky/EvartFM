@@ -159,11 +159,27 @@
         position: relative;
       }
       .event-item {
+        position: relative;
         padding: 14px;
         color: #4f4f4f;
         display: table;
         width: 100%;
         max-width: 100%;
+        &:hover:after{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #fff;
+          cursor: pointer;
+          content: attr(data-edit);
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          text-align: center;
+          background-color: rgba(0,0,0,.8);
+        }
         .event-item-info{
           display: table-cell;
           width: 100%;
