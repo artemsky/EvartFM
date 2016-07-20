@@ -124,5 +124,17 @@
       "development": "./jquery.mousewheel.js",
       "production": "./jquery.mousewheel.min.js"
     }
+  },
+  "jt.timepicker":{
+    "main":{
+      "development": ["./jquery.timepicker.js", "./jquery.timepicker.css"],
+      "production": ["./jquery.timepicker.min.js", "./jquery.timepicker.css"]
+    }
+  },
+  "datetimepicker":{
+    "main":{
+      "development": ["./build/jquery.datetimepicker.full.js", "./jquery.datetimepicker.css"],
+      "production": ["./build/jquery.datetimepicker.full.min.js", "./build/jquery.datetimepicker.min.css"]
+    }
   }
 }

@@ -13,6 +13,7 @@
   $dark-gray: #ccc;
   $dark-blue: #155394;
   $blue: #79baff;
+  $selected-color: #7fffd4;
   #full-clndr {
     width: 100%;
     background-color: $light-gray;
@@ -20,6 +21,9 @@
     -moz-box-shadow: 0px 4px 0 darken($dark-gray, 5%);
     -webkit-box-shadow: 0px 4px 0 darken($dark-gray, 5%);
     box-shadow: 0px 4px 0 darken($dark-gray, 5%);
+    .clndr{
+      overflow: hidden;
+    }
 
     .clndr-controls {
       padding: 14px;
@@ -76,6 +80,19 @@
 
       .days {
         width: 100%;
+        overflow: hidden;
+
+
+        .selected{
+          background-color: $selected-color !important;
+        }
+
+        .day{
+          cursor: pointer;
+          &:hover:not(.selected):not(.today){
+            background-color: lighten($selected-color, 15%) !important;
+          }
+        }
 
         .day, .empty {
           float: left;
@@ -131,9 +148,14 @@
         text-align: center;
         color: white;
         letter-spacing: 1px;
+        .glyphicon{
+          cursor:pointer;
+          &:hover{
+            color: $selected-color;
+          }
+        }
       }
       .event-items{
-        display: none;
         position: relative;
       }
       .event-item {
@@ -151,6 +173,7 @@
           display: table-cell;
           width: 1%;
           vertical-align: middle;
+          white-space: nowrap;
         }
         @media (max-width: 768px) {
           .event-item-info, .event-item-time{
