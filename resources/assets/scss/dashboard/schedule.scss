@@ -202,4 +202,56 @@
       }
     }
   }
+  #fountainTextG{
+    display: block;
+    margin:30px auto;
+    text-align: center;
+  }
+
+  .fountainTextG{
+    display: inline-block;
+    color:rgb(0,0,0);
+    font-family:Arial;
+    font-size:34px;
+    text-decoration:none;
+    font-weight:normal;
+    font-style:normal;
+    animation-name:bounce_fountainTextG;
+    animation-duration:2.09s;
+    animation-iteration-count:infinite;
+    animation-direction:normal;
+    transform:scale(.5);
+  }#fountainTextG_1{
+     animation-delay:0.75s;
+   }
+  #fountainTextG_2{
+    animation-delay:0.9s;
+  }
+  #fountainTextG_3{
+    animation-delay:1.05s;
+  }
+  #fountainTextG_4{
+    animation-delay:1.2s;
+  }
+  #fountainTextG_5{
+    animation-delay:1.35s;
+  }
+  #fountainTextG_6{
+    animation-delay:1.5s;
+  }
+  #fountainTextG_7{
+    animation-delay:1.64s;
+  }
+
+  @keyframes bounce_fountainTextG{
+    0%{
+      transform:scale(1);
+      color:rgb(0,0,0);
+    }
+
+    100%{
+      transform:scale(.5);
+      color:rgb(255,255,255);
+    }
+  }
 }

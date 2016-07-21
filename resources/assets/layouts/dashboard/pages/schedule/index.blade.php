@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{{ URL::to('vendor/icheck/skins/square/blue.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css" onerror="onErrorLoader(this, '{{ URL::to('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}')">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/jquery.datetimepicker.min.css" onerror="onErrorLoader(this, '{{ URL::to('vendor/datetimepicker/build/jquery.datetimepicker.min.css') }}')">
+
 @endsection
 
 @section('scripts')
@@ -27,6 +28,7 @@
     <div id="full-clndr" class="clearfix">
         @include('dashboard.components.clndr')
     </div>
+    <div id="fountainTextG"><div id="fountainTextG_1" class="fountainTextG">L</div><div id="fountainTextG_2" class="fountainTextG">o</div><div id="fountainTextG_3" class="fountainTextG">a</div><div id="fountainTextG_4" class="fountainTextG">d</div><div id="fountainTextG_5" class="fountainTextG">i</div><div id="fountainTextG_6" class="fountainTextG">n</div><div id="fountainTextG_7" class="fountainTextG">g</div></div>
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modal">
         <div class="modal-dialog">

@@ -84,10 +84,17 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'schedule.index',
             'uses' => 'EventsController@getIndex',
         ]);
-        Route::get('/events', [
-            'as' => 'schedule.events.get',
-            'uses' => 'EventsController@getEvents',
-        ]);
+        Route::group(['prefix' => '/events'], function () {
+            Route::get('/', [
+                'as' => 'schedule.events.all',
+                'uses' => 'EventsController@getEvents',
+            ]);
+            Route::get('/{date}', [
+                'as' => 'schedule.events.date',
+                'uses' => 'EventsController@getEvent',
+            ])->where(['date' => '\d{4}-\d{2}-\d{2}']);
+        });
+
     });
     
     Route::get('/login', [

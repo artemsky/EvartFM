@@ -31,7 +31,7 @@
                 <div class="event-item" data-id="@{{%= event.id %}}" data-edit="Edit">
                     <div class="event-item-info">
                         <div class="event-item-name">@{{%= event.title %}}</div>
-                        <div class="event-item-location">@{{%= event.location %}}</div>
+                        <div class="event-item-location">@{{%= event.description %}}</div>
                     </div>
                     <div class="event-item-time" data-datetime="@{{%= moment(event.date).format("YYYY/MM/DD HH:mm") %}}">@{{%= moment(event.date).format("ddd DD") %}}</div>
                 </div>
