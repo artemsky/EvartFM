@@ -1,5 +1,4 @@
-
-$(function(){
+(function(){
     "use strict";
 
     //Set underscore template setting as {{%%}} for better code reading
@@ -11,11 +10,57 @@ $(function(){
     //Set moment locale
     moment.locale("en-gb");
 
+    //Init storage helpers
+    var storage = {
+        disk: sessionStorage || localStorage,
+        target: {
+            name: null,
+            object: null,
+            repeat: false
+        },
+        'get': function(key){
+            if(!this.disk.getItem(key))
+              return null;
+            this.target.object = JSON.parse(this.disk.getItem(key));
+            this.target.name = key;
+            return this;
+        },
+        'set': function(key, value){
+            this.disk.setItem(key, JSON.stringify(value));
+            this.target.name = key;
+            return this;
+        },
+        whereDate: function(date){
+            if(!date)
+                return null;
+            for(var i in this.target.object)
+                if(this.target.object[i].date.substring(0,10) == date){
+                    this.target.object = [this.target.object[i]];
+                    return this;
+                }
+            this.target.object = [];
+            return this;
+        },
+        repeat: function(){
+            this.target.repeat = true;
+            return this;
+        },
+        result: function(){
+            if(!this.target.repeat)
+                return this.target.object;
+            var result = [];
+            for(var i in this.target.object)
+                result.push(this.target.object[i].repeat);
+            return result;
+        }
+    };
+
     //events
     var events = [];
     var onEventsSuccess = function(response){
             $("#fountainTextG").hide();
             initCalendar(response);
+            storage.set('events', events);
         },
         onEventsError = function (response){
             $("#fountainTextG").hide();
@@ -28,6 +73,7 @@ $(function(){
         error: onEventsError
     };
     $.ajax('schedule/events', requestOptions);
+    
     //!events
 
     //read events template
@@ -43,14 +89,14 @@ $(function(){
                     var template = _.template(dayEventsTemplate);
                     $(".day-events")
                         .mCustomScrollbar("destroy")
-                        .slideDown()
+                        //.slideDown()
                         .html(template({eventsThisDay: target.events}))
                         .height( $(".clndr-grid .days").height() - $(".clndr-grid .days-of-the-week").height() )
                         .mCustomScrollbar({
                             scrollButtons:{enable:true},
                             theme:"minimal-dark"
                         });
-                    $(".event-items").slideUp();
+                    $(".event-items")//.slideUp();
 
                 },
                 onMonthChange: function () {
@@ -168,14 +214,20 @@ $(function(){
 
             },//!ready
             doneRendering: function(){ //doneRendering
-                $(".event-items")
+                $(".day-events")
                     .height( $(".clndr-grid .days").height() - $(".clndr-grid .days-of-the-week").height() )
                     .mCustomScrollbar({
                         scrollButtons:{enable:true},
                         theme:"minimal-dark"
-                    })
+                    });
+                var calendar = $("#full-clndr");
+                if(calendar.find(".today").length > 0)
+                    calendar.find(".today").click();
+                else
+                    calendar.find(".day").eq(0).click();
+
             }//!doneRendering
         });
     };
 
-});
+})();

@@ -18,7 +18,7 @@ class EventsController extends Controller
         $events = Event::whereBetween('date', [
             Carbon::now()->addMonth(-1)->toDateString(),
             Carbon::now()->addMonth(1)->toDateString()
-        ])->get();
+        ])->orderBy('date', 'desc')->get();
         foreach ($events as $event){
             $event->repeat;
         }

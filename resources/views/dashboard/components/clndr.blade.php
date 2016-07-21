@@ -21,28 +21,30 @@
             </div>
         </div>
         <div class="event-listing">
-            <div class="event-listing-title month-title">
-                <span class="glyphicon glyphicon-plus pull-right"></span>
-                <span class="glyphicon glyphicon-chevron-up pull-left"></span>
-                <span class="event-title">EVENTS THIS MONTH</span>
-            </div>
-            <div class="event-items">
-                @{{% _.each(eventsThisMonth, function(event) { %}}
-                <div class="event-item" data-id="@{{%= event.id %}}" data-edit="Edit">
-                    <div class="event-item-info">
-                        <div class="event-item-name">@{{%= event.title %}}</div>
-                        <div class="event-item-location">@{{%= event.description %}}</div>
-                    </div>
-                    <div class="event-item-time" data-datetime="@{{%= moment(event.date).format("YYYY/MM/DD HH:mm") %}}">@{{%= moment(event.date).format("ddd DD") %}}</div>
-                </div>
-                @{{% }); %}}
-            </div>
+
             <div class="event-listing-title day-title">
                 <span class="glyphicon glyphicon-plus pull-right"></span>
                 <span class="glyphicon glyphicon-chevron-down pull-left"></span>
                 <span class="event-title">EVENTS THIS DAY</span>
             </div>
             <div class="day-events"></div>
+
+            <div class="event-listing-title month-title">
+                <span class="glyphicon glyphicon-plus pull-right"></span>
+                <span class="glyphicon glyphicon-chevron-up pull-left"></span>
+                <span class="event-title">EVENTS THIS MONTH</span>
+            </div>
+            <div class="event-items" style="display:none">
+                @{{% _.each(eventsThisMonth, function(event) { %}}
+                <div class="event-item" data-id="@{{%= event.id %}}" data-edit="Edit">
+                <div class="event-item-info">
+                <div class="event-item-name">@{{%= event.title %}}</div>
+                <div class="event-item-location">@{{%= event.description %}}</div>
+                </div>
+                <div class="event-item-time" data-datetime="@{{%= moment(event.date).format("YYYY/MM/DD HH:mm") %}}">@{{%= moment(event.date).format("ddd DD") %}}</div>
+                </div>
+                @{{% }); %}}
+            </div>
 
         </div>
     </div>
@@ -53,7 +55,7 @@
     <div class="event-item" data-edit="Edit">
         <div class="event-item-info" data-id="@{{%= event.id %}}">
             <div class="event-item-name">@{{%= event.title %}}</div>
-            <div class="event-item-location">@{{%= event.location %}}</div>
+            <div class="event-item-location">@{{%= event.description %}}</div>
         </div>
         <div class="event-item-time" data-datetime="@{{%= moment(event.date).format("YYYY/MM/DD HH:mm") %}}">@{{%= moment(event.date).format("HH:mm") %}}</div>
     </div>
