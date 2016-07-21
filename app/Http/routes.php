@@ -84,6 +84,10 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'schedule.index',
             'uses' => 'EventsController@getIndex',
         ]);
+        Route::get('/events', [
+            'as' => 'schedule.events.get',
+            'uses' => 'EventsController@getEvents',
+        ]);
     });
     
     Route::get('/login', [

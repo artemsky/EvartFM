@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
 use App\Http\Controllers\Traits\Validate;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 
 class EventsController extends Controller
 {
@@ -14,4 +12,13 @@ class EventsController extends Controller
     public function getIndex(){
         return view('dashboard.pages.schedule.index');
     }
+
+    public function getEvents(){
+        $events = Event::all();
+        foreach ($events as $event){
+            $event->repeat;
+        }
+        return response()->json($events);
+    }
+
 }
