@@ -52,6 +52,26 @@
                             <label for="repeat-day">Repeat every day</label>
                         </div>
                         <div class="form-group">
+                            <input type="checkbox" id="repeat-month">
+                            <label for="repeat-month">Repeat every week</label>
+                            <div class="form-group" id="repeat-on">
+                                <input type="checkbox" id="repeat-on-mon">
+                                <label for="repeat-on-mon">Mon</label>
+                                <input type="checkbox" id="repeat-on-tue">
+                                <label for="repeat-on-tue">Tue</label>
+                                <input type="checkbox" id="repeat-on-wed">
+                                <label for="repeat-on-wed">Wed</label>
+                                <input type="checkbox" id="repeat-on-thu">
+                                <label for="repeat-on-thu">Thu</label>
+                                <input type="checkbox" id="repeat-on-fri">
+                                <label for="repeat-on-fri">Fri</label>
+                                <input type="checkbox" id="repeat-on-sat">
+                                <label for="repeat-on-sat">Sat</label>
+                                <input type="checkbox" id="repeat-on-sun">
+                                <label for="repeat-on-sun">Sun</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="datetimepicker">Date / Time</label>
                             <input type="text" class="form-control" id="datetimepicker" placeholder="Datetime" autocomplete="off">
                         </div>

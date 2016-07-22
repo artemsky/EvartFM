@@ -89,14 +89,12 @@
                     var template = _.template(dayEventsTemplate);
                     $(".day-events")
                         .mCustomScrollbar("destroy")
-                        //.slideDown()
                         .html(template({eventsThisDay: target.events}))
                         .height( $(".clndr-grid .days").height() - $(".clndr-grid .days-of-the-week").height() )
                         .mCustomScrollbar({
                             scrollButtons:{enable:true},
                             theme:"minimal-dark"
                         });
-                    $(".event-items")//.slideUp();
 
                 },
                 onMonthChange: function () {
@@ -175,7 +173,25 @@
                     dtPicker
                         .datetimepicker('destroy')
                         .datetimepicker(options);
-                    modal.modal('show');
+
+                    var repeatOn = $("#repeat-on");
+                    repeatOn.hide();
+                    $('#repeat-month').iCheck('uncheck')
+                        .iCheck({
+                            checkboxClass: 'icheckbox_square-blue',
+                            radioClass: 'iradio_square-blue',
+                            increaseArea: '20%', // optional
+                        }).on("ifUnchecked", function(){
+                            repeatOn.hide();
+                        }).on("ifChecked", function(){
+                            $("[id*='repeat-on-']").iCheck({
+                                checkboxClass: 'icheckbox_square-blue',
+                                radioClass: 'iradio_square-blue',
+                                increaseArea: '20%', // optional
+                            });
+                            repeatOn.show();
+                        });
+                        modal.modal('show');
                 };
 
                 //Init modal window "Edit event"
