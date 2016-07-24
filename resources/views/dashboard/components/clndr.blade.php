@@ -13,10 +13,19 @@
                 @{{% _.each(daysOfTheWeek, function(day) { %}}
                 <div class="header-day">@{{%= day %}}</div>
                 @{{% }); %}}
+
             </div>
             <div class="days">
                 @{{% _.each(days, function(day) { %}}
-                <div class="@{{%= day.classes %}}" data-id="@{{%= day.date.format("YYYY/MM/DD") %}}"><span class="day-number">@{{%= day.day %}}</span></div>
+                @{{%
+                    var eventIDs = [];
+                    day.events.forEach(function(val){
+                        eventIDs.push(val.id);
+                    });
+                 %}}
+                <div class="@{{%= day.classes %}}" data-date="@{{%= day.date.format("YYYY/MM/DD") %}}" data-id="@{{%= eventIDs.join('|') %}}">
+                    <span class="day-number">@{{%= day.day %}}</span>
+                </div>
                 @{{% }); %}}
             </div>
         </div>

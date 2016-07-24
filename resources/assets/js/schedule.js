@@ -338,7 +338,7 @@
                 return result;
             })(),
             doneRendering: function(){ //doneRendering
-                $(".day-events")
+                $(".event-items")
                     .height( $(".clndr-grid .days").height() - $(".clndr-grid .days-of-the-week").height() )
                     .mCustomScrollbar({
                         scrollButtons:{enable:true},
@@ -391,8 +391,8 @@
                     modal.find("#Title").val($(this).find(".event-item-name").text());
                     modal.find("#Description").val($(this).find(".event-item-location").text());
 
-                    datetimePickerInit(datetimepickerOptions, $(this).attr('data-id'));
-                    modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$(this).attr('data-id')));
+                    datetimePickerInit(datetimepickerOptions, $(this).attr('data-date'));
+                    modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$(this).attr('data-date')));
                 });
 
                 //Init modal window "Add event"
@@ -405,14 +405,14 @@
                             var time = " " + moment().format("HH:mm");
                             var el = $(clndr.element).find(".selected");
                             if(el.length > 0)
-                                return el.attr("data-id") + time;
+                                return el.attr("data-date") + time;
                             else
-                                return $(clndr.element).find("today").attr("data-id") + time;
+                                return $(clndr.element).find("today").attr("data-date") + time;
                         })();
                     }
 
                     datetimePickerInit(datetimepickerOptions);
-                    modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$(this).attr('data-id')));
+                    modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$(this).attr('data-date')));
                 });
 
                 var calendar = $(".clndr");
