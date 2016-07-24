@@ -1,6 +1,5 @@
 (function(){
     "use strict";
-
     //Set underscore template setting as {{%%}} for better code reading
     _.templateSettings = {
         evaluate    : /\{\{%([\s\S]+?)%\}\}/g,
@@ -16,9 +15,10 @@
         target: {
             name: null,
             object: null,
-            repeat: false
+            repeat: null
         },
         'get': function(key){
+            this.target.repeat = false;
             if(!this.disk.getItem(key))
               return null;
             this.target.object = JSON.parse(this.disk.getItem(key));
@@ -26,6 +26,7 @@
             return this;
         },
         'set': function(key, value){
+            this.target.repeat = false;
             this.disk.setItem(key, JSON.stringify(value));
             this.target.name = key;
             return this;
@@ -42,22 +43,28 @@
                     everyWeek: event.everyWeek ? 1 : 0,
                 }
             };
-            var dayKeys = Object.keys(event.days);
-            for(var i = dayKeys.length; i--;){
-                var key = dayKeys[i];
-                result.repeat[key] = event.days[key];
+            if(event.days){
+                var dayKeys = Object.keys(event.days);
+                for(var i = dayKeys.length; i--;){
+                    var key = dayKeys[i];
+                    result.repeat[key] = event.days[key];
+                }
             }
             var isExists = false;
-            this.target.object.forEach(function(value){
+            this.target.object.forEach(function(value, i, arr){
                 if(value.id == result.id){
                     isExists = true;
-                    value = result;
+                    arr[i] = result;
                 }
             });
             if(!isExists){
                 this.target.object.push(result);
             }
-                
+
+            return this;
+        },
+        save: function(){
+            this.set('events', this.target.object);
         },
         whereDate: function(date){
             if(!date)
@@ -96,10 +103,20 @@
                     key = '';
                 for(var r = repeatKeys.length; r--;){
                     key = repeatKeys[r];
-                    if(r > 3)
-                        days[key] = (this.target.object[i].repeat[key]);
-                    else
-                        repeat[key] = this.target.object[i].repeat[key];
+                    switch(key){
+                        case "mon":
+                        case "tue":
+                        case "wed":
+                        case "thu":
+                        case "fri":
+                        case "sat":
+                        case "sun":
+                            days[key] = this.target.object[i].repeat[key];
+                            break;
+                        default:
+                            repeat[key] = this.target.object[i].repeat[key];
+                    }
+
                 }
                 repeat.days = days;
                 result.push(repeat);
@@ -130,6 +147,7 @@
     //!events
 
     //init variables
+    var clndr = {};
     var dayEventsTemplate = $('#day-events').html();
 
     var modal = $("#modal");
@@ -176,24 +194,27 @@
                 repeatOn.show();
             });
         //Set checked days
-        (function(){
-            var repeats = storage.get('events').whereId(id).repeat().result()[0];
-            if(repeats.everyWeek){
-                $('#repeat-month').iCheck('check');
-                for(var i in repeats.days)
-                    $("#repeat-on-" + i).iCheck(repeats.days[i] ? 'check': 'uncheck')
-            }
-            if(repeats.everyDay){
+        if(id){
+            (function(){
+                var repeats = storage.get('events').whereId(id).repeat().result()[0];
+                if(repeats.everyWeek){
+                    $('#repeat-month').iCheck('check');
+                    for(var i in repeats.days){
+                        $("#repeat-on-" + i).iCheck(repeats.days[i] ? 'check': 'uncheck')
+                    }
 
-            }
-        })();
-
+                }
+                if(repeats.everyDay){
+                    $('#repeat-day').iCheck('check');
+                }
+            })();
+        }
         //!checked days
 
         modal.modal('show');
     };
     //on Saving changes
-    var saveEditChanges = function(id){
+    var saveChanges = function(id){
         var title = $.trim($("#Title").val()),
             description = $.trim($("#Description").val()),
             isDayRepeat = $("#repeat-day").prop("checked"),
@@ -209,22 +230,22 @@
         }
         
         storage.get('events').add({
-            id: id,
+            id: id || -1,
             title: title,
             date : dateTime,
             description: description,
             everyDay: isDayRepeat,
             everyWeek: isWeekRepeat,
             days: daysRepeat
-        })
-    },
-    saveAddChanges = function(id){
-
+        }).save();
+        
+        clndr.setEvents(storage.get('events').result());
+        modal.modal('hide');
     };
 
     //Init calendar
     var initCalendar = function(events){
-        var clndr = $('#full-clndr').clndr({
+        clndr = $('#full-clndr').clndr({
             template: $('#full-clndr-template').html(),
             events: events,
             clickEvents: {
@@ -239,9 +260,6 @@
                             theme:"minimal-dark"
                         });
 
-                },
-                onMonthChange: function () {
-                    this.options.ready();
                 }
             },
             forceSixRows: true,
@@ -260,7 +278,19 @@
                 }
                 return result;
             })(),
-            ready: function(){ //ready
+            doneRendering: function(){ //doneRendering
+                $(".day-events")
+                    .height( $(".clndr-grid .days").height() - $(".clndr-grid .days-of-the-week").height() )
+                    .mCustomScrollbar({
+                        scrollButtons:{enable:true},
+                        theme:"minimal-dark"
+                    });
+                var calendar = $("#full-clndr");
+                if(calendar.find(".today").length > 0)
+                    calendar.find(".today").click();
+                else
+                    calendar.find(".day").eq(0).click();
+
                 var eventListingTitle = $(".event-listing-title");
                 //Init block Open/Close event
                 eventListingTitle.on("click", ".glyphicon-chevron-up, .glyphicon-chevron-down", function(){
@@ -303,7 +333,7 @@
                     modal.find("#Description").val($(this).find(".event-item-location").text());
 
                     datetimePickerInit(datetimepickerOptions, $(this).attr('data-id'));
-                    modal.find(".save-changes").one('click', saveEditChanges.bind(null,$(this).attr('data-id')));
+                    modal.find(".save-changes").one('click', saveChanges.bind(null,$(this).attr('data-id')));
                 });
 
                 //Init modal window "Add event"
@@ -323,25 +353,11 @@
                     }
 
                     datetimePickerInit(datetimepickerOptions);
-                    modal.find(".save-changes").one('click', saveAddChanges.bind(null,$(this).attr('data-id')));
+                    modal.find(".save-changes").one('click', saveChanges.bind(null,$(this).attr('data-id')));
                 });
 
                 var calendar = $(".clndr");
                 calendar.height(calendar.height());
-
-            },//!ready
-            doneRendering: function(){ //doneRendering
-                $(".day-events")
-                    .height( $(".clndr-grid .days").height() - $(".clndr-grid .days-of-the-week").height() )
-                    .mCustomScrollbar({
-                        scrollButtons:{enable:true},
-                        theme:"minimal-dark"
-                    });
-                var calendar = $("#full-clndr");
-                if(calendar.find(".today").length > 0)
-                    calendar.find(".today").click();
-                else
-                    calendar.find(".day").eq(0).click();
 
             }//!doneRendering
         });
