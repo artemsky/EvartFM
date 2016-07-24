@@ -30,6 +30,35 @@
             this.target.name = key;
             return this;
         },
+        add: function(event){
+            var result = {
+                id: event.id,
+                title: event.title,
+                description: event.description,
+                date: event.date,
+                repeat: {
+                    event_id: event.id,
+                    everyDay: event.everyDay ? 1 : 0,
+                    everyWeek: event.everyWeek ? 1 : 0,
+                }
+            };
+            var dayKeys = Object.keys(event.days);
+            for(var i = dayKeys.length; i--;){
+                var key = dayKeys[i];
+                result.repeat[key] = event.days[key];
+            }
+            var isExists = false;
+            this.target.object.forEach(function(value){
+                if(value.id == result.id){
+                    isExists = true;
+                    value = result;
+                }
+            });
+            if(!isExists){
+                this.target.object.push(result);
+            }
+                
+        },
         whereDate: function(date){
             if(!date)
                 return null;
@@ -148,9 +177,7 @@
             });
         //Set checked days
         (function(){
-            
             var repeats = storage.get('events').whereId(id).repeat().result()[0];
-
             if(repeats.everyWeek){
                 $('#repeat-month').iCheck('check');
                 for(var i in repeats.days)
@@ -164,6 +191,35 @@
         //!checked days
 
         modal.modal('show');
+    };
+    //on Saving changes
+    var saveEditChanges = function(id){
+        var title = $.trim($("#Title").val()),
+            description = $.trim($("#Description").val()),
+            isDayRepeat = $("#repeat-day").prop("checked"),
+            dateTime = $("#datetimepicker").val();
+        if(!isDayRepeat){
+            var isWeekRepeat =  $("#repeat-month").prop("checked");
+            if(isWeekRepeat){
+                var daysRepeat = {};
+                $("[id*='repeat-on-']").each(function (i, obj) {
+                    daysRepeat[$(obj).attr('id').substring(10)] = $(obj).prop("checked") ? 1 : 0;
+                });
+            }
+        }
+        
+        storage.get('events').add({
+            id: id,
+            title: title,
+            date : dateTime,
+            description: description,
+            everyDay: isDayRepeat,
+            everyWeek: isWeekRepeat,
+            days: daysRepeat
+        })
+    },
+    saveAddChanges = function(id){
+
     };
 
     //Init calendar
@@ -247,6 +303,7 @@
                     modal.find("#Description").val($(this).find(".event-item-location").text());
 
                     datetimePickerInit(datetimepickerOptions, $(this).attr('data-id'));
+                    modal.find(".save-changes").one('click', saveEditChanges.bind(null,$(this).attr('data-id')));
                 });
 
                 //Init modal window "Add event"
@@ -266,6 +323,7 @@
                     }
 
                     datetimePickerInit(datetimepickerOptions);
+                    modal.find(".save-changes").one('click', saveAddChanges.bind(null,$(this).attr('data-id')));
                 });
 
                 var calendar = $(".clndr");
