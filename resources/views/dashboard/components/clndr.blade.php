@@ -44,7 +44,13 @@
                 <span class="event-title">EVENTS THIS MONTH</span>
             </div>
             <div class="event-items" style="display:none">
-                @{{% _.each(eventsThisMonth, function(event) { %}}
+                @{{%
+                    var lastID = null;
+                    _.each(eventsThisMonth, function(event) {
+                        if(lastID == event.id)
+                            return;
+                        lastID = event.id;
+                %}}
                 <div class="event-item" data-id="@{{%= event.id %}}" data-edit="Edit">
                 <div class="event-item-info">
                 <div class="event-item-name">@{{%= event.title %}}</div>

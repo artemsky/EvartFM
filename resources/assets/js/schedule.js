@@ -391,8 +391,8 @@
                     modal.find("#Title").val($(this).find(".event-item-name").text());
                     modal.find("#Description").val($(this).find(".event-item-location").text());
 
-                    datetimePickerInit(datetimepickerOptions, $(this).attr('data-date'));
-                    modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$(this).attr('data-date')));
+                    datetimePickerInit(datetimepickerOptions, $(this).attr('data-id'));
+                    modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$(this).attr('data-id')));
                 });
 
                 //Init modal window "Add event"
