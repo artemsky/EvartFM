@@ -32,13 +32,14 @@
             return this;
         },
         add: function(event){
+            var identity = event.id > 0 ? event.id : Date.now();
             var result = {
-                id: event.id,
+                id: identity,
                 title: event.title,
                 description: event.description,
                 date: event.date,
                 repeat: {
-                    event_id: event.id,
+                    event_id: identity,
                     everyDay: event.everyDay ? 1 : 0,
                     everyWeek: event.everyWeek ? 1 : 0,
                 }
