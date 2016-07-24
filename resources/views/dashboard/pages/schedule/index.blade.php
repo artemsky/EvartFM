@@ -41,7 +41,7 @@
                     <form>
                         <div class="form-group">
                             <label for="Title">Title</label>
-                            <input type="text" class="form-control" id="Title" placeholder="Title">
+                            <input type="text" class="form-control" id="Title" placeholder="Title" title="Title can't be empty">
                         </div>
                         <div class="form-group">
                             <label for="Description">Description</label>

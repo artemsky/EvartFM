@@ -210,7 +210,6 @@
             })();
         }
         //!checked days
-
         modal.modal('show');
     };
     //on Saving changes
@@ -219,6 +218,16 @@
             description = $.trim($("#Description").val()),
             isDayRepeat = $("#repeat-day").prop("checked"),
             dateTime = $("#datetimepicker").val();
+
+        if(!title){
+            $("#Title").tooltip({
+                trigger:'manual'
+            }).tooltip('show');
+            setTimeout(function(){
+                $("#Title").tooltip('destroy');
+            }, 2000);
+            return;
+        }
         if(!isDayRepeat){
             var isWeekRepeat =  $("#repeat-month").prop("checked");
             if(isWeekRepeat){
@@ -333,7 +342,7 @@
                     modal.find("#Description").val($(this).find(".event-item-location").text());
 
                     datetimePickerInit(datetimepickerOptions, $(this).attr('data-id'));
-                    modal.find(".save-changes").one('click', saveChanges.bind(null,$(this).attr('data-id')));
+                    modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$(this).attr('data-id')));
                 });
 
                 //Init modal window "Add event"
@@ -353,7 +362,7 @@
                     }
 
                     datetimePickerInit(datetimepickerOptions);
-                    modal.find(".save-changes").one('click', saveChanges.bind(null,$(this).attr('data-id')));
+                    modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$(this).attr('data-id')));
                 });
 
                 var calendar = $(".clndr");
