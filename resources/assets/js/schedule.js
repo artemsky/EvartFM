@@ -41,6 +41,17 @@
             this.target.object = [];
             return this;
         },
+        whereId: function(id){
+            if(!id)
+                return null;
+            for(var i in this.target.object)
+                if(this.target.object[i].id == id){
+                    this.target.object = [this.target.object[i]];
+                    return this;
+                }
+            this.target.object = [];
+            return this;
+        },
         repeat: function(){
             this.target.repeat = true;
             return this;
@@ -49,8 +60,21 @@
             if(!this.target.repeat)
                 return this.target.object;
             var result = [];
-            for(var i in this.target.object)
-                result.push(this.target.object[i].repeat);
+            for(var i in this.target.object){
+                var repeatKeys = Object.keys(this.target.object[i].repeat),
+                    days = {},
+                    repeat = {},
+                    key = '';
+                for(var r = repeatKeys.length; r--;){
+                    key = repeatKeys[r];
+                    if(r > 3)
+                        days[key] = (this.target.object[i].repeat[key]);
+                    else
+                        repeat[key] = this.target.object[i].repeat[key];
+                }
+                repeat.days = days;
+                result.push(repeat);
+            }
             return result;
         }
     };
@@ -60,7 +84,7 @@
     var onEventsSuccess = function(response){
             $("#fountainTextG").hide();
             initCalendar(response);
-            storage.set('events', events);
+            storage.set('events', response);
         },
         onEventsError = function (response){
             $("#fountainTextG").hide();
@@ -76,8 +100,71 @@
     
     //!events
 
-    //read events template
+    //init variables
     var dayEventsTemplate = $('#day-events').html();
+
+    var modal = $("#modal");
+    var datetimePickerInit = function(options, id){
+        //Date init
+        var dtPicker = $('#datetimepicker'),
+            checkOptions = {
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%',
+            };
+        $('#repeat-day').iCheck('uncheck')
+            .iCheck(checkOptions).on("ifUnchecked", function(){
+                dtPicker
+                    .datetimepicker('destroy')
+                    .datetimepicker();
+                $("#repeat-month").iCheck('enable');
+                repeatOn.iCheck('enable');
+            }).on("ifChecked", function(){
+                dtPicker
+                    .datetimepicker('destroy')
+                    .datetimepicker({
+                        datepicker:false,
+                        format:'H:i'
+                    });
+                $("#repeat-month").iCheck('disable');
+                repeatOn.iCheck('disable');
+            });
+        dtPicker
+            .datetimepicker('destroy')
+            .datetimepicker(options);
+
+        //Repeat init
+        var repeatOn = $("#repeat-on");
+        repeatOn.hide();
+        $('#repeat-month').iCheck('uncheck')
+            .iCheck(checkOptions)
+            .on("ifUnchecked", function(){
+                repeatOn.hide();
+            })
+            .on("ifChecked", function(){
+                $("[id*='repeat-on-']")
+                    .iCheck(checkOptions);
+                repeatOn.show();
+            });
+        //Set checked days
+        (function(){
+            
+            var repeats = storage.get('events').whereId(id).repeat().result()[0];
+
+            if(repeats.everyWeek){
+                $('#repeat-month').iCheck('check');
+                for(var i in repeats.days)
+                    $("#repeat-on-" + i).iCheck(repeats.days[i] ? 'check': 'uncheck')
+            }
+            if(repeats.everyDay){
+
+            }
+        })();
+
+        //!checked days
+
+        modal.modal('show');
+    };
 
     //Init calendar
     var initCalendar = function(events){
@@ -146,54 +233,10 @@
 
                 });
 
-                //Init modal window
-                var modal = $("#modal");
+
                 var datetimepickerOptions = {
                     step: 30
                 };
-                var datetimePickerInit = function(options){
-                    var dtPicker = $('#datetimepicker');
-                    $('#repeat-day').iCheck('uncheck')
-                        .iCheck({
-                            checkboxClass: 'icheckbox_square-blue',
-                            radioClass: 'iradio_square-blue',
-                            increaseArea: '20%', // optional
-                        }).on("ifUnchecked", function(){
-                        dtPicker
-                            .datetimepicker('destroy')
-                            .datetimepicker();
-                    }).on("ifChecked", function(){
-                        dtPicker
-                            .datetimepicker('destroy')
-                            .datetimepicker({
-                                datepicker:false,
-                                format:'H:i'
-                            });
-                    });
-                    dtPicker
-                        .datetimepicker('destroy')
-                        .datetimepicker(options);
-
-                    var repeatOn = $("#repeat-on");
-                    repeatOn.hide();
-                    $('#repeat-month').iCheck('uncheck')
-                        .iCheck({
-                            checkboxClass: 'icheckbox_square-blue',
-                            radioClass: 'iradio_square-blue',
-                            increaseArea: '20%', // optional
-                        }).on("ifUnchecked", function(){
-                            repeatOn.hide();
-                        }).on("ifChecked", function(){
-                            $("[id*='repeat-on-']").iCheck({
-                                checkboxClass: 'icheckbox_square-blue',
-                                radioClass: 'iradio_square-blue',
-                                increaseArea: '20%', // optional
-                            });
-                            repeatOn.show();
-                        });
-                        modal.modal('show');
-                };
-
                 //Init modal window "Edit event"
                 $(".event-listing").on('click', '.event-item', function(){
                     modal.find("form").get(0).reset();
@@ -203,7 +246,7 @@
                     modal.find("#Title").val($(this).find(".event-item-name").text());
                     modal.find("#Description").val($(this).find(".event-item-location").text());
 
-                    datetimePickerInit(datetimepickerOptions);
+                    datetimePickerInit(datetimepickerOptions, $(this).attr('data-id'));
                 });
 
                 //Init modal window "Add event"
