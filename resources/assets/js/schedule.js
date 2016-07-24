@@ -15,6 +15,7 @@
         target: {
             name: null,
             object: null,
+            renderd: null,
             repeat: null
         },
         'get': function(key){
@@ -93,6 +94,54 @@
             this.target.repeat = true;
             return this;
         },
+        getRendered: function(range){
+            var dateFormat = 'YYYY-MM-DD HH:ss';
+            this.target.renderd = [];
+            // var range = moment().add(month, 'month').diff(moment().add(-month, 'month'), 'days');
+            range /= 2;
+
+            this.target.object.forEach(function(value){
+                var flag = {
+                    everyDay: false,
+                    everyWeek: false
+                };
+                if(value.repeat.everyDay){
+                    flag.everyDay = true;
+                    for(var i = -range; i < range; i++){
+                        value.date = moment().add(i, 'days').format(dateFormat);
+                        this.target.renderd.push($.extend(true, {}, value));
+                    }
+                }
+                else if(value.repeat.everyWeek){
+                    flag.everyWeek = true;
+                    var weekRange = Math.floor(range / 7);
+                    var weekNow = moment().week();
+                    for(var i = -weekRange; i < weekRange; i++){
+                        var week = moment().week(weekNow + i);
+                        for(var day in value.repeat)
+                            switch(day){
+                                case "mon":
+                                case "tue":
+                                case "wed":
+                                case "thu":
+                                case "fri":
+                                case "sat":
+                                case "sun":
+                                    if(value.repeat[day]){
+                                        value.date = week.day(day).format(dateFormat);
+                                        this.target.renderd.push($.extend(true, {}, value));
+                                    }
+                            }
+
+                    }
+                }
+                if(!flag.everyDay && !flag.everyWeek){
+                    this.target.renderd.push($.extend(true, {}, value));
+                }
+                    
+            }.bind(this));
+            return this.target.renderd;
+        },
         result: function(){
             if(!this.target.repeat)
                 return this.target.object;
@@ -127,11 +176,11 @@
     };
 
     //events
-    var events = [];
     var onEventsSuccess = function(response){
             $("#fountainTextG").hide();
-            initCalendar(response);
             storage.set('events', response);
+            var events = storage.get('events').getRendered(60);
+            initCalendar(events);
         },
         onEventsError = function (response){
             $("#fountainTextG").hide();
@@ -249,7 +298,7 @@
             days: daysRepeat
         }).save();
         
-        clndr.setEvents(storage.get('events').result());
+        clndr.setEvents(storage.get('events').getRendered(60));
         modal.modal('hide');
     };
 
