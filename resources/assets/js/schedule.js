@@ -384,16 +384,45 @@
                 };
                 //Init modal window "Edit event"
                 $(".event-listing").on('click', '.event-item', function(){
+                    $(this).find(".event-item-hover").css('transform', 'translateX(0px)');
+                }).on('click', '.event-item .event-item-hover', function(e){
+                    e.stopPropagation();
+                    $(this).css('transform', 'translateX(202px)');
+                }).on('click', '.event-item span:first-child', function(e){
+                    e.stopPropagation();
+                    var $this = $(this).parent().parent();
                     modal.find("form").get(0).reset();
                     modal.find(".modal-title").text("Edit event");
 
-                    datetimepickerOptions.value = $(this).find(".event-item-time").attr("data-datetime");
-                    modal.find("#Title").val($(this).find(".event-item-name").text());
-                    modal.find("#Description").val($(this).find(".event-item-location").text());
+                    datetimepickerOptions.value = $this.find(".event-item-time").attr("data-datetime");
+                    modal.find("#Title").val($this.find(".event-item-name").text());
+                    modal.find("#Description").val($this.find(".event-item-location").text());
 
-                    datetimePickerInit(datetimepickerOptions, $(this).attr('data-id'));
-                    modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$(this).attr('data-id')));
+                    datetimePickerInit(datetimepickerOptions, $this.attr('data-id'));
+                    modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$this.attr('data-id')));
                 });
+                $(".event-listing").on('click', '.event-item .event-item-hover span:last-child', function(e){
+                    e.stopPropagation();
+                    $(this).toggleClass('text-info');
+                    var $this = $(this).parent().parent();
+                    var id = $this.attr('data-id');
+                    var match = $('.days [data-id*="'+ id +'"]');
+                    if(!$(this).hasClass('text-info')){
+                        match.css("background-color", "#eee");
+                        return;
+                    }
+                    var color = (function() {
+                        var letters = 'BCDEF'.split('');
+                        var color = '#';
+                        for (var i = 0; i < 6; i++ ) {
+                            color += letters[Math.floor(Math.random() * letters.length)];
+                        }
+                        return color;
+                    })();
+                    match.css("background-color", color);
+                });
+
+
 
                 //Init modal window "Add event"
                 eventListingTitle.on("click", ".glyphicon-plus", function(){

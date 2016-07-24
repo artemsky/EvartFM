@@ -57,6 +57,10 @@
                 <div class="event-item-location">@{{%= event.description %}}</div>
                 </div>
                 <div class="event-item-time" data-datetime="@{{%= moment(event.date).format("YYYY/MM/DD HH:mm") %}}">@{{%= moment(event.date).format("ddd DD") %}}</div>
+                <div class="event-item-hover">
+                    <span>Edit</span>
+                    <span>Highlight</span>
+                </div>
                 </div>
                 @{{% }); %}}
             </div>
@@ -73,6 +77,10 @@
             <div class="event-item-location">@{{%= event.description %}}</div>
         </div>
         <div class="event-item-time" data-datetime="@{{%= moment(event.date).format("YYYY/MM/DD HH:mm") %}}">@{{%= moment(event.date).format("HH:mm") %}}</div>
+        <div class="event-item-hover">
+            <span>Edit</span>
+            <span>Highlight</span>
+        </div>
     </div>
     @{{% }); %}}
 </script>
