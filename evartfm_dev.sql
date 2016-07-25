@@ -10,10 +10,57 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-07-17 20:26:40
+Date: 2016-07-25 07:28:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `events`
+-- ----------------------------
+DROP TABLE IF EXISTS `events`;
+CREATE TABLE `events` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `date` datetime NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of events
+-- ----------------------------
+INSERT INTO `events` VALUES ('2', 'tit', 'test', '2016-07-22 16:28:12', '2016-07-21 16:28:17', '2016-07-21 16:28:20');
+INSERT INTO `events` VALUES ('3', 'eee', 'qweqwe', '2016-07-24 08:34:00', '2016-07-22 08:34:04', '2016-07-22 08:34:08');
+
+-- ----------------------------
+-- Table structure for `events_repeat`
+-- ----------------------------
+DROP TABLE IF EXISTS `events_repeat`;
+CREATE TABLE `events_repeat` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `event_id` int(10) unsigned NOT NULL,
+  `everyDay` tinyint(1) NOT NULL DEFAULT '0',
+  `everyWeek` tinyint(1) NOT NULL DEFAULT '0',
+  `sun` tinyint(1) NOT NULL DEFAULT '0',
+  `mon` tinyint(1) NOT NULL DEFAULT '0',
+  `tue` tinyint(1) NOT NULL DEFAULT '0',
+  `wed` tinyint(1) NOT NULL DEFAULT '0',
+  `thu` tinyint(1) NOT NULL DEFAULT '0',
+  `fri` tinyint(1) NOT NULL DEFAULT '0',
+  `sat` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `events_repeat_event_id_foreign` (`event_id`),
+  CONSTRAINT `events_repeat_event_id_foreign` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of events_repeat
+-- ----------------------------
+INSERT INTO `events_repeat` VALUES ('2', '2', '1', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `events_repeat` VALUES ('3', '3', '0', '1', '0', '1', '1', '0', '1', '0', '0');
 
 -- ----------------------------
 -- Table structure for `migrations`
@@ -29,6 +76,9 @@ CREATE TABLE `migrations` (
 -- ----------------------------
 INSERT INTO `migrations` VALUES ('2016_07_08_212019_create_users_table', '1');
 INSERT INTO `migrations` VALUES ('2016_07_12_231104_create_news_table', '2');
+INSERT INTO `migrations` VALUES ('2016_07_21_015430_update_users_table', '4');
+INSERT INTO `migrations` VALUES ('2016_07_19_032239_create_events_table', '5');
+INSERT INTO `migrations` VALUES ('2016_07_21_014607_create_events_repeaters_table', '5');
 
 -- ----------------------------
 -- Table structure for `news`
@@ -152,11 +202,12 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_login_unique` (`login`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'EvartFM', '$2y$10$gR72Wgh1NiM.Q0oQ1VSKd.Wqc530tjwVcOASTMr5wwo8Q7UctifaW', 'super', null, null, '2016-07-09 15:49:56', '2016-07-13 16:16:31', 'IhAYBc1gnP5AJTuwUpZYAvJBTTPDOob7HWhEe7A8swNi0pWocxdzDOX1EUHz');
+INSERT INTO `users` VALUES ('1', 'EvartFM', '$2y$10$gR72Wgh1NiM.Q0oQ1VSKd.Wqc530tjwVcOASTMr5wwo8Q7UctifaW', 'super', null, null, '2016-07-09 15:49:56', '2016-07-19 13:59:22', 'pzcMQ7VReh23HZUUm8ft9WX0r6SCevmCa3iS7dTtAQzFAG80OYAhGlIuv7cI');
 INSERT INTO `users` VALUES ('6', 'someuser', '$2y$10$rS5UMt/hqMtp8PjqSx4XZuM26UANgVpXbL05i.gBDFvQ3xfvLIiWq', 'writer', 'Alex', 'qwe@qw.com', '2016-07-12 21:12:45', '2016-07-12 21:12:45', null);
