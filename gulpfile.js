@@ -198,7 +198,7 @@ gulp.task('minreplace', function () {
 gulp.task('watch', () =>{
     gulp.watch(`${dir.src}/scss/**/*.*`, gulp.series('styles'));
     gulp.watch(`${dir.src}/dependencies/**/*.*`, gulp.series('copydeps'));
-    gulp.watch(`${dir.src}/${dir.img}/**/*.*`, gulp.series('images'));
+    // gulp.watch(`${dir.src}/${dir.img}/**/*.*`, gulp.series('images'));
     gulp.watch(`${dir.src}/${dir.js}/**/*.*`, gulp.series('javascript'));
     gulp.watch(`${dir.src}/${dir.fonts}/**/*.*`, gulp.series('fonts'));
     gulp.watch(`${dir.src}/layouts/**/*.*`, gulp.series('layouts'));
@@ -214,5 +214,5 @@ gulp.task('setDev', (done) =>{
     return done();
 });
 
-gulp.task('default', gulp.series("setDev", "cls", 'minreplace', gulp.parallel('bower', 'copydeps', 'images', 'styles', 'javascript', 'fonts', 'eslint')));
-gulp.task('prod', gulp.series("setProd", "cls", 'minreplace', gulp.parallel('bower', 'copydeps', 'images', 'styles', 'javascript', 'fonts', 'eslint')));
+gulp.task('default', gulp.series("setDev", "cls", 'minreplace', gulp.parallel('bower', 'copydeps', 'styles', 'javascript', 'fonts', 'eslint')));
+gulp.task('prod', gulp.series("setProd", "cls", 'minreplace', gulp.parallel('bower', 'copydeps', 'styles', 'javascript', 'fonts', 'eslint')));

@@ -382,13 +382,18 @@
                 var datetimepickerOptions = {
                     step: 30
                 };
-                //Init modal window "Edit event"
-                $(".event-listing").on('click', '.event-item', function(){
-                    $(this).find(".event-item-hover").css('transform', 'translateX(0px)');
-                }).on('click', '.event-item .event-item-hover', function(e){
+                var isTipOpen = false;
+                $(".event-listing").on('click', '.event-item', function(e){
                     e.stopPropagation();
-                    $(this).css('transform', 'translateX(202px)');
-                }).on('click', '.event-item span:first-child', function(e){
+                    var hover = $(this).find(".event-item-hover");
+                    if(isTipOpen)
+                        hover.css('transform', 'translateX(202gitpx)');
+                    else
+                        hover.css('transform', 'translateX(0px)');
+                    isTipOpen = !isTipOpen;
+                })
+                //Init modal window "Edit event"
+                    .on('click', '.event-item span:first-child', function(e){
                     e.stopPropagation();
                     var $this = $(this).parent().parent();
                     modal.find("form").get(0).reset();
