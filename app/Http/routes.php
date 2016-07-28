@@ -89,6 +89,10 @@ Route::group(['middleware' => 'web'], function () {
                 'as' => 'schedule.events.all',
                 'uses' => 'EventsController@getEvents',
             ]);
+            Route::post('/update', [
+                'as' => 'schedule.events.update',
+                'uses' => 'EventsController@postUpdate',
+            ]);
             Route::get('/{date}', [
                 'as' => 'schedule.events.date',
                 'uses' => 'EventsController@getEvent',

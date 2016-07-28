@@ -67,6 +67,7 @@
         },
         save: function(){
             this.set('events', this.target.object);
+            this.ajaxUpdate();
         },
         whereDate: function(date){
             if(!date)
@@ -172,6 +173,29 @@
                 result.push(repeat);
             }
             return result;
+        },
+        ajaxUpdate: function(){
+            var ajaxOptions = {
+                type: "POST",
+                cache: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response){
+                    console.log('success', response);
+                },
+                error: function(response){
+                    console.log('error', response);
+
+                    $("body").html(response.responseText)
+                },
+                data: {
+                    events: this.get('events').target.object
+                }
+            };
+
+            $.ajax('schedule/events/update', ajaxOptions);
+
         }
     };
 
@@ -193,7 +217,6 @@
         error: onEventsError
     };
     $.ajax('schedule/events', requestOptions);
-    
     //!events
 
     //init variables
@@ -387,7 +410,7 @@
                     e.stopPropagation();
                     var hover = $(this).find(".event-item-hover");
                     if(isTipOpen)
-                        hover.css('transform', 'translateX(202gitpx)');
+                        hover.css('transform', 'translateX('+ hover.width() +'px)');
                     else
                         hover.css('transform', 'translateX(0px)');
                     isTipOpen = !isTipOpen;
@@ -451,6 +474,9 @@
 
                 var calendar = $(".clndr");
                 calendar.height(calendar.height());
+
+
+                //Ajax post request
 
             }//!doneRendering
         });
