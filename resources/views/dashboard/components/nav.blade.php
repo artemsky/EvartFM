@@ -15,10 +15,18 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 {{--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>--}}
-                <li><a href="{{route('user')}}">All Users</a></li>
-                <li><a href="{{route('adduser')}}">Add Users</a></li>
-                <li><a href="{{route('allnews')}}">All News</a></li>
-                <li><a href="{{route('schedule.index')}}">Schedule</a></li>
+                @php($userRole = Auth::user()->role)
+                @if(str_contains('super, admin', $userRole))
+                    <li><a href="{{route('user')}}">All Users</a></li>
+                    <li><a href="{{route('adduser')}}">Add Users</a></li>
+                @endif
+                @if(str_contains('super, admin, writer', $userRole))
+                    <li><a href="{{route('allnews')}}">All News</a></li>
+                @endif
+                @if(str_contains('super, admin, writer, dj', $userRole))
+                    <li><a href="{{route('schedule.index')}}">Schedule</a></li>
+                @endif
+
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{route('logout')}}">Logout</a></li>
