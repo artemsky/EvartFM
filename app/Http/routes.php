@@ -93,6 +93,11 @@ Route::group(['middleware' => 'web'], function () {
                 'as' => 'schedule.events.update',
                 'uses' => 'EventsController@postUpdate',
             ]);
+            Route::get('/delete/{id}', [
+                'as' => 'schedule.events.delete',
+                'uses' => 'EventsController@getDelete',
+            ])->where(['id' => '[0-9]+']);
+
             Route::get('/{date}', [
                 'as' => 'schedule.events.date',
                 'uses' => 'EventsController@getEvent',

@@ -310,11 +310,11 @@
                 });
             }
         }
-        
+
         storage.get('events').add({
             id: id || -1,
             title: title,
-            date : dateTime,
+            date : isDayRepeat ? moment(dateTime, "HH:mm").format("YYYY-MM-DD HH:mm") : dateTime,
             description: description,
             everyDay: isDayRepeat,
             everyWeek: isWeekRepeat,

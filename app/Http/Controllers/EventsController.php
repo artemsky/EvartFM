@@ -47,11 +47,14 @@ class EventsController extends Controller
             $e->repeat->save();
             $e->save();
 
-
-
         }
 
         return response()->json($events);
+    }
+
+    public function getDelete($id){
+        $isDeleted = Event::destroy($id);
+        return response($isDeleted);
     }
 
     public function getEvent($date){
