@@ -11,14 +11,16 @@ class RoleMiddleware
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string  $role
+     * @param  array  $roles
      * @return mixed
      */
-    public function handle($request, Closure $next, $role){
-        if (! $request->user()->hasRole($role)) {
-            return redirect('/dashboard');
+    public function handle($request, Closure $next, ...$roles){
+
+        foreach ($roles as $role) {
+            if($request->user()->hasRole($role))
+                return $next($request);
         }
 
-        return $next($request);
+        return redirect('/dashboard');
     }
 }
