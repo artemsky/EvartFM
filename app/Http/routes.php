@@ -13,116 +13,123 @@
 
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('/dashboard', [
-        'as' => 'home',
-        'uses' => 'UserController@getDashboardPage',
-        'middleware' => 'auth'
-    ]);
 
-
-
-    Route::group(['prefix' => '/dashboard/user', 'middleware' => ['auth', 'role:super']], function () {
-
-        Route::get('/', [
-            'as' => 'user',
-            'uses' => 'UserController@getAllUsers',
-        ]);
-
-        Route::post('/edit', [
-            'as' => 'useredit',
-            'uses' => 'UserController@postEditUser',
-        ]);
-
-        Route::post('/update', [
-            'as' => 'userupdate',
-            'uses' => 'UserController@postUpdateUser',
-        ]);
-
-        Route::post('/delete', [
-            'as' => 'userdelete',
-            'uses' => 'UserController@postDeleteUser',
-        ]);
-
-        Route::get('/add', [
-            'as' => 'adduser',
-            'uses' => 'UserController@getAddUsers'
-        ]);
-
-        Route::post('/register', [
-            'as' => 'register',
-            'uses' => 'UserController@postRegister'
-        ]);
-    });
-
-
-    Route::group(['prefix' => '/dashboard/news', 'middleware' => ['auth', 'role:super,writer']], function () {
-        Route::get('/{sort?}/{order?}', [
-            'as' => 'allnews',
-            'uses' => 'NewsController@getAllNews',
-        ])->where(['sort' => 'asc|desc', 'order' => 'id|created_at|updated_at|title_long|title_short']);
-
-        Route::post('/update', [
-            'as' => 'newsUpdate',
-            'uses' => 'NewsController@postUpdateNews'
-        ]);
-
-        Route::post('/add', [
-            'as' => 'newsAdd',
-            'uses' => 'NewsController@postAddNews'
-        ]);
-
-
-//        Route::get('/rename', [
-//            'uses' => 'NewsController@rename'
-//        ]);
-
-    });
-
-    Route::group(['prefix' => '/dashboard/schedule', 'middleware' => ['auth', 'role:super,writer,dj']], function () {
-        Route::get('/', [
-            'as' => 'schedule.index',
-            'uses' => 'EventsController@getIndex',
-        ]);
-        Route::group(['prefix' => '/events'], function () {
-            Route::get('/', [
-                'as' => 'schedule.events.all',
-                'uses' => 'EventsController@getEvents',
-            ]);
-            Route::get('/{date}', [
-                'as' => 'schedule.events.date',
-                'uses' => 'EventsController@getEvent',
-            ])->where(['date' => '\d{4}-\d{2}-\d{2}']);
-        });
-
-    });
-
-    Route::group(['prefix' => '/dashboard/content', 'middleware' => ['auth', 'role:super,writer,dj']], function () {
-        Route::get('/', [
-            'as' => 'content.index',
-            'uses' => 'ContentManagement@getIndex',
-        ]);
-
-    });
-    
     Route::get('/login', [
         'as' => 'login',
         'uses' => 'UserController@getLoginPage',
         'middleware' => 'guest'
     ]);
 
-
     Route::get('/logout', [
         'as' => 'logout',
         'uses' => 'UserController@getLogout'
     ]);
-    
-
 
     Route::post('/login', [
         'as' => 'signIn',
         'uses' => 'UserController@postSignIn',
         'middleware' => 'throttle:3,1'
     ]);
+
+
+    Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
+        Route::get('/', [
+            'as' => 'home',
+            'uses' => 'UserController@getDashboardPage'
+        ]);
+
+        Route::group(['prefix' => 'user', 'middleware' => ['auth', 'role:super']], function () {
+
+            Route::get('/', [
+                'as' => 'user',
+                'uses' => 'UserController@getAllUsers',
+            ]);
+
+            Route::post('/edit', [
+                'as' => 'useredit',
+                'uses' => 'UserController@postEditUser',
+            ]);
+
+            Route::post('/update', [
+                'as' => 'userupdate',
+                'uses' => 'UserController@postUpdateUser',
+            ]);
+
+            Route::post('/delete', [
+                'as' => 'userdelete',
+                'uses' => 'UserController@postDeleteUser',
+            ]);
+
+            Route::get('/add', [
+                'as' => 'adduser',
+                'uses' => 'UserController@getAddUsers'
+            ]);
+
+            Route::post('/register', [
+                'as' => 'register',
+                'uses' => 'UserController@postRegister'
+            ]);
+        });
+
+        Route::group(['prefix' => 'news', 'middleware' => ['auth', 'role:super,writer']], function () {
+            Route::get('/{sort?}/{order?}', [
+                'as' => 'allnews',
+                'uses' => 'NewsController@getAllNews',
+            ])->where(['sort' => 'asc|desc', 'order' => 'id|created_at|updated_at|title_long|title_short']);
+
+            Route::post('/update', [
+                'as' => 'newsUpdate',
+                'uses' => 'NewsController@postUpdateNews'
+            ]);
+
+            Route::post('/add', [
+                'as' => 'newsAdd',
+                'uses' => 'NewsController@postAddNews'
+            ]);
+
+
+//        Route::get('/rename', [
+//            'uses' => 'NewsController@rename'
+//        ]);
+
+        });
+
+        Route::group(['prefix' => 'schedule', 'middleware' => ['auth', 'role:super,writer']], function () {
+
+            Route::get('/', [
+                'as' => 'schedule.index',
+                'uses' => 'EventsController@getIndex',
+            ]);
+            Route::group(['prefix' => '/events'], function () {
+                Route::get('/', [
+                    'as' => 'schedule.events.all',
+                    'uses' => 'EventsController@getEvents',
+                ]);
+                Route::post('/update', [
+                    'as' => 'schedule.events.update',
+                    'uses' => 'EventsController@postUpdate',
+                ]);
+                Route::get('/delete/{id}', [
+                    'as' => 'schedule.events.delete',
+                    'uses' => 'EventsController@getDelete',
+                ])->where(['id' => '[0-9]+']);
+
+                Route::get('/{date}', [
+                    'as' => 'schedule.events.date',
+                    'uses' => 'EventsController@getEvent',
+                ])->where(['date' => '\d{4}-\d{2}-\d{2}']);
+            });
+
+        });
+    });
+
+    Route::group(['prefix' => '/dashboard/content', 'middleware' => ['auth', 'role:super,writer,dj']], function () {
+        Route::get('/', [
+            'as' => 'content.index',
+            'uses' => 'ContentController@getIndex',
+        ]);
+    });
+
 
 
 });

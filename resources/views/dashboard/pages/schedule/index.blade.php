@@ -1,6 +1,7 @@
 @extends('dashboard.main')
 
 @section('styles')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ URL::to('css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ URL::to('vendor/icheck/skins/square/blue.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css" onerror="onErrorLoader(this, '{{ URL::to('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}')">
@@ -79,6 +80,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-danger pull-left delete-user">Delete</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary save-changes">Save</button>
                 </div>

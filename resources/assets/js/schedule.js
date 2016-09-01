@@ -67,6 +67,7 @@
         },
         save: function(){
             this.set('events', this.target.object);
+            this.ajaxUpdate();
         },
         whereDate: function(date){
             if(!date)
@@ -172,6 +173,29 @@
                 result.push(repeat);
             }
             return result;
+        },
+        ajaxUpdate: function(){
+            var ajaxOptions = {
+                type: "POST",
+                cache: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response){
+                    console.log('success', response);
+                },
+                error: function(response){
+                    console.log('error', response);
+
+                    $("body").html(response.responseText)
+                },
+                data: {
+                    events: this.get('events').target.object
+                }
+            };
+
+            $.ajax('schedule/events/update', ajaxOptions);
+
         }
     };
 
@@ -193,7 +217,6 @@
         error: onEventsError
     };
     $.ajax('schedule/events', requestOptions);
-    
     //!events
 
     //init variables
@@ -287,11 +310,11 @@
                 });
             }
         }
-        
+
         storage.get('events').add({
             id: id || -1,
             title: title,
-            date : dateTime,
+            date : isDayRepeat ? moment(dateTime, "HH:mm").format("YYYY-MM-DD HH:mm") : dateTime,
             description: description,
             everyDay: isDayRepeat,
             everyWeek: isWeekRepeat,
@@ -382,13 +405,18 @@
                 var datetimepickerOptions = {
                     step: 30
                 };
-                //Init modal window "Edit event"
-                $(".event-listing").on('click', '.event-item', function(){
-                    $(this).find(".event-item-hover").css('transform', 'translateX(0px)');
-                }).on('click', '.event-item .event-item-hover', function(e){
+                var isTipOpen = false;
+                $(".event-listing").on('click', '.event-item', function(e){
                     e.stopPropagation();
-                    $(this).css('transform', 'translateX(202px)');
-                }).on('click', '.event-item span:first-child', function(e){
+                    var hover = $(this).find(".event-item-hover");
+                    if(isTipOpen)
+                        hover.css('transform', 'translateX('+ hover.width() +'px)');
+                    else
+                        hover.css('transform', 'translateX(0px)');
+                    isTipOpen = !isTipOpen;
+                })
+                //Init modal window "Edit event"
+                    .on('click', '.event-item span:first-child', function(e){
                     e.stopPropagation();
                     var $this = $(this).parent().parent();
                     modal.find("form").get(0).reset();
@@ -446,6 +474,9 @@
 
                 var calendar = $(".clndr");
                 calendar.height(calendar.height());
+
+
+                //Ajax post request
 
             }//!doneRendering
         });

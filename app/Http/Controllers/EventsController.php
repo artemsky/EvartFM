@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\Http\Controllers\Traits\Validate;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
+
 
 class EventsController extends Controller
 {
@@ -23,6 +25,36 @@ class EventsController extends Controller
             $event->repeat;
         }
         return response()->json($events, 200);
+    }
+
+    public function postUpdate(Request $request){
+
+        $this->isValid($request, [
+            'data' => 'json'
+        ]);
+
+        $events = $request['events'];
+
+        foreach ($events as $event) {
+            $e = Event::find($event['id']);
+            $e->date = $event['date'];
+            $e->title = $event['title'];
+            $e->description = $event['description'];
+            unset($event['repeat']['event_id']);
+            foreach ($event['repeat'] as $key=>$repeat) {
+                $e->repeat->$key = $repeat;
+            }
+            $e->repeat->save();
+            $e->save();
+
+        }
+
+        return response()->json($events);
+    }
+
+    public function getDelete($id){
+        $isDeleted = Event::destroy($id);
+        return response($isDeleted);
     }
 
     public function getEvent($date){
