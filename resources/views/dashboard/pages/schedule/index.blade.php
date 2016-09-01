@@ -86,5 +86,4 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    </div>
 @endsection

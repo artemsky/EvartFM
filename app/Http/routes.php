@@ -12,7 +12,6 @@
 */
 
 
-
 Route::group(['middleware' => 'web'], function () {
     Route::get('/dashboard', [
         'as' => 'home',
@@ -79,7 +78,7 @@ Route::group(['middleware' => 'web'], function () {
 
     });
 
-    Route::group(['prefix' => '/dashboard/schedule', 'middleware' => ['auth', 'role:super,writer']], function () {
+    Route::group(['prefix' => '/dashboard/schedule', 'middleware' => ['auth', 'role:super,writer,dj']], function () {
         Route::get('/', [
             'as' => 'schedule.index',
             'uses' => 'EventsController@getIndex',
@@ -96,12 +95,21 @@ Route::group(['middleware' => 'web'], function () {
         });
 
     });
+
+    Route::group(['prefix' => '/dashboard/content', 'middleware' => ['auth', 'role:super,writer,dj']], function () {
+        Route::get('/', [
+            'as' => 'content.index',
+            'uses' => 'ContentManagement@getIndex',
+        ]);
+
+    });
     
     Route::get('/login', [
         'as' => 'login',
         'uses' => 'UserController@getLoginPage',
         'middleware' => 'guest'
     ]);
+
 
     Route::get('/logout', [
         'as' => 'logout',
