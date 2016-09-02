@@ -128,6 +128,11 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'content.index',
             'uses' => 'ContentController@getIndex',
         ]);
+
+        Route::get('/component/{component}', [
+            'as' => 'content.component',
+            'uses' => 'ContentController@getComponent',
+        ]);
     });
 
 
