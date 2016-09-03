@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\EventsRepeater;
 use App\Http\Controllers\Traits\Validate;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -37,6 +38,10 @@ class EventsController extends Controller
 
         foreach ($events as $event) {
             $e = Event::find($event['id']);
+            if(!$e) {
+                $this->createNewItem($event);
+                continue;
+            }
             $e->date = $event['date'];
             $e->title = $event['title'];
             $e->description = $event['description'];
@@ -50,6 +55,21 @@ class EventsController extends Controller
         }
 
         return response()->json($events);
+    }
+
+    private function createNewItem($event){
+        $e = new Event();
+        $e->date = $event['date'];
+        $e->title = $event['title'];
+        $e->description = $event['description'];
+        $e->save();
+        $e->repeat = new EventsRepeater();
+        $event['repeat']['event_id'] = $e->id;
+        foreach ($event['repeat'] as $key=>$repeat) {
+            $e->repeat->$key = $repeat;
+        }
+        $e->repeat->save();
+        return response()->json(["asdasd"=> $e]);
     }
 
     public function getDelete($id){
