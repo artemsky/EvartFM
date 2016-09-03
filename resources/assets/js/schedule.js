@@ -65,6 +65,13 @@
 
             return this;
         },
+        del: function(id){
+            for(var i in this.target.object){
+                if(this.target.object[i].id == id)
+                    delete this.target.object[i];
+            }
+            return this;
+        },
         save: function(){
             this.set('events', this.target.object);
             this.ajaxUpdate();
@@ -428,6 +435,13 @@
 
                     datetimePickerInit(datetimepickerOptions, $this.attr('data-id'));
                     modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$this.attr('data-id')));
+                    modal.find(".delete-event").off("click").on('click', function(){
+                        $.get("schedule/events/delete/" + $this.attr('data-id')).done(function(){
+                            clndr.setEvents(storage.get("events").del(parseInt($this.attr('data-id'))).getRendered(60));
+                            modal.modal("hide");
+                        });
+                    });
+                    modal.find(".delete-event").show();
                 });
                 $(".event-listing").on('click', '.event-item .event-item-hover span:last-child', function(e){
                     e.stopPropagation();
@@ -469,6 +483,7 @@
                     }
 
                     datetimePickerInit(datetimepickerOptions);
+                    modal.find(".delete-event").hide();
                     modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$(this).attr('data-date')));
                 });
 
