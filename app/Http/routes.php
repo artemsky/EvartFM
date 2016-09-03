@@ -129,9 +129,13 @@ Route::group(['middleware' => 'web'], function () {
             'uses' => 'ContentController@getIndex',
         ]);
 
-        Route::get('/component/{component}', [
-            'as' => 'content.component',
+        Route::get('/component/get/{component}', [
+            'as' => 'content.component.get',
             'uses' => 'ContentController@getComponent',
+        ]);
+        Route::post('/component/update/{component}', [
+            'as' => 'content.component.update',
+            'uses' => 'ContentController@postComponent',
         ]);
     });
 

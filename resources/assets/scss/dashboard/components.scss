@@ -10,11 +10,12 @@
     flex-flow: row wrap;
     .more{
       min-height: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     button{
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
+
     }
   }
 }

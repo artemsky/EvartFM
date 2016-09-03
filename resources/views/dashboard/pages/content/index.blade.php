@@ -1,6 +1,7 @@
 @extends('dashboard.main')
 
 @section('styles')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ URL::to('css/dashboard.css') }}">
 @endsection
 
