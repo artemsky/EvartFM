@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Components\Slider;
+use App\Components\Blockquote;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests;
@@ -55,6 +56,41 @@ class ContentController extends Controller
                 $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $item["image"]));
                 if(!$slide->id) $slide->save();
                 $filepath = 'public/slider/'. $slide->id. '.' . $extensions[$type];
+                Storage::put($filepath, $data);
+
+                $slide->image = 'app/' . $filepath;
+            }
+            $slide->save();
+        }
+        return response()->json(['msg' => 'success'], 200);
+    }
+
+    private function getComponentBlockquote($dataOnly = false){
+        $data = Blockquote::all()->sortBy('order');
+        if($dataOnly)
+            return $data ?? null;
+        return view('public.components.Blockquote')->with(['Blockquote' => $data]);
+    }
+
+    private function postComponentBlockquote(Request $request){
+        foreach ($request['data'] as $item) {
+            $slide = $slide = Blockquote::find($item["id"]) ?? new Blockquote();
+            $slide->order = $item["order"];
+            $slide->name = $item["name"];
+            $slide->text = $item["text"];
+            $slide->description = $item["description"];
+            $slide->stars = $item["stars"];
+            if(asset($slide->image) != $item["image"]){
+                $pos  = strpos($item["image"], ';');
+                $type = explode(':', substr($item["image"], 0, $pos))[1];
+                $extensions = array(
+                    'image/jpeg' => 'jpg',
+                    'image/png' => 'png'
+                );
+
+                $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $item["image"]));
+                if(!$slide->id) $slide->save();
+                $filepath = 'public/blockquote/'. $slide->id. '.' . $extensions[$type];
                 Storage::put($filepath, $data);
 
                 $slide->image = 'app/' . $filepath;

@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row sortable">
+    <div class="row sortable sortableSlider">
         @foreach($Slider as $Slide)
             <div class="col-sm-3 item" data-order="{{$Slide->order}}" data-id="{{$Slide->id}}">
                 <img src="{{asset($Slide->image)}}" alt="" class="img-responsive img-thumbnail">

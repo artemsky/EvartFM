@@ -18,4 +18,42 @@
 
     }
   }
+  .sortableBlockquote{
+    //.panel{
+    //  position: relative;
+    //  button{
+    //    position: absolute;
+    //    top: 2px;
+    //    right: 10px;
+    //  }
+    //}
+    .panel-heading{
+      padding: 0;
+      a{
+        h4{
+          margin: 0;
+          padding: 10px;
+        }
+      }
+    }
+
+    .panel-body{
+      img{
+        cursor: pointer;
+      }
+      .stars{
+        .glyphicon{
+          color: rgb(141, 141, 141);
+        }
+        .active{
+          color: #000;
+        }
+      }
+      textarea{
+        display: block;
+        width: 100%;
+        resize: vertical;
+      }
+    }
+  }
 }
