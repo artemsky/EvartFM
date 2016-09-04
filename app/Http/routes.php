@@ -137,6 +137,10 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'content.component.update',
             'uses' => 'ContentController@postComponent',
         ]);
+        Route::post('/component/delete/{component}', [
+            'as' => 'content.component.update',
+            'uses' => 'ContentController@postDeleteComponent',
+        ]);
     });
 
 

@@ -2,6 +2,7 @@ $(function() {
         "use strict";
         //Slider
         (function(){
+                var forDelete = [];
                 var sliderItems = $(".sortableSlider");
                 var removeIntent = false;
                 sliderItems.sortable({
@@ -21,6 +22,9 @@ $(function() {
                         beforeStop: function (event, ui) {
                                 if(removeIntent == true){
                                         ui.item.remove();
+                                        var id = ui.item.attr("data-id");
+                                        if(id > 1 && id < 99999)
+                                                forDelete.push(ui.item.attr("data-id"));
                                 }
                         }
                 });
@@ -70,6 +74,11 @@ $(function() {
                         });
                         requestOptions.data = {data:data};
                         $.ajax(URLUpdateItems, requestOptions);
+                        if(forDelete.length > 0){
+                                requestOptions.data = {id: forDelete};
+                                $.ajax("content/component/delete/Slider", requestOptions);
+                                forDelete = [];
+                        }
                 });
                 var currentItem = null;
                 var isNew = false;
@@ -97,6 +106,9 @@ $(function() {
 
                 modal.find(".delete-item").on("click", function(){
                         currentItem.remove();
+                        var id = currentItem.attr("data-id");
+                        if(id > 1 && id < 99999)
+                                forDelete.push(ui.item.attr("data-id"));
                         modal.modal('hide');
                 });
 
@@ -114,6 +126,7 @@ $(function() {
         })();
         //Blockquote
         (function(){
+                var forDelete = [];
                 var sliderItems = $(".sortableBlockquote");
                 var removeIntent = false;
                 sliderItems.sortable({
@@ -134,6 +147,9 @@ $(function() {
                         beforeStop: function (event, ui) {
                                 if(removeIntent == true){
                                         ui.item.remove();
+                                        var id = ui.item.attr("data-id");
+                                        if(id > 1 && id < 99999)
+                                                forDelete.push(ui.item.attr("data-id"));
                                 }
                         }
                 });
@@ -172,25 +188,30 @@ $(function() {
                         $(e.delegateTarget).parent().prev().find(".name").text($(this).text());
                 });
                 sliderItems.find(".panel-body button").on("click", function(){
-                        $(this).parent().parent().parent().remove();
+                        var item = $(this).parent().parent().parent();
+                        var id = item.attr("data-id");
+                        item.remove();
+                        if(id > 1 && id < 99999)
+                                forDelete.push(ui.item.attr("data-id"));
                 });
 
                 sliderItems.find(".new-item").on("click", function(){
                         var item = sliderItems.find('.cloneable').clone(true);
+                        var randomId = Date.now();
                         item.removeClass('cloneable hidden')
                             .addClass("item")
-                            .attr("data-id", "-1")
+                            .attr("data-id", "-1");
                         item.attr("data-order", (parseInt(sliderItems.find(".panel:last")
                                 .prev().attr("data-order")) || 0) + 1);
-                        item.find('.panel-heading').attr("id", "heading_-1");
+                        item.find('.panel-heading').attr("id", "heading_" + randomId);
                         item.find('.panel-title a')
-                            .attr("href", "#collapse_-1")
-                            .attr("aria-controls", "collapse_-1");
+                            .attr("href", "#collapse_"  + randomId)
+                            .attr("aria-controls", "collapse_" + randomId);
                         item.find('.panel-collapse')
-                            .attr('id', 'collapse_-1')
-                            .attr('aria-labelledby', 'heading_-1');
-                        item.find('label').attr("for", 'img_-1')
-                            .find("input").attr("id", 'img_-1');
+                            .attr('id', 'collapse_' + randomId)
+                            .attr('aria-labelledby', 'heading_' + randomId);
+                        item.find('label').attr("for", 'img_' + randomId)
+                            .find("input").attr("id", 'img_' + randomId);
 
                         sliderItems.find('.cloneable').before(item);
 
@@ -203,6 +224,7 @@ $(function() {
                     },
                     onEditSuccess = function(response){
                             console.log(response);
+
                     };
 
                 var requestOptions = {
@@ -228,6 +250,11 @@ $(function() {
                         });
                         requestOptions.data = {data:data};
                         $.ajax(URLUpdateItems, requestOptions);
+                        if(forDelete.length > 0){
+                                requestOptions.data = {id: forDelete};
+                                $.ajax("content/component/delete/Blockquote", requestOptions);
+                                forDelete = [];
+                        }
                 });
 
         })();

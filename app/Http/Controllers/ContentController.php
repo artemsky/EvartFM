@@ -33,6 +33,18 @@ class ContentController extends Controller
         return $this->$componentName($request);
     }
 
+    public function postDeleteComponent($component, Request $request){
+        $componentName = 'App\\Components\\' . $component;
+        $image = [];
+        foreach ($request['id'] as $id) {
+            $image[] = substr($componentName::find($id)->image, 4);
+        }
+        if($componentName::destroy($request['id']))
+                Storage::delete($image);
+
+        return response()->json($image);
+    }
+
     private function getComponentSlider($dataOnly = false){
         $data = Slider::all()->sortBy('order');
         if($dataOnly)
@@ -40,6 +52,7 @@ class ContentController extends Controller
         return view('public.components.Slider')->with(['slides' => $data]);
     }
     private function postComponentSlider(Request $request){
+        if(!$request->all()) return response()->json(['msg' => 'nothing to add'], 200);
         foreach ($request['data'] as $item) {
             $slide = $slide = Slider::find($item["id"]) ?? new Slider();
             $slide->order = $item["order"];
@@ -55,7 +68,7 @@ class ContentController extends Controller
 
                 $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $item["image"]));
                 if(!$slide->id) $slide->save();
-                $filepath = 'public/slider/'. $slide->id. '.' . $extensions[$type];
+                $filepath = 'public/Slider/'. $slide->id. '.' . $extensions[$type];
                 Storage::put($filepath, $data);
 
                 $slide->image = 'app/' . $filepath;
@@ -73,6 +86,7 @@ class ContentController extends Controller
     }
 
     private function postComponentBlockquote(Request $request){
+        if(!$request->all()) return response()->json(['msg' => 'nothing to add'], 200);
         foreach ($request['data'] as $item) {
             $slide = $slide = Blockquote::find($item["id"]) ?? new Blockquote();
             $slide->order = $item["order"];
@@ -90,7 +104,7 @@ class ContentController extends Controller
 
                 $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $item["image"]));
                 if(!$slide->id) $slide->save();
-                $filepath = 'public/blockquote/'. $slide->id. '.' . $extensions[$type];
+                $filepath = 'public/Blockquote/'. $slide->id. '.' . $extensions[$type];
                 Storage::put($filepath, $data);
 
                 $slide->image = 'app/' . $filepath;
