@@ -4,6 +4,7 @@
     touch-action: none;
     cursor: pointer;
   }
+
   .sortable{
     padding-top: 20px;
     display: flex;
@@ -19,14 +20,6 @@
     }
   }
   .sortableBlockquote{
-    //.panel{
-    //  position: relative;
-    //  button{
-    //    position: absolute;
-    //    top: 2px;
-    //    right: 10px;
-    //  }
-    //}
     .panel-heading{
       padding: 0;
       a{
