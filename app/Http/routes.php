@@ -141,6 +141,10 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'content.component.update',
             'uses' => 'ContentController@postDeleteComponent',
         ]);
+        Route::get('/all', [
+            'as' => 'content.component.all',
+            'uses' => 'ContentController@all',
+        ]);
     });
 
 

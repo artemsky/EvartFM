@@ -1,10 +1,10 @@
 <div class="container-fluid">
     <div class="row sortable sortableSlider">
-        @foreach($Slider as $Slide)
-            <div class="col-sm-3 item" data-order="{{$Slide->order}}" data-id="{{$Slide->id}}">
-                <img src="{{asset($Slide->image)}}" alt="" class="img-responsive img-thumbnail">
-                <h1>{{$Slide->title}}</h1>
-                <p>{{$Slide->description}}</p>
+        @foreach($Slider as $slide)
+            <div class="col-sm-3 item" data-order="{{$slide->order}}" data-id="{{$slide->id}}">
+                <img src="{{asset($slide->image)}}" alt="" class="img-responsive img-thumbnail">
+                <h1>{{$slide->title}}</h1>
+                <p>{{$slide->description}}</p>
             </div>
 
         @endforeach

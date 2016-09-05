@@ -1,10 +1,11 @@
 <div class="container-fluid">
-    <div class="row sortable sortableSlider">
-        @foreach($Slider as $slide)
-            <div class="col-sm-3 item" data-order="{{$slide->order}}" data-id="{{$slide->id}}">
-                <img src="{{asset($slide->image)}}" alt="" class="img-responsive img-thumbnail">
-                <h1>{{$slide->title}}</h1>
-                <p>{{$slide->description}}</p>
+    <div class="row sortable sortableVideo">
+        @foreach($Video as $video)
+            <div class="col-sm-3 item" data-order="{{$video->order}}" data-id="{{$video->id}}">
+                <img src="{{asset($video->image)}}" alt="" class="img-responsive img-thumbnail">
+                <h1>{{$video->title}}</h1>
+                <p>{{$video->description}}</p>
+                <p class="url">{{$video->video}}</p>
             </div>
 
         @endforeach
@@ -12,6 +13,7 @@
                 <img src="" alt="" class="img-responsive img-thumbnail">
                 <h1></h1>
                 <p></p>
+                <p class="url"></p>
             </div>
             <div class="col-xs-12 more">
                 <button type="button" class="btn btn-default new-item">
@@ -28,7 +30,7 @@
 </div>
 <!-- /.container-fluid -->
 
-<div id="modal_slider" class="modal fade" tabindex="-1" role="dialog">
+<div id="modal_video" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -38,20 +40,25 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" placeholder="Title" name="title">
+                        <label for="video_title">Title</label>
+                        <input type="text" class="form-control" id="video_title" placeholder="Title">
                         <p class="help-block">Max length: 300</p>
                     </div>
                     <div class="form-group">
-                        <label for="description">Description</label>
-                        <input type="text" class="form-control" id="description" placeholder="Description" name="description">
+                        <label for="video_description">Description</label>
+                        <input type="text" class="form-control" id="video_description" placeholder="Description">
                         <p class="help-block">Max length: 100</p>
                     </div>
                     <div class="form-group">
-                        <label for="image">Select Image</label>
-                        <input type="file" id="image" name="image_url">
+                        <label for="video_url">Video URL</label>
+                        <input type="text" class="form-control" id="video_url" placeholder="Link">
+                        <p class="help-block">Any iFrame link</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="video_image">Select Image</label>
+                        <input type="file" id="video_image">
                         <p class="help-block">PNG, JPEG, JPG and not more than 1MB.</p>
-                        <img class="img-thumbnail" src="" alt="" id="preview">
+                        <img class="img-thumbnail" src="" alt="" id="video_preview">
                     </div>
                 </form>
             </div>

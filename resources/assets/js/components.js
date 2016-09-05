@@ -23,7 +23,7 @@ $(function() {
                         if(removeIntent == true){
                                 ui.item.remove();
                                 var id = ui.item.attr("data-id");
-                                if(id > 1 && id < 99999)
+                                if(id > 0 && id < 99999)
                                         forDelete.push(ui.item.attr("data-id"));
                         }
                 }
@@ -148,7 +148,7 @@ $(function() {
                             if(removeIntent == true){
                                     ui.item.remove();
                                     var id = ui.item.attr("data-id");
-                                    if(id > 1 && id < 99999)
+                                    if(id > 0 && id < 99999)
                                             forDelete.push(ui.item.attr("data-id"));
                             }
                     }
@@ -285,7 +285,7 @@ $(function() {
                 if(removeIntent == true){
                     ui.item.remove();
                     var id = ui.item.attr("data-id");
-                    if(id > 1 && id < 99999)
+                    if(id > 0 && id < 99999)
                         forDelete.push(ui.item.attr("data-id"));
                 }
             }
@@ -353,7 +353,7 @@ $(function() {
             isNew = false;
             currentItem = $(this);
             title.val(currentItem.find("h1").text());
-            description.val(currentItem.find("p").text());
+            description.val(currentItem.find("p:first").text());
             image.attr("src", currentItem.find("img").attr("src"));
             date.datepicker( "setDate", currentItem.find('.date').text());
             modal.find(".modal-title span").text(currentItem.attr("data-order"));
@@ -362,9 +362,137 @@ $(function() {
 
         modal.find(".save-changes").on("click", function(){
             currentItem.find("h1").text(title.val());
-            currentItem.find("p").text(description.val());
+            currentItem.find("p:first").text(description.val());
             currentItem.find("img").attr("src", $('#events_preview').attr("src"));
             currentItem.find(".date").text(moment($('#events_date').datetimepicker('getValue')).format('YYYY-MM-DD'));
+            if(isNew)
+                sliderItems.find(".more").before(currentItem);
+            modal.modal('hide');
+        });
+
+        modal.find(".delete-item").on("click", function(){
+            currentItem.remove();
+            var id = currentItem.attr("data-id");
+            if(id > 1 && id < 99999)
+                forDelete.push(ui.item.attr("data-id"));
+            modal.modal('hide');
+        });
+
+        sliderItems.find(".new-item").on("click", function(){
+            isNew = true;
+            currentItem = sliderItems.find(".cloneable").clone(true);
+            currentItem.removeClass("cloneable hidden").addClass('item');
+            currentItem.attr("data-order", (parseInt(sliderItems.find(".item:last").attr("data-order")) || 0)+1);
+            currentItem.attr("data-id", "-1");
+            form.get(0).reset();
+            image.attr("src", '');
+            modal.find(".modal-title span").text('');
+            modal.modal();
+        });
+    })();
+    //Video
+    (function(){
+        var forDelete = [];
+        var sliderItems = $(".sortableVideo");
+        var removeIntent = false;
+        sliderItems.sortable({
+            items: ".item",
+            opacity: 0.8,
+            stop: function( event, ui ) {
+                $(event.target).find(".item").each(function(i, obj){
+                    $(obj).attr("data-order", i+1);
+                });
+            },
+            over: function () {
+                removeIntent = false;
+            },
+            out: function () {
+                removeIntent = true;
+            },
+            beforeStop: function (event, ui) {
+                if(removeIntent == true){
+                    ui.item.remove();
+                    var id = ui.item.attr("data-id");
+                    if(id > 0 && id < 99999)
+                        forDelete.push(ui.item.attr("data-id"));
+                }
+            }
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#video_preview').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#video_image").change(function(){
+            readURL(this);
+        });
+
+        var URLUpdateItems = "content/component/update/Video";
+        var onEditError = function(response){
+                console.log(response);
+                $("body").append(response.responseText)
+            },
+            onEditSuccess = function(response){
+                console.log(response);
+            };
+        var modal = $("#modal_video");
+        var form = modal.find('form');
+        var requestOptions = {
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: onEditSuccess,
+            error: onEditError
+        };
+        sliderItems.find(".save-all").on("click", function(){
+            var data = [];
+            sliderItems.find('.item').each(function(i, obj){
+                data.push({
+                    id:  $(obj).attr("data-id"),
+                    order:  $(obj).attr("data-order"),
+                    title:  $(obj).find("h1").text(),
+                    description: $(obj).find("p:first").text(),
+                    video: $(obj).find("p.url").text(),
+                    image: $(obj).find("img").attr("src")
+                });
+            });
+            requestOptions.data = {data:data};
+            $.ajax(URLUpdateItems, requestOptions);
+            if(forDelete.length > 0){
+                requestOptions.data = {id: forDelete};
+                $.ajax("content/component/delete/Video", requestOptions);
+                forDelete = [];
+            }
+        });
+        var currentItem = null;
+        var isNew = false;
+        var title = form.find("#video_title");
+        var description = form.find("#video_description");
+        var video = form.find("#video_url");
+        var image = form.find("img");
+        sliderItems.on('click', ".item", function(){
+            isNew = false;
+            currentItem = $(this);
+            title.val(currentItem.find("h1").text());
+            description.val(currentItem.find("p:first").text());
+            image.attr("src", currentItem.find("img").attr("src"));
+            video.val(currentItem.find("p.url").text());
+            modal.find(".modal-title span").text(currentItem.attr("data-order"));
+            modal.modal();
+        });
+
+        modal.find(".save-changes").on("click", function(){
+            currentItem.find("h1").text(title.val());
+            currentItem.find("p:first").text(description.val());
+            currentItem.find("p.url").text(video.val());
+            currentItem.find("img").attr("src", $('#video_preview').attr("src"));
             if(isNew)
                 sliderItems.find(".more").before(currentItem);
             modal.modal('hide');

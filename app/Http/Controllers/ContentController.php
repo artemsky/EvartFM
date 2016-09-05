@@ -4,34 +4,85 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Components\Slider;
-use App\Components\Blockquote;
 use App\Components\Events;
+use App\Components\Video;
+use App\Components\Blockquote;
 use Illuminate\Support\Facades\Storage;
-
-use App\Http\Requests;
-const DATA_ONLY = true;
 class ContentController extends Controller
 {
     public function getIndex(){
-        $methods = get_class_methods(get_class());
-        $methods = array_where($methods, function ($key, $value) {
-            return starts_with($value, 'getComponent') && !str_is('getComponent', $value);
-        });
         $data = [];
-        foreach($methods as $method){
-            $data[substr($method, 12)] = $this->$method(DATA_ONLY);
+        foreach($this->allComponentsNames() as $component){
+            $data[$component] = $this->getComponent($component, true);
         }
         return view('dashboard.pages.content.index')->with($data);
     }
 
     //Components
-    public function getComponent($component){
-        $componentName = 'getComponent' . $component;
-        return $this->$componentName();
+    public function getComponent($component, $dataOnly = false){
+        $componentName = 'App\\Components\\' . $component;
+        $data = $componentName::all()->sortBy('order');
+        if($dataOnly)
+            return $data ?? null;
+        return view('public.components.' . $component)->with([$component => $data]);
+    }
+    private function allComponentsNames(){
+        $Components = array_map(
+            function($value) {
+                return str_replace('.php', '', $value);
+            },
+            array_flatten(
+                array_where(
+                    scandir(app_path() . '/Components'),
+                    function($key, $value){
+                        return ends_with($value, '.php');
+                    }
+                )
+            )
+        );
+        return $Components;
     }
     public function postComponent($component, Request $request){
-        $componentName = 'postComponent' . $component;
-        return $this->$componentName($request);
+        if(!$request->all())
+            return response()->json([
+            'msg' => 'No items to add'
+        ], 200);
+        $result = [];
+        foreach ($request['data'] as $item) {
+            $tempInfo = [];
+            $request_id = intval(array_pull($item, 'id'));
+            $object = 'App\\Components\\' . $component;
+            if(!$objectInstance = $object::find($request_id)){
+                $tempInfo['request_id'] = $request_id;
+                $objectInstance = new $object();
+            }
+
+            if(array_has($item, 'image')){
+                $image= array_pull($item, 'image');
+                if(asset($objectInstance->image) != $image){
+                    $imageObject = $this->fromBase64toImage($image);
+                    if(!$objectInstance->id) $objectInstance->save();
+                    $path = 'public/'. $component . '/' . $objectInstance->id. '.' . $imageObject['extension'];
+                    Storage::put($path, $imageObject['file']);
+
+                    $objectInstance->image = 'app/' . $path;
+                }
+            }
+            foreach ($item as $property=>$value) {
+                $objectInstance->$property = $value;
+            }
+            $objectInstance->save();
+            if($request_id != $objectInstance->id){
+                $tempInfo['response_id'] = $objectInstance->id;
+                $result[] = $tempInfo;
+            }
+
+
+        }
+        return response()->json([
+            'msg' => 'success',
+            'treatedObjects' => $result
+        ], 200);
     }
 
     public function postDeleteComponent($component, Request $request){
@@ -43,109 +94,23 @@ class ContentController extends Controller
         if($componentName::destroy($request['id']))
                 Storage::delete($image);
 
-        return response()->json($image);
+        return response()->json([
+            'msg' => 'success'
+        ], 200);
     }
 
-    private function getComponentSlider($dataOnly = false){
-        $data = Slider::all()->sortBy('order');
-        if($dataOnly)
-            return $data ?? null;
-        return view('public.components.Slider')->with(['slides' => $data]);
-    }
-    private function postComponentSlider(Request $request){
-        if(!$request->all()) return response()->json(['msg' => 'nothing to add'], 200);
-        foreach ($request['data'] as $item) {
-            $slide = $slide = Slider::find($item["id"]) ?? new Slider();
-            $slide->order = $item["order"];
-            $slide->title = $item["title"];
-            $slide->description = $item["description"];
-            if(asset($slide->image) != $item["image"]){
-                $pos  = strpos($item["image"], ';');
-                $type = explode(':', substr($item["image"], 0, $pos))[1];
-                $extensions = array(
-                    'image/jpeg' => 'jpg',
-                    'image/png' => 'png'
-                );
+    private function fromBase64toImage($base64){
+        $pos  = strpos($base64, ';');
+        $type = explode(':', substr($base64, 0, $pos))[1];
+        $extensions = [
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png'
+        ];
 
-                $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $item["image"]));
-                if(!$slide->id) $slide->save();
-                $filepath = 'public/Slider/'. $slide->id. '.' . $extensions[$type];
-                Storage::put($filepath, $data);
-
-                $slide->image = 'app/' . $filepath;
-            }
-            $slide->save();
-        }
-        return response()->json(['msg' => 'success'], 200);
+        return [
+            'file' => base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64)),
+            'extension' => $extensions[$type]
+        ];
     }
 
-    private function getComponentBlockquote($dataOnly = false){
-        $data = Blockquote::all()->sortBy('order');
-        if($dataOnly)
-            return $data ?? null;
-        return view('public.components.Blockquote')->with(['Blockquote' => $data]);
-    }
-
-    private function postComponentBlockquote(Request $request){
-        if(!$request->all()) return response()->json(['msg' => 'nothing to add'], 200);
-        foreach ($request['data'] as $item) {
-            $slide = $slide = Blockquote::find($item["id"]) ?? new Blockquote();
-            $slide->order = $item["order"];
-            $slide->name = $item["name"];
-            $slide->text = $item["text"];
-            $slide->description = $item["description"];
-            $slide->stars = $item["stars"];
-            if(asset($slide->image) != $item["image"]){
-                $pos  = strpos($item["image"], ';');
-                $type = explode(':', substr($item["image"], 0, $pos))[1];
-                $extensions = array(
-                    'image/jpeg' => 'jpg',
-                    'image/png' => 'png'
-                );
-
-                $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $item["image"]));
-                if(!$slide->id) $slide->save();
-                $filepath = 'public/Blockquote/'. $slide->id. '.' . $extensions[$type];
-                Storage::put($filepath, $data);
-
-                $slide->image = 'app/' . $filepath;
-            }
-            $slide->save();
-        }
-        return response()->json(['msg' => 'success'], 200);
-    }
-
-    private function getComponentEvents($dataOnly = false){
-        $data = Events::all()->sortBy('order');
-        if($dataOnly)
-            return $data ?? null;
-        return view('public.components.Slider')->with(['slides' => $data]);
-    }
-    private function postComponentEvents(Request $request){
-        if(!$request->all()) return response()->json(['msg' => 'nothing to add'], 200);
-        foreach ($request['data'] as $item) {
-            $slide = $slide = Slider::find($item["id"]) ?? new Events();
-            $slide->order = $item["order"];
-            $slide->title = $item["title"];
-            $slide->description = $item["description"];
-            $slide->date = $item["date"];
-            if(asset($slide->image) != $item["image"]){
-                $pos  = strpos($item["image"], ';');
-                $type = explode(':', substr($item["image"], 0, $pos))[1];
-                $extensions = array(
-                    'image/jpeg' => 'jpg',
-                    'image/png' => 'png'
-                );
-
-                $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $item["image"]));
-                if(!$slide->id) $slide->save();
-                $filepath = 'public/Events/'. $slide->id. '.' . $extensions[$type];
-                Storage::put($filepath, $data);
-
-                $slide->image = 'app/' . $filepath;
-            }
-            $slide->save();
-        }
-        return response()->json(['msg' => 'success'], 200);
-    }
 }
