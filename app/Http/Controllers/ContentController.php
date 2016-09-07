@@ -2,31 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Components\Slider;
-use App\Components\Events;
-use App\Components\Video;
-use App\Components\Blockquote;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 class ContentController extends Controller
 {
     public function getIndex(){
-        $data = [];
-        foreach($this->allComponentsNames() as $component){
-            $data[$component] = $this->getComponent($component, true);
-        }
-        return view('dashboard.pages.content.index')->with($data);
+        return view('dashboard.pages.content.index');
     }
 
     //Components
     public function getComponent($component, $dataOnly = false){
         $componentName = 'App\\Components\\' . $component;
-        $data = $componentName::all()->sortBy('order');
-        if($dataOnly)
-            return $data ?? null;
-        return view('public.components.' . $component)->with([$component => $data]);
+        $data = $componentName::all();
+
+        $schema = new $componentName();
+
+        $data = [
+            'data' => array_values(array_sort($data->toArray(), function ($value) {
+                return $value['order'];
+            })),
+            'schema' => $schema->getTableColumns()
+        ];
+
+        return $dataOnly ? $data ?? null : view('public.components.' . $component)->with([$component => $data]);
     }
-    private function allComponentsNames(){
+    public function getComponentsData(){
         $Components = array_map(
             function($value) {
                 return str_replace('.php', '', $value);
@@ -40,15 +41,36 @@ class ContentController extends Controller
                 )
             )
         );
-        return $Components;
+        $data = [];
+        foreach($Components as $component){
+            $data[$component] = $this->getComponent($component, true);
+        }
+        return response()->json($data);
     }
-    public function postComponent($component, Request $request){
-        if(!$request->all())
-            return response()->json([
-            'msg' => 'No items to add'
-        ], 200);
+
+    public function postUpdateComponentsData(Request $request){
         $result = [];
-        foreach ($request['data'] as $item) {
+        if($request->forSave){
+            foreach ($request->forSave as $componentName => $data) {
+                if(!array_has($data, 'componentData'))
+                    continue;
+                $result[$componentName] = $this->postComponent($componentName, $data['componentData']);
+            }
+        }
+        if($request->forDelete){
+            foreach ($request->forDelete as $componentName => $data) {
+                $this->postDeleteComponent($componentName, $data);
+            }
+        }
+        return response()->json($result);
+
+    }
+
+    private function postComponent($component, $data){
+        if(!count($data))
+            return false;
+        $result = [];
+        foreach ($data as $item) {
             $tempInfo = [];
             $request_id = intval(array_pull($item, 'id'));
             $object = 'App\\Components\\' . $component;
@@ -65,7 +87,7 @@ class ContentController extends Controller
                     $path = 'public/'. $component . '/' . $objectInstance->id. '.' . $imageObject['extension'];
                     Storage::put($path, $imageObject['file']);
 
-                    $objectInstance->image = 'app/' . $path;
+                    $objectInstance->image = asset('app/' . $path);
                 }
             }
             foreach ($item as $property=>$value) {
@@ -79,24 +101,18 @@ class ContentController extends Controller
 
 
         }
-        return response()->json([
-            'msg' => 'success',
-            'treatedObjects' => $result
-        ], 200);
+        return $result;
     }
 
-    public function postDeleteComponent($component, Request $request){
+    private function postDeleteComponent($component, $data){
         $componentName = 'App\\Components\\' . $component;
         $image = [];
-        foreach ($request['id'] as $id) {
+        foreach ($data as $id) {
             $image[] = substr($componentName::find($id)->image, 4);
         }
-        if($componentName::destroy($request['id']))
-                Storage::delete($image);
+        if($componentName::destroy($data))
+            Storage::delete($image);
 
-        return response()->json([
-            'msg' => 'success'
-        ], 200);
     }
 
     private function fromBase64toImage($base64){

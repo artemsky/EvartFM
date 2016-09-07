@@ -10,43 +10,15 @@
     display: flex;
     flex-flow: row wrap;
     .more{
-      min-height: 100px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    button{
-
+      padding: 20px 0;
     }
   }
-  .sortableBlockquote{
-    .panel-heading{
-      padding: 0;
-      a{
-        h4{
-          margin: 0;
-          padding: 10px;
-        }
-      }
+  .stars{
+    .glyphicon{
+      color: rgb(141, 141, 141);
     }
-
-    .panel-body{
-      img{
-        cursor: pointer;
-      }
-      .stars{
-        .glyphicon{
-          color: rgb(141, 141, 141);
-        }
-        .active{
-          color: #000;
-        }
-      }
-      textarea{
-        display: block;
-        width: 100%;
-        resize: vertical;
-      }
+    .active{
+      color: #000;
     }
   }
 }

@@ -17,17 +17,30 @@
 
                 @php($userRole = Auth::user()->role)
                 @if(str_contains('super, admin', $userRole))
-                    <li><a href="{{route('user')}}">All Users</a></li>
-                    <li><a href="{{route('adduser')}}">Add Users</a></li>
-                @endif
-                @if(str_contains('super, admin, writer', $userRole))
-                    <li><a href="{{route('allnews')}}">All News</a></li>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            Users <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{route('user')}}">All Users</a></li>
+                            <li><a href="{{route('adduser')}}">Add User</a></li>
+                        </ul>
+                    </li>
                 @endif
                 @if(str_contains('super, admin, writer, dj', $userRole))
                     <li><a href="{{route('schedule.index')}}">Schedule</a></li>
                 @endif
                 @if(str_contains('super, admin, writer', $userRole))
-                    <li><a href="{{route('content.index')}}">Content Management</a></li>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            Content Management <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{route('allnews')}}">News</a></li>
+                            <li><a href="{{route('content.index')}}">Components</a></li>
+                        </ul>
+                    </li>
+
                 @endif
 
             </ul>

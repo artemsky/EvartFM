@@ -128,19 +128,26 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'content.index',
             'uses' => 'ContentController@getIndex',
         ]);
+        Route::get('/component/get/all', [
+            'uses' => 'ContentController@getComponentsData',
+        ]);
 
-        Route::get('/component/get/{component}', [
-            'as' => 'content.component.get',
-            'uses' => 'ContentController@getComponent',
+        Route::post('/component/update/all', [
+            'uses' => 'ContentController@postUpdateComponentsData',
         ]);
-        Route::post('/component/update/{component}', [
-            'as' => 'content.component.update',
-            'uses' => 'ContentController@postComponent',
-        ]);
-        Route::post('/component/delete/{component}', [
-            'as' => 'content.component.update',
-            'uses' => 'ContentController@postDeleteComponent',
-        ]);
+
+//        Route::get('/component/get/{component}/{data?}', [
+//            'as' => 'content.component.get',
+//            'uses' => 'ContentController@getComponent',
+//        ]);
+//        Route::post('/component/update/{component}', [
+//            'as' => 'content.component.update',
+//            'uses' => 'ContentController@postComponent',
+//        ]);
+//        Route::post('/component/delete/{component}', [
+//            'as' => 'content.component.update',
+//            'uses' => 'ContentController@postDeleteComponent',
+//        ]);
 
     });
 
