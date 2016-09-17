@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Components\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 class ContentController extends Controller

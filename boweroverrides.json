@@ -136,5 +136,23 @@
       "development": ["./build/jquery.datetimepicker.full.js", "./jquery.datetimepicker.css"],
       "production": ["./build/jquery.datetimepicker.full.min.js", "./build/jquery.datetimepicker.min.css"]
     }
+  },
+  "blueimp-file-upload":{
+    "main":{
+      "development": ["./js/jquery.fileupload.js", "./js/jquery.fileupload-audio.js", "./js/vendor/jquery.ui.widget.js", "./js/jquery.fileupload-process.js", "./js/jquery.fileupload-validate.js"],
+      "production": ["./js/jquery.fileupload.js", "./js/jquery.fileupload-audio.js", "./js/vendor/jquery.ui.widget.js", "./js/jquery.fileupload-process.js", "./js/jquery.fileupload-validate.js"]
+    }
+  },
+  "blueimp-load-image":{
+    "main":{
+      "development": ["./js/load-image.all.min.js"],
+      "production": ["./js/load-image.all.min.js"]
+    }
+  },
+  "dropzone":{
+    "main":{
+      "development": ["./dist/basic.css", "./dist/dropzone.css", "./dist/dropzone.js" ],
+      "production": ["./dist/min/basic.min.css", "./dist/min/dropzone.min.css", "./dist/min/dropzone.min.js"]
+    }
   }
 }

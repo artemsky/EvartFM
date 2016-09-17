@@ -11,8 +11,8 @@
 |
 */
 
-
 Route::group(['middleware' => 'web'], function () {
+
 
     Route::get('/login', [
         'as' => 'login',
@@ -121,6 +121,45 @@ Route::group(['middleware' => 'web'], function () {
             });
 
         });
+
+        Route::group(['prefix' => 'broadcast', 'middleware' => ['auth', 'role:super,dj']], function () {
+
+            Route::get('/', [
+                'as' => 'radio.index',
+                'uses' => 'RadioController@getIndex',
+            ]);
+
+            Route::post('/switch', [
+                'uses' => 'RadioController@postAction',
+            ]);
+
+            Route::get('/upload', [
+                'as' => 'radio.upload',
+                'uses' => 'RadioController@getUpload',
+            ]);
+
+            Route::post('/upload', [
+                'as' => 'radio.upload.file',
+                'uses' => 'RadioController@postUpload',
+            ]);
+
+            Route::get('/delete', [
+                'as' => 'radio.delete',
+                'uses' => 'RadioController@getDelete',
+            ]);
+
+            Route::post('/delete', [
+                'as' => 'radio.upload.file',
+                'uses' => 'RadioController@postDelete',
+            ]);
+
+            Route::get('/playlist', [
+                'as' => 'radio.playlist',
+                'uses' => 'RadioController@getPlaylist',
+            ]);
+
+        });
+
     });
 
     Route::group(['prefix' => '/dashboard/content', 'middleware' => ['auth', 'role:super,writer,dj']], function () {
@@ -135,19 +174,6 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('/component/update/all', [
             'uses' => 'ContentController@postUpdateComponentsData',
         ]);
-
-//        Route::get('/component/get/{component}/{data?}', [
-//            'as' => 'content.component.get',
-//            'uses' => 'ContentController@getComponent',
-//        ]);
-//        Route::post('/component/update/{component}', [
-//            'as' => 'content.component.update',
-//            'uses' => 'ContentController@postComponent',
-//        ]);
-//        Route::post('/component/delete/{component}', [
-//            'as' => 'content.component.update',
-//            'uses' => 'ContentController@postDeleteComponent',
-//        ]);
 
     });
 

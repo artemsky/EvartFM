@@ -1,0 +1,35 @@
+.radio-ctrl{
+  .thumbnail{
+    .icon{
+      font-size: 165px;
+      line-height: 215px;
+      text-align: center;
+      span{
+        vertical-align: middle;
+      }
+    }
+    &:hover{
+      background-color: #ebfaff;
+    }
+  }
+}
+
+.radio-upload{
+  #dropzone.dz-clickable {
+    cursor: pointer;
+  }
+  #dropzone {
+    border: 2px dashed #0087F7;
+    border-radius: 5px;
+    background: white;
+    margin-top: 60px;
+  }
+  #dropzone, #dropzone * {
+    box-sizing: border-box;
+  }
+
+  .dropzone .dz-preview .dz-error-message {
+    color: white;
+  }
+
+}

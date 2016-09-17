@@ -27,7 +27,7 @@ class NewsController extends Controller
             'article' => 'required|max:2500',
             'created_at' => 'date',
             'image_url' => 'image'
-        ]);;
+        ]);
 
 
         $newsItem = News::find($request['id']);
