@@ -40,7 +40,7 @@
                     <h3>Manage playlist</h3>
                     <p>Create new, edit old and manage schedule</p>
                     <p>
-                        <a href="#" class="btn btn-primary" role="button">Playlist's</a>
+                        <a href="{{route('radio.playlist.get')}}" class="btn btn-primary" role="button">Playlist's</a>
                         <a href="#" class="btn btn-info" role="button">Schedule</a>
                     </p>
                 </div>

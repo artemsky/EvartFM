@@ -2,7 +2,7 @@
 
 @section('scripts')
     <script src="{{asset('vendor/dropzone/dist/dropzone.js')}}"></script>
-    <script src="{{asset('js/radio/upload.js')}}"></script>
+    <script src="{{ URL::to('js/notify.min.js') }}"></script>
 @endsection
 
 
@@ -22,11 +22,13 @@
     <div class="row">
         <div class="col-sm-12">
             <form id="dropzone" action="{{route('radio.upload.file')}}" class="dropzone needsclick dz-clickable">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="dz-message needsclick">
                         Drop files here or click to upload.<br>
                         <span class="note needsclick">(Only <strong>mp3</strong> filew allowed. Size not more than <strong>300M</strong>)</span>
                     </div>
 
-                </form>
+            </form>
         </div>
+    </div>
 @endsection

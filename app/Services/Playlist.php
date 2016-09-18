@@ -7,19 +7,27 @@ class Playlist
 {
     protected $list;
     protected $current;
+    private $filepath = "broadcast/playlist.json";
 
     public function get(){
-        $file = Storage::get("broadcast/playlist.json");
+        $file = Storage::get($this->filepath);
         $this->list = json_decode($file);
-        return $this;
+        return $this->list;
     }
 
-    public function getJSON(){
-        return json_encode($this->playlist);
+    public function set($newPlatlist){
+        return Storage::put(
+            $this->filepath,
+            json_encode($newPlatlist, true)
+        );
+    }
+
+    public function json(){
+        return json_encode($this->list);
     }
 
     public function toList(){
-        return implode('\n', $this->playlist);
+        return implode('\n', $this->list);
     }
 
     public function select($playlistName){

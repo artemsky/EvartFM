@@ -33,3 +33,58 @@
   }
 
 }
+
+.radio-delete{
+  .ui-selectable {
+    -ms-touch-action: none;
+    touch-action: none;
+  }
+  .ui-selectable-helper {
+    position: absolute;
+    z-index: 100;
+    border: 1px dotted black;
+  }
+  .ui-sortable-handle {
+    -ms-touch-action: none;
+    touch-action: none;
+  }
+  .selectable{
+    display: flex;
+    flex-flow: column;
+    background: #e8ffdc;
+    padding: 10px 15px;
+    width: 100%;
+    border-radius: 5px;
+    border: 2px dashed #00dd1c;
+  }
+  .selectable .ui-selecting {
+    background: #FECA40;
+  }
+  .selectable .ui-selected {
+    background: #ff0000;
+    color: white;
+  }
+  .delete{
+    display: none;
+    margin-top: 20px;
+  }
+}
+
+.playlist-manager{
+  .mb30{
+    margin-bottom: 30px;
+  }
+  .mt20{
+    margin-top: 20px;
+  }
+  .w100{
+    width: 100%;
+  }
+  .sortable{
+    background: #fff8e7;
+    padding-bottom: 20px;
+    .item{
+      border-bottom: 1px dashed #1b6d85;
+    }
+  }
+}

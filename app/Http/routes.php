@@ -126,36 +126,45 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::get('/', [
                 'as' => 'radio.index',
-                'uses' => 'RadioController@getIndex',
+                'uses' => 'RadioController@getIndex'
             ]);
 
             Route::post('/switch', [
-                'uses' => 'RadioController@postAction',
+                'uses' => 'RadioController@postAction'
             ]);
 
             Route::get('/upload', [
                 'as' => 'radio.upload',
-                'uses' => 'RadioController@getUpload',
+                'uses' => 'RadioController@getUpload'
             ]);
 
             Route::post('/upload', [
                 'as' => 'radio.upload.file',
-                'uses' => 'RadioController@postUpload',
+                'uses' => 'RadioController@postUpload'
             ]);
 
             Route::get('/delete', [
                 'as' => 'radio.delete',
-                'uses' => 'RadioController@getDelete',
+                'uses' => 'RadioController@getDelete'
             ]);
 
             Route::post('/delete', [
-                'as' => 'radio.upload.file',
-                'uses' => 'RadioController@postDelete',
+                'as' => 'radio.delete.files',
+                'uses' => 'RadioController@postDelete'
             ]);
 
             Route::get('/playlist', [
-                'as' => 'radio.playlist',
-                'uses' => 'RadioController@getPlaylist',
+                'as' => 'radio.playlist.get',
+                'uses' => 'RadioController@getPlaylist'
+            ]);
+            Route::post('/playlist', [
+                'as' => 'radio.playlist.save',
+                'uses' => 'RadioController@postPlaylist'
+            ]);
+
+            Route::delete('/playlist', [
+                'as' => 'radio.playlist.delete',
+                'uses' => 'RadioController@deletePlaylist'
             ]);
 
         });
