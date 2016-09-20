@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ URL::to('vendor/icheck/skins/square/blue.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css" onerror="onErrorLoader(this, '{{ URL::to('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}')">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/jquery.datetimepicker.min.css" onerror="onErrorLoader(this, '{{ URL::to('vendor/datetimepicker/build/jquery.datetimepicker.min.css') }}')">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" onerror="onErrorLoader(this, '{{ URL::to('vendor/bootstrap-select/dist/css/bootstrap-select.css') }}')">
 
 @endsection
 
@@ -13,6 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/moment/moment.js') }}')"></script>
     <script src="{{ URL::to('vendor/moment/locale/en-gb.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/underscore/underscore.js') }}')"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/bootstrap-select/dist/js/bootstrap-select.js') }}')"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}')"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/datetimepicker/build/jquery.datetimepicker.full.min.js') }}')"></script>
     <script src="{{ URL::asset('vendor/clndr/src/clndr.js') }}"></script>
@@ -48,6 +51,13 @@
                             <label for="Description">Description</label>
                             <input type="text" class="form-control" id="Description" placeholder="Description">
                         </div>
+                        <div class="form-group">
+                            <label for="playlist">Select Playlist</label>
+                            <select class="selectpicker form-control" id="playlist" name="playlist">
+                                <option value="0">No Playlist</option>
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <input type="checkbox" id="repeat-day">
                             <label for="repeat-day">Repeat every day</label>

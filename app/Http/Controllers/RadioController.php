@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\TrackList;
 use Illuminate\Http\Request;
-use App\Services\Envoy;
 use Illuminate\Support\Facades\Storage;
 use App\Playlist;
+use App\Services\ProcessService;
 use App\Http\Requests;
 
 class RadioController extends Controller
 {
-    private $musicDir = 'music';
     use Traits\Validate;
     public function getIndex(){
         return view('dashboard.pages.radio.index');
@@ -22,8 +21,7 @@ class RadioController extends Controller
     }
 
     public function postUpload(Request $request){
-        $folder = "music";
-        $filepath = $this->musicDir . '/' .
+        $filepath = config('radio.music.relative') . '/' .
             str_slug(
                 str_replace(
                     $request->file('file')->getClientOriginalExtension(),
@@ -42,13 +40,13 @@ class RadioController extends Controller
 
     public function getDelete(){
         return view('dashboard.pages.radio.delete')->with([
-            'Files' => Storage::files($this->musicDir)
+            'Files' => Storage::files(config('radio.music.relative'))
         ]);
     }
 
     public function postDelete(Request $request){
         $files = array_map(function($value){
-            return  $this->musicDir . '/' . $value;
+            return  config('radio.music.relative') . '/' . $value;
         }, $request->delete);
 
         if(Storage::delete($files)){
@@ -62,23 +60,19 @@ class RadioController extends Controller
             'action' => 'required|in:on,off,refresh'
         ]);
 
-        $e = new Envoy();
         switch($request['action']){
             case 'on':
-                $e->run('icecastStart')->wait(function() use ($e){
-                    $e->run('streamStart');
-
-                });
+                ProcessService::startProcess(config('radio.script.run.icecast'));
+                ProcessService::startBackgroundProcess(config('radio.script.run.ezstream'));
                 return response()->json($this->serverStatus());
                 break;
             case 'off':
-                $e->run('streamStop')->wait(function() use ($e){
-                    $e->run('icecastStop');
-                });
+                ProcessService::startProcess(config('radio.script.shutdown.ezstream'));
+                ProcessService::startProcess(config('radio.script.shutdown.icecast'));
                 return response()->json($this->serverStatus());
                 break;
             case 'refresh':
-                $e->run('streamRefresh');
+                ProcessService::startProcess(config('radio.script.refresh'));
                 return response()->json($this->serverStatus());
         }
     }
@@ -86,13 +80,18 @@ class RadioController extends Controller
     public function serverStatus(){
         $SERVER = 'localhost:8000';
         $STATS_FILE = '/play.xspf';
-        $ch = curl_init();
-        curl_setopt($ch,CURLOPT_URL,$SERVER.$STATS_FILE);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        $output = curl_exec($ch);
+        $ch = curl_init($SERVER . $STATS_FILE);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-
-        return $output ? true : false;
+        if($httpcode>=200 && $httpcode<300){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getPlaylist(){
@@ -103,7 +102,7 @@ class RadioController extends Controller
         return view("dashboard.pages.radio.playlist")
             ->with([
                 'Playlists' => $playlists->toArray(),
-                'Files' => Storage::files($this->musicDir)
+                'Files' => Storage::files(config('radio.music.relative'))
             ]);
     }
 

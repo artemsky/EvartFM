@@ -17,6 +17,7 @@ class CreateEventsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->dateTime('date');
+            $table->unsignedInteger('playlist')->defalut(null);
         });
     }
 

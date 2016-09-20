@@ -51,7 +51,7 @@
                             return;
                         lastID = event.id;
                 %}}
-                <div class="event-item" data-id="@{{%= event.id %}}" data-edit="Edit">
+                <div class="event-item" data-id="@{{%= event.id %}}" data-edit="Edit" data-playlist="@{{%= event.playlist %}}">
                 <div class="event-item-info">
                 <div class="event-item-name">@{{%= event.title %}}</div>
                 <div class="event-item-location">@{{%= event.description %}}</div>
@@ -71,7 +71,7 @@
 
 <script type="text/template" id="day-events">
     @{{% _.each(eventsThisDay, function(event) { %}}
-    <div class="event-item" data-edit="Edit" data-id="@{{%= event.id %}}">
+    <div class="event-item" data-edit="Edit" data-id="@{{%= event.id %}}" data-playlist="@{{%= event.playlist %}}">
         <div class="event-item-info">
             <div class="event-item-name">@{{%= event.title %}}</div>
             <div class="event-item-location">@{{%= event.description %}}</div>

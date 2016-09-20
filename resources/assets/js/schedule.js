@@ -15,7 +15,7 @@
         target: {
             name: null,
             object: null,
-            renderd: null,
+            rendered: null,
             repeat: null
         },
         'get': function(key){
@@ -39,6 +39,7 @@
                 title: event.title,
                 description: event.description,
                 date: event.date,
+                playlist: event.playlist,
                 repeat: {
                     event_id: identity,
                     everyDay: event.everyDay ? 1 : 0,
@@ -103,9 +104,8 @@
             return this;
         },
         getRendered: function(range){
-            var dateFormat = 'YYYY-MM-DD HH:ss';
+            var dateFormat = 'YYYY-MM-DD HH:mm';
             this.target.renderd = [];
-            // var range = moment().add(month, 'month').diff(moment().add(-month, 'month'), 'days');
             range /= 2;
 
             this.target.object.forEach(function(value){
@@ -115,8 +115,9 @@
                 };
                 if(value.repeat.everyDay){
                     flag.everyDay = true;
+                    var dayNow = moment(value.date);
                     for(var i = -range; i < range; i++){
-                        value.date = moment().add(i, 'days').format(dateFormat);
+                        value.date = moment(dayNow).add(i, 'days').format(dateFormat);
                         this.target.renderd.push($.extend(true, {}, value));
                     }
                 }
@@ -125,7 +126,7 @@
                     var weekRange = Math.floor(range / 7);
                     var weekNow = moment().week();
                     for(var i = -weekRange; i < weekRange; i++){
-                        var week = moment().week(weekNow + i);
+                        var week = moment(value.date).week(weekNow + i);
                         for(var day in value.repeat)
                             switch(day){
                                 case "mon":
@@ -209,9 +210,12 @@
     //events
     var onEventsSuccess = function(response){
             $("#fountainTextG").hide();
-            storage.set('events', response);
+            storage.set('events', response.events);
+            storage.set('playlists', response.playlists);
             var events = storage.get('events').getRendered(60);
+            var playlists = storage.get('playlists').result();
             initCalendar(events);
+            initPlaylist(playlists);
         },
         onEventsError = function (response){
             $("#fountainTextG").hide();
@@ -322,6 +326,7 @@
             id: id || -1,
             title: title,
             date : isDayRepeat ? moment(dateTime, "HH:mm").format("YYYY-MM-DD HH:mm") : dateTime,
+            playlist: $("#playlist option:selected").val(),
             description: description,
             everyDay: isDayRepeat,
             everyWeek: isWeekRepeat,
@@ -332,6 +337,14 @@
         modal.modal('hide');
     };
 
+    //Init playlist
+    var initPlaylist = function (playlist){
+        var list = $("#playlist");
+        playlist.forEach(function(val){
+            list.append("<option value='"+val.id+"'>"+val.name+"</option>");
+        });
+        list.selectpicker('refresh');
+    };
     //Init calendar
     var initCalendar = function(events){
         clndr = $('#full-clndr').clndr({
@@ -424,24 +437,25 @@
                 })
                 //Init modal window "Edit event"
                     .on('click', '.event-item span:first-child', function(e){
-                    e.stopPropagation();
-                    var $this = $(this).parent().parent();
-                    modal.find("form").get(0).reset();
-                    modal.find(".modal-title").text("Edit event");
+                        e.stopPropagation();
+                        var $this = $(this).parent().parent();
+                        modal.find("form").get(0).reset();
+                        modal.find(".modal-title").text("Edit event");
 
-                    datetimepickerOptions.value = $this.find(".event-item-time").attr("data-datetime");
-                    modal.find("#Title").val($this.find(".event-item-name").text());
-                    modal.find("#Description").val($this.find(".event-item-location").text());
+                        datetimepickerOptions.value = $this.find(".event-item-time").attr("data-datetime");
+                        modal.find("#Title").val($this.find(".event-item-name").text());
+                        modal.find("#Description").val($this.find(".event-item-location").text());
 
-                    datetimePickerInit(datetimepickerOptions, $this.attr('data-id'));
-                    modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$this.attr('data-id')));
-                    modal.find(".delete-event").off("click").on('click', function(){
-                        $.get("schedule/events/delete/" + $this.attr('data-id')).done(function(){
-                            clndr.setEvents(storage.get("events").del(parseInt($this.attr('data-id'))).getRendered(60));
-                            modal.modal("hide");
+                        datetimePickerInit(datetimepickerOptions, $this.attr('data-id'));
+                        modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$this.attr('data-id')));
+                        modal.find(".delete-event").off("click").on('click', function(){
+                            $.get("schedule/events/delete/" + $this.attr('data-id')).done(function(){
+                                clndr.setEvents(storage.get("events").del(parseInt($this.attr('data-id'))).getRendered(60));
+                                modal.modal("hide");
+                            });
                         });
-                    });
-                    modal.find(".delete-event").show();
+                        modal.find(".delete-event").show();
+                        $("#playlist").selectpicker("val", $this.attr("data-playlist") || 0);
                 });
                 $(".event-listing").on('click', '.event-item .event-item-hover span:last-child', function(e){
                     e.stopPropagation();
@@ -487,7 +501,7 @@
                     modal.find(".save-changes").off("click").on('click', saveChanges.bind(null,$(this).attr('data-date')));
                 });
 
-                var calendar = $(".clndr");
+                // var calendar = $(".clndr");
                 calendar.height(calendar.height());
 
 

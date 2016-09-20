@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\EventsRepeater;
 use App\Http\Controllers\Traits\Validate;
+use App\Playlist;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -25,23 +26,26 @@ class EventsController extends Controller
         foreach ($events as $event){
             $event->repeat;
         }
-        return response()->json($events, 200);
+
+        $playlists = Playlist::all();
+        return response()->json([
+            "events" => $events,
+            "playlists" => $playlists
+        ], 200);
     }
 
     public function postUpdate(Request $request){
 
-        $this->isValid($request, [
-            'data' => 'json'
-        ]);
-
         $events = $request['events'];
 
         foreach ($events as $event) {
-            $e = Event::find($event['id']);
+            $id = $event['id'];
+            $e = Event::find($id);
             if(!$e) {
                 $this->createNewItem($event);
                 continue;
             }
+            $e->playlist = intval($event['playlist']) > 0 ? $event['playlist'] : null;
             $e->date = $event['date'];
             $e->title = $event['title'];
             $e->description = $event['description'];
@@ -62,6 +66,7 @@ class EventsController extends Controller
         $e->date = $event['date'];
         $e->title = $event['title'];
         $e->description = $event['description'];
+        $e->playlist = intval($event['playlist']) > 0 ? $event['playlist'] : 0;
         $e->save();
         $e->repeat = new EventsRepeater();
         $event['repeat']['event_id'] = $e->id;
@@ -69,7 +74,6 @@ class EventsController extends Controller
             $e->repeat->$key = $repeat;
         }
         $e->repeat->save();
-        return response()->json(["asdasd"=> $e]);
     }
 
     public function getDelete($id){

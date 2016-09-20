@@ -8,11 +8,6 @@ use App\Event;
 use Illuminate\Support\Facades\Storage;
 
 class PlaylistService{
-    function __construct(){
-       $this->playlistPath = storage_path() . "broadcast/playlist.txt";
-    }
-
-    private $playlistPath;
 
     public function getPlaylistByNow(){
         $events = Event::all();
@@ -52,48 +47,14 @@ class PlaylistService{
     }
 
     public function generatePlaylistForNow(){
+        Storage::put(config('radio.music.relative') . '/check.txt', Carbon::now()->toDateTimeString());
         $id = $this->getPlaylistByNow();
         $playlist = Playlist::find($id);
         if(!$playlist) return false;
-        $filelist = $playlist->tracklist->only('track');
-        Storage::put("app/22/1.txt", json_encode($filelist));
+        $list = $playlist->tracklist->map(function ($item, $key) {
+            return config('radio.music.full') . '/' . $item['track'];
+        });
+        Storage::put(config('radio.playlist.relative'), implode("\n", $list->toArray()));
         return true;
     }
 }
-//class Playlist
-//{
-//    protected $list;
-//    protected $current;
-//    private $filepath = "broadcast/playlist.json";
-//
-//    public function get(){
-//        $file = Storage::get($this->filepath);
-//        $this->list = json_decode($file);
-//        return $this->list;
-//    }
-//
-//    public function set($newPlatlist){
-//        return Storage::put(
-//            $this->filepath,
-//            json_encode($newPlatlist, true)
-//        );
-//    }
-//
-//    public function json(){
-//        return json_encode($this->list);
-//    }
-//
-//    public function toList(){
-//        return implode('\n', $this->list);
-//    }
-//
-//    public function select($playlistName){
-//        foreach ($this->list as $playlist){
-//            if(str_contains($playlist->name, $playlistName)){
-//                $this->current = $playlist->files;
-//                return $this;
-//            }
-//        }
-//        $this->current = null;
-//    }
-//}
