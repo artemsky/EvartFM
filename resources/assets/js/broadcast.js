@@ -14,9 +14,6 @@ APPLICATION.Broadcasting = new function(){
             error: function(response){
                 var w = window.open('', ':Error Message', 'menubar=no, location=no');
                 w.document.write(response.responseText);
-            },
-            success: function(response){
-                console.log(response);
             }
         };
     };
@@ -50,6 +47,24 @@ APPLICATION.Broadcasting = new function(){
                 }
             });
         };
+        $this.ServerStatusCheck = function(){
+            var serverStatus = $("#serverStatus");
+            var onbtn = $(".radio-on");
+            var offbtn = $(".radio-off");
+            self.Global.requestOptions.type = "GET";
+            self.Global.requestOptions.success = function(response){
+            if(response){
+              serverStatus.removeClass("text-danger").addClass("text-success");
+                offbtn.prop("disabled", false);
+            }
+            else{
+              serverStatus.removeClass("text-success").addClass("text-danger");
+                onbtn.prop("disabled", false);
+            }
+            };
+            $.ajax(serverStatus.attr("data-status-url"), self.Global.requestOptions)
+
+        };
         $this.getURL = function(){
             return {
                 switch: self.Global.RootURL + "switch"
@@ -57,18 +72,31 @@ APPLICATION.Broadcasting = new function(){
         };
     };
     self.initRadioControll = new function(){
-        $(".radio-on").on("click", function(){
+        var onbtn = $(".radio-on");
+        var offbtn = $(".radio-off");
+        onbtn.on("click", function(){
+            onbtn.prop("disabled", true);
+            offbtn.prop("disabled", true);
           self.Global.requestOptions.data = {action: "on"};
+            self.Global.requestOptions.type = "POST";
+            self.Global.requestOptions.success = self.Helper.ServerStatusCheck;
           $.ajax(self.Helper.getURL().switch, self.Global.requestOptions);
         });
-        $(".radio-off").on("click", function(){
+        offbtn.on("click", function(){
+            onbtn.prop("disabled", true);
+            offbtn.prop("disabled", true);
             self.Global.requestOptions.data = {action: "off"};
+            self.Global.requestOptions.type = "POST";
+            self.Global.requestOptions.success = self.Helper.ServerStatusCheck;
             $.ajax(self.Helper.getURL().switch, self.Global.requestOptions);
         });
         $(".radio-refresh").on("click", function(){
             self.Global.requestOptions.data = {action: "refresh"};
+            self.Global.requestOptions.type = "POST";
             $.ajax(self.Helper.getURL().switch, self.Global.requestOptions);
         });
+        self.Helper.ServerStatusCheck();
+        setInterval(self.Helper.ServerStatusCheck, 5000);
     };
 
 };

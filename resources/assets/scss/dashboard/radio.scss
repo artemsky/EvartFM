@@ -14,26 +14,6 @@
   }
 }
 
-.radio-upload{
-  #dropzone.dz-clickable {
-    cursor: pointer;
-  }
-  #dropzone {
-    border: 2px dashed #0087F7;
-    border-radius: 5px;
-    background: white;
-    margin-top: 60px;
-  }
-  #dropzone, #dropzone * {
-    box-sizing: border-box;
-  }
-
-  .dropzone .dz-preview .dz-error-message {
-    color: white;
-  }
-
-}
-
 .radio-delete{
   .ui-selectable {
     -ms-touch-action: none;
@@ -51,11 +31,11 @@
   .selectable{
     display: flex;
     flex-flow: column;
-    background: #e8ffdc;
+    background: #f9f9f9;
     padding: 10px 15px;
     width: 100%;
     border-radius: 5px;
-    border: 2px dashed #00dd1c;
+    border: 2px dashed #77777b;
   }
   .selectable .ui-selecting {
     background: #FECA40;
@@ -83,8 +63,30 @@
   .sortable{
     background: #fff8e7;
     padding-bottom: 20px;
+    max-height: 500px;
+    overflow: auto;
     .item{
-      border-bottom: 1px dashed #1b6d85;
+      border: 1px dashed #1b6d85;
+      padding: 0.5em;
+      border-radius: 10px;
+      margin: 0 0 2px;
+      display: table;
+      table-layout: fixed;
+      width: 100%;
+      span{
+        vertical-align: middle;
+      }
+      .name{
+        display: table-cell;
+        width: 80%;
+      }
+      .duration{
+        display: table-cell;
+        width: 20%;
+      }
+    }
+    .ui-sortable-helper{
+      background: #ffe4c4;
     }
   }
 }

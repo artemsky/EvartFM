@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Playlist;
 use App\Services\ProcessService;
-use App\Http\Requests;
+use App\Services\MP3FileService;
 
 class RadioController extends Controller
 {
@@ -64,16 +64,16 @@ class RadioController extends Controller
             case 'on':
                 ProcessService::startProcess(config('radio.script.run.icecast'));
                 ProcessService::startBackgroundProcess(config('radio.script.run.ezstream'));
-                return response()->json($this->serverStatus());
+                return $this->serverStatus();
                 break;
             case 'off':
                 ProcessService::startProcess(config('radio.script.shutdown.ezstream'));
                 ProcessService::startProcess(config('radio.script.shutdown.icecast'));
-                return response()->json($this->serverStatus());
+                return $this->serverStatus();
                 break;
             case 'refresh':
                 ProcessService::startProcess(config('radio.script.refresh'));
-                return response()->json($this->serverStatus());
+                return $this->serverStatus();
         }
     }
 
@@ -88,21 +88,32 @@ class RadioController extends Controller
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
         if($httpcode>=200 && $httpcode<300){
-            return true;
+            return response()->json(true);
         } else {
-            return false;
+            return response()->json(false);
         }
     }
 
     public function getPlaylist(){
         $playlists = Playlist::all();
-        foreach ($playlists as $playlist)
-            $playlist->tracklist;
+        foreach ($playlists as $playlist){
+            foreach ($playlist->tracklist as $track){
+                $mp3file = new MP3FileService(config('radio.music.full') . '/' . $track['track']);
+                $track['duration'] = MP3FileService::formatTime($mp3file->getDurationEstimate());
+                $track['track'] = config('radio.music.relative') . '/' . $track['track'];
+            }
+        }
 
         return view("dashboard.pages.radio.playlist")
             ->with([
                 'Playlists' => $playlists->toArray(),
-                'Files' => Storage::files(config('radio.music.relative'))
+                'Files' => collect(Storage::files(config('radio.music.relative')))->map(function($value){
+                    $mp3file = new MP3FileService(storage_path('app') .'/'. $value);
+                    return [
+                        'file' => $value,
+                        'duration' => MP3FileService::formatTime($mp3file->getDurationEstimate())
+                    ];
+                })
             ]);
     }
 

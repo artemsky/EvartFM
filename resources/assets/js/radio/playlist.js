@@ -8,10 +8,10 @@ $(function(){
             receive: function(event, ui) {
                 var item = ui.item.clone();
                 var id = Date.now();
-                item.find("h5").attr("data-track-id", id);
+                item.find(".name").attr("data-track-id", id);
                 $(this).append(item);
                 var parent = item.parent().parent();
-                var info = item.find("h5");
+                var info = item.find(".name");
                 var playlistName = parent.attr("id");
                 var inArray = -1;
                 forSave.forEach(function(playlist, i){
@@ -44,7 +44,7 @@ $(function(){
             beforeStop: function (event, ui) {
                 if(removeIntent == true){
                     ui.item.remove();
-                    var id = ui.item.find("h5").attr("data-track-id");
+                    var id = ui.item.find(".name").attr("data-track-id");
                     forDeleteTrack.push(parseInt(id));
                 }
             }
@@ -127,5 +127,33 @@ $(function(){
         };
         $.ajax($(this).attr("data-url"), requestOptions);
     })
+    $(function(){
+        var prev = null;
+        var switchAudio = function(item){
+            var audio = $(item).parent().find("audio").get(0);
+            if(audio.paused){
+                audio.play();
+                $(item).addClass('glyphicon-pause').removeClass('glyphicon-play');
+            }
+            else{
+                audio.pause();
+                $(item).addClass('glyphicon-play').removeClass('glyphicon-pause');
+            }
+        };
+        $(".sortable").on("click", ".play", function(){
+            if(prev == null){
+                prev = $(this);
+            }
+            if(prev.is($(this))){
+                switchAudio(this);
+            }
+            else{
+                switchAudio(prev);
+                switchAudio(this);
+                prev = $(this);
+            }
+        })
+    });
+
 
 });

@@ -49,15 +49,15 @@
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
                 <div class="icon">
-                    <span class="glyphicon glyphicon-bullhorn"></span>
+                    <span id="serverStatus" class="glyphicon glyphicon-bullhorn" data-status-url="{{route('radio.server.status')}}"></span>
                 </div>
                 <div class="caption">
                     <h3>Manage radio station</h3>
                     <p>Click button to turn ON/OFF broadcasting</p>
                     <p>
-                        <a href="#" class="btn btn-success radio-on" role="button">Turn on</a>
-                        <a href="#" class="btn btn-danger radio-off" role="button">Turn off</a>
-                        <a href="#" class="btn btn-warning radio-refresh" role="button">Refresh Playlist</a></p>
+                        <button type="button" class="btn btn-success radio-on" role="button">Turn on</button>
+                        <button type="button" class="btn btn-danger radio-off" role="button">Turn off</button>
+                        <button type="button"  class="btn btn-warning radio-refresh" role="button">Refresh Playlist</button></p>
                 </div>
             </div>
         </div>

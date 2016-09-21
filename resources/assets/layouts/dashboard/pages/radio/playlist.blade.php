@@ -42,14 +42,17 @@
                 <div class="tab-content">
                     <?php $isFirst = true?>
                     @foreach($Playlists as $playlist)
-                        <?php $counter = 0 ?>
                     <div role="tabpanel" class="tab-pane fade in  {{$isFirst ? "active" : false}}" id="{{$playlist['name']}}" data-playlist-id="{{$playlist['id']}}">
                         <div class="sortable playlist">
                             @foreach($playlist['tracklist'] as $track)
-                            <div class="item">
-                                <span>{{++$counter}}</span>
-                                <h5 data-track-id="{{$track['id']}}">{{basename($track['track'])}}</h5>
-                            </div>
+                                <div class="item">
+                                    <span class="name" data-track-id="{{$track['id']}}">{{basename($track['track'])}}</span>
+                                    <span class="duration text-center">
+                                        <span>{{$track['duration']}}</span>
+                                        <span class="play glyphicon glyphicon-play"></span>
+                                        <audio src="{{asset('app/'.$track['track'])}}"></audio>
+                                    </span>
+                                </div>
                             @endforeach
                         </div>
                         <button type="button" class="btn btn-warning w100 delete-current" data-url="{{route("radio.playlist.delete")}}">Delete this list</button>
@@ -64,8 +67,12 @@
             <div class="sortable files">
                 @foreach($Files as $file)
                     <div class="item">
-                        <span>{{++$counter}}</span>
-                        <h5>{{basename($file)}}</h5>
+                        <span class="name">{{basename($file['file'])}}</span>
+                        <span class="duration text-center">
+                            <span>{{$file['duration']}}</span>
+                            <span class="play glyphicon glyphicon-play"></span>
+                            <audio src="{{asset('app/'.$file['file'])}}"></audio>
+                        </span>
                     </div>
                 @endforeach
             </div>

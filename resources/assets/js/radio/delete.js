@@ -2,13 +2,13 @@ $(function(){
     "use strict";
     var forDelete = [];
     var btnDelete = $(".delete");
-    console.log(111);
     $( ".selectable" ).selectable({
+        filter: ".item",
         unselected: function( event, ui ) {
             var deletetable = $(ui.unselected).find('span').text();
             forDelete = forDelete.filter(function(el){
                 return el != deletetable;
-            })
+            });
             console.log(2);
         },
         selected: function( event, ui ) {

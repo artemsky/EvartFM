@@ -167,6 +167,11 @@ Route::group(['middleware' => 'web'], function () {
                 'uses' => 'RadioController@deletePlaylist'
             ]);
 
+            Route::get('/server/status', [
+                'as' => 'radio.server.status',
+                'uses' => 'RadioController@serverStatus'
+            ]);
+
         });
 
     });
