@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => 'web'], function () {
+Route::group(['middleware' => ['web', 'locale']], function () {
 
 
     Route::get('/login', [
@@ -37,6 +37,14 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'home',
             'uses' => 'UserController@getDashboardPage'
         ]);
+
+        Route::get('/lang/{locale}', function ($locale) {
+            if (in_array($locale, \Config::get('app.locales'))) {   # Проверяем, что у пользователя выбран доступный язык
+                Session::put('locale', $locale);                    # И устанавливаем его в сессии под именем locale
+            }
+            return redirect()->back();                              # Редиректим его <s>взад</s> на ту же страницу
+
+        });
 
         Route::group(['prefix' => 'user', 'middleware' => ['auth', 'role:super']], function () {
 

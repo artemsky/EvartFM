@@ -362,6 +362,11 @@
                             theme:"minimal-dark"
                         });
 
+                        //TranslateX item hover menu
+                        var subMenu = $(".event-item-hover");
+                        subMenu.css("transform", "translateX(" + subMenu.width() + "px)");
+
+
                 }
             },
             forceSixRows: true,

@@ -13,7 +13,7 @@
         <div class="col-xs-12 text-right more">
             <button type="button" class="btn btn-default new-item">
                 <span class="glyphicon glyphicon-plus"></span>
-                New event
+                @lang('dashboard.components.new.event')
             </button>
         </div>
     </div>

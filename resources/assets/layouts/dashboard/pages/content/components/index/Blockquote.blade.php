@@ -11,7 +11,7 @@
         <div class="col-xs-12 text-right more">
             <button type="button" class="btn btn-default new-item">
                 <span class="glyphicon glyphicon-plus"></span>
-                New blockquote
+                @lang('dashboard.components.new.blockquote')
             </button>
         </div>
 

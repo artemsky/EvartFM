@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">@lang('dashboard.title')</a>
+            <a class="navbar-brand" href="#">@lang('dashboard.core.navigation.title')</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,32 +19,32 @@
                 @if(str_contains('super, admin', $userRole))
                     <li role="presentation" class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            Users <span class="caret"></span>
+                            @lang('dashboard.core.navigation.users.title') <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{route('user')}}">All Users</a></li>
-                            <li><a href="{{route('adduser')}}">Add User</a></li>
+                            <li><a href="{{route('user')}}">@lang('dashboard.core.navigation.users.all')</a></li>
+                            <li><a href="{{route('adduser')}}">@lang('dashboard.core.navigation.users.add')</a></li>
                         </ul>
                     </li>
                 @endif
                 @if(str_contains('super, admin, writer, dj', $userRole))
-                    <li><a href="{{route('schedule.index')}}">Schedule</a></li>
+                    <li><a href="{{route('schedule.index')}}">@lang('dashboard.core.navigation.schedule')</a></li>
                 @endif
                 @if(str_contains('super, admin, writer', $userRole))
                     <li role="presentation" class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            Content Management <span class="caret"></span>
+                            @lang('dashboard.core.navigation.content.title') <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{route('allnews')}}">News</a></li>
-                            <li><a href="{{route('content.index')}}">Components</a></li>
+                            <li><a href="{{route('allnews')}}">@lang('dashboard.core.navigation.content.news')</a></li>
+                            <li><a href="{{route('content.index')}}">@lang('dashboard.core.navigation.content.components')</a></li>
                         </ul>
                     </li>
 
                 @endif
 
                 @if(str_contains('super, admin', $userRole))
-                    <li><a href="{{route('radio.index')}}">Broadcast</a></li>
+                    <li><a href="{{route('radio.index')}}">@lang('dashboard.core.navigation.broadcast')</a></li>
 
                 @endif
 
@@ -52,14 +52,14 @@
             <ul class="nav navbar-nav navbar-right">
                 <li role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        Language <span class="caret"></span>
+                        @lang('dashboard.core.navigation.language') <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Eng</a></li>
-                        <li><a href="#">Ru</a></li>
+                        <li><a href="/dashboard/lang/en">Eng</a></li>
+                        <li><a href="/dashboard/lang/ru">Рус</a></li>
                     </ul>
                 </li>
-                <li><a href="{{route('logout')}}">Logout</a></li>
+                <li><a href="{{route('logout')}}">@lang('dashboard.core.navigation.logout')</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

@@ -12,7 +12,7 @@
         <div class="col-xs-12 text-right more">
             <button type="button" class="btn btn-default new-item">
                 <span class="glyphicon glyphicon-plus"></span>
-                New video slide
+                @lang('dashboard.components.new.video')
             </button>
         </div>
     </div>

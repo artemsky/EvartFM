@@ -34,14 +34,14 @@
             <div class="event-listing-title day-title">
                 <span class="glyphicon glyphicon-plus pull-right"></span>
                 <span class="glyphicon glyphicon-chevron-down pull-left"></span>
-                <span class="event-title">EVENTS THIS DAY</span>
+                <span class="event-title">@lang('dashboard.components.scheduler.event.day')</span>
             </div>
             <div class="day-events"></div>
 
             <div class="event-listing-title month-title">
                 <span class="glyphicon glyphicon-plus pull-right"></span>
                 <span class="glyphicon glyphicon-chevron-up pull-left"></span>
-                <span class="event-title">EVENTS THIS MONTH</span>
+                <span class="event-title">@lang('dashboard.components.scheduler.event.month')</span>
             </div>
             <div class="event-items" style="display:none">
                 @{{%
@@ -58,8 +58,8 @@
                 </div>
                 <div class="event-item-time" data-datetime="@{{%= moment(event.date).format("YYYY/MM/DD HH:mm") %}}">@{{%= moment(event.date).format("ddd DD") %}}</div>
                 <div class="event-item-hover">
-                    <span>Edit</span>
-                    <span>Highlight</span>
+                    <span>@lang('dashboard.components.scheduler.event.edit')</span>
+                    <span>@lang('dashboard.components.scheduler.event.highlight')</span>
                 </div>
                 </div>
                 @{{% }); %}}
@@ -78,8 +78,8 @@
         </div>
         <div class="event-item-time" data-datetime="@{{%= moment(event.date).format("YYYY/MM/DD HH:mm") %}}">@{{%= moment(event.date).format("HH:mm") %}}</div>
         <div class="event-item-hover">
-            <span>Edit</span>
-            <span>Highlight</span>
+            <span>@lang('dashboard.components.scheduler.event.edit')</span>
+            <span>@lang('dashboard.components.scheduler.event.highlight')</span>
         </div>
     </div>
     @{{% }); %}}
