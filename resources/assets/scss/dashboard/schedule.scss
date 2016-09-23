@@ -207,6 +207,15 @@
             cursor: pointer;
             margin: 10px 20px;
           }
+          @media (max-width: 1199px) {
+            font-size: 1.2em;
+          }
+          @media (max-width: 992px) {
+            font-size: 1em;
+            span{
+              margin: 10px;
+            }
+          }
         }
         //&:hover:after{
         //  display: flex;

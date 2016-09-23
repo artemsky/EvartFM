@@ -103,8 +103,8 @@
   },
   "moment":{
     "main":{
-      "development": ["./moment.js", "./locale/en-gb.js"],
-      "production": ["./min/moment.min.js", "./locale/en-gb.js"]
+      "development": ["./moment.js", "./locale/en-gb.js", "./locale/ru.js"],
+      "production": ["./min/moment.min.js", "./locale/en-gb.js", "./locale/ru.js"]
     }
   },
   "underscore":{

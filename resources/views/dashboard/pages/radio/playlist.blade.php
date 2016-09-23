@@ -25,7 +25,7 @@
                     <?php $isFirst = true?>
                         <li role="presentation" class="dropdown active">
                             <a href="#" class="dropdown-toggle" id="playlist" data-toggle="dropdown" aria-expanded="false">
-                                @lang('dashboard.radio.playlist.select')
+                                @lang('dashboard.radio.playlist.playlist.select')
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="playlist" id="playlist-contents">

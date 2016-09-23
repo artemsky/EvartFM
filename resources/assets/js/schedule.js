@@ -7,7 +7,14 @@
         escape      : /\{\{%-([\s\S]+?)%\}\}/g
     };
     //Set moment locale
-    moment.locale("en-gb");
+    switch($('meta[name="lang"]').attr('content')){
+        case 'ru':
+            moment.locale("ru");
+            break;
+        default:
+            moment.locale("en-gb");
+    }
+
 
     //Init storage helpers
     var storage = {
@@ -363,8 +370,9 @@
                         });
 
                         //TranslateX item hover menu
-                        var subMenu = $(".event-item-hover");
-                        subMenu.css("transform", "translateX(" + subMenu.width() + "px)");
+                        $(".event-item-hover").each(function(i, obj){
+                            $(obj).css("transform", "translateX(" + $(obj).width() + "px)");
+                        });
 
 
                 }
@@ -423,6 +431,10 @@
                         $this.removeClass(block.close).addClass(block.open);
 
                     $(".event-items, .day-events").slideToggle();
+
+                    $(".event-item-hover").each(function(i, obj){
+                        $(obj).css("transform", "translateX(" + $(obj).width() + "px)");
+                    });
 
                 });
 

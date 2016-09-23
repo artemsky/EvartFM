@@ -17,9 +17,9 @@
 @section('body-class', 'useradd')
 @section('content')
     <div class="row">
-        <div class="col-md-offset-3 col-md-6">
+        <div class="col-md-offset-2 col-md-7">
 
-            <h1>Add Users</h1>
+            <h1>@lang('dashboard.users.add')</h1>
             <form class="form-horizontal">
                 <div class="form-group">
                     <label for="login" class="col-sm-2 control-label required">@lang('dashboard.users.login')</label>
