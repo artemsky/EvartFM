@@ -20,8 +20,8 @@
 @section('content')
     <div class="row">
         <div class="col-sm-12">
-            <h1>Click to select</h1>
-            <h6><strong>CTRL+click</strong> or <strong>click+mouse drag over items</strong> to select many</h6>
+            <h1>@lang('dashboard.radio.delete.select')</h1>
+            <h6>@lang('dashboard.radio.delete.selectDesc')</h6>
             <div class="selectable">
                 <?php $counter = 0 ?>
                 @foreach($Files as $file)
@@ -30,7 +30,7 @@
                      </div>
                 @endforeach
             </div>
-            <button class="btn btn-danger delete pull-right" data-url="{{route("radio.delete.files")}}">Delete</button>
+            <button class="btn btn-danger delete pull-right" data-url="{{route("radio.delete.files")}}">@lang('dashboard.core.buttons.delete')</button>
 
         </div>
     </div>

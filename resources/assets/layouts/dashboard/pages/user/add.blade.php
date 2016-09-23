@@ -22,68 +22,68 @@
             <h1>Add Users</h1>
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label for="login" class="col-sm-2 control-label required">Login</label>
+                    <label for="login" class="col-sm-2 control-label required">@lang('dashboard.users.login')</label>
                     <div class="col-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-user"></span>
                             </span>
-                            <input type="text" class="form-control" placeholder="Enter login" name="login" id="login">
+                            <input type="text" class="form-control" placeholder="@lang('dashboard.users.loginPlaceholder')" name="login" id="login">
                         </div><!-- /input-group -->
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="password" class="col-sm-2 control-label required">Password</label>
+                    <label for="password" class="col-sm-2 control-label required">@lang('dashboard.users.password')</label>
                     <div class="col-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon glyphicon-lock"></span>
                             </span>
-                            <input type="text" class="form-control" placeholder="Min: 6 - Max: 32" name="password" id="password">
+                            <input type="text" class="form-control" placeholder="@lang('dashboard.users.passwordPlaceholder')" name="password" id="password">
                         </div><!-- /input-group -->
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="password_confirmation" class="col-sm-2 control-label required">Repeat</label>
+                    <label for="password_confirmation" class="col-sm-2 control-label required">@lang('dashboard.users.passwordRepeat')</label>
                     <div class="col-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon glyphicon-lock"></span>
                             </span>
-                            <input type="text" class="form-control" placeholder="Repeat password" name="password_confirmation" id="password_confirmation">
+                            <input type="text" class="form-control" placeholder="@lang('dashboard.users.passwordRepeatPlaceholder')" name="password_confirmation" id="password_confirmation">
                         </div><!-- /input-group -->
                     </div>
                 </div>
 
 
                 <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label">Email</label>
+                    <label for="email" class="col-sm-2 control-label">@lang('dashboard.users.email')</label>
                     <div class="col-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </span>
-                            <input type="text" class="form-control" placeholder="Enter e-mail" name="email" id="email">
+                            <input type="text" class="form-control" placeholder="@lang('dashboard.users.emailPlaceholder')" name="email" id="email">
                         </div><!-- /input-group -->
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label">Name</label>
+                    <label for="name" class="col-sm-2 control-label">@lang('dashboard.users.name')</label>
                     <div class="col-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon glyphicon-sunglasses"></span>
                             </span>
-                            <input type="text" class="form-control" placeholder="Enter Username" name="name" id="name">
+                            <input type="text" class="form-control" placeholder="@lang('dashboard.users.namePlaceholder')" name="name" id="name">
                         </div><!-- /input-group -->
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="role" class="col-sm-2 control-label required">Role</label>
+                    <label for="role" class="col-sm-2 control-label required">@lang('dashboard.users.role')</label>
                     <div class="col-sm-10">
                         <select class="selectpicker" id="role" name="role">
                             <option value="super">Super Admin</option>
@@ -98,7 +98,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">Add user</button>
+                        <button type="submit" class="btn btn-default">@lang('dashboard.users.add')</button>
                     </div>
                 </div>
             </form>

@@ -39,60 +39,60 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Add new Event</h4>
+                    <h4 class="modal-title">@lang('dashboard.components.scheduler.modal.modalTitle')</h4>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="Title">Title</label>
-                            <input type="text" class="form-control" id="Title" placeholder="Title" title="Title can't be empty">
+                            <label for="Title">@lang('dashboard.components.scheduler.modal.title')</label>
+                            <input type="text" class="form-control" id="Title" placeholder="@lang('dashboard.components.scheduler.modal.title')" title="@lang('dashboard.components.scheduler.modal.titleTip')">
                         </div>
                         <div class="form-group">
-                            <label for="Description">Description</label>
-                            <input type="text" class="form-control" id="Description" placeholder="Description">
+                            <label for="Description">@lang('dashboard.components.scheduler.modal.desc')</label>
+                            <input type="text" class="form-control" id="Description" placeholder="@lang('dashboard.components.scheduler.modal.desc')">
                         </div>
                         <div class="form-group">
-                            <label for="playlist">Select Playlist</label>
+                            <label for="playlist">@lang('dashboard.components.scheduler.modal.playlist')</label>
                             <select class="selectpicker form-control" id="playlist" name="playlist">
-                                <option value="0">No Playlist</option>
+                                <option value="0">@lang('dashboard.components.scheduler.modal.emptyPlaylist')</option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <input type="checkbox" id="repeat-day">
-                            <label for="repeat-day">Repeat every day</label>
+                            <label for="repeat-day">@lang('dashboard.components.scheduler.modal.repeat.everyDay')</label>
                         </div>
                         <div class="form-group">
                             <input type="checkbox" id="repeat-month">
-                            <label for="repeat-month">Repeat every week</label>
+                            <label for="repeat-month">@lang('dashboard.components.scheduler.modal.repeat.everyWeek')</label>
                             <div class="form-group" id="repeat-on">
                                 <input type="checkbox" id="repeat-on-mon">
-                                <label for="repeat-on-mon">Mon</label>
+                                <label for="repeat-on-mon">@lang('dashboard.components.scheduler.modal.repeat.weeks.mon')</label>
                                 <input type="checkbox" id="repeat-on-tue">
-                                <label for="repeat-on-tue">Tue</label>
+                                <label for="repeat-on-tue">@lang('dashboard.components.scheduler.modal.repeat.weeks.tue')</label>
                                 <input type="checkbox" id="repeat-on-wed">
-                                <label for="repeat-on-wed">Wed</label>
+                                <label for="repeat-on-wed">@lang('dashboard.components.scheduler.modal.repeat.weeks.wed')</label>
                                 <input type="checkbox" id="repeat-on-thu">
-                                <label for="repeat-on-thu">Thu</label>
+                                <label for="repeat-on-thu">@lang('dashboard.components.scheduler.modal.repeat.weeks.thu')</label>
                                 <input type="checkbox" id="repeat-on-fri">
-                                <label for="repeat-on-fri">Fri</label>
+                                <label for="repeat-on-fri">@lang('dashboard.components.scheduler.modal.repeat.weeks.fri')</label>
                                 <input type="checkbox" id="repeat-on-sat">
-                                <label for="repeat-on-sat">Sat</label>
+                                <label for="repeat-on-sat">@lang('dashboard.components.scheduler.modal.repeat.weeks.sat')</label>
                                 <input type="checkbox" id="repeat-on-sun">
-                                <label for="repeat-on-sun">Sun</label>
+                                <label for="repeat-on-sun">@lang('dashboard.components.scheduler.modal.repeat.weeks.sun')</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="datetimepicker">Date / Time</label>
+                            <label for="datetimepicker">@lang('dashboard.components.scheduler.modal.datetime')</label>
                             <input type="text" class="form-control" id="datetimepicker" placeholder="Datetime" autocomplete="off">
                         </div>
 
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left delete-event">Delete</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary save-changes">Save</button>
+                    <button type="button" class="btn btn-danger pull-left delete-event">@lang('dashboard.core.buttons.delete')</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('dashboard.core.buttons.close')</button>
+                    <button type="button" class="btn btn-primary save-changes">@lang('dashboard.core.buttons.save')</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

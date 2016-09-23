@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
 
         $user = new User();
         $user->login = 'admin';
-        $user->password = bcrypt('admin');
+        $user->password = bcrypt('evartadmin');
         $user->role = 'super';
         $user->save();
     }

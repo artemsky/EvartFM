@@ -22,23 +22,23 @@
 @section('content')
     <div id="actions" class="row">
         <div class="col-md-12">
-            <h2>Drop files on the window or click Add Files to upload</h2>
-            <p>(Only <strong>mp3</strong> files allowed. Size not more than <strong>300M</strong>)</p>
+            <h2>@lang('dashboard.radio.files.upload.select')</h2>
+            <p>@lang('dashboard.radio.files.upload.selectDesc')</p>
         </div>
         <!-- /.col-md-12 -->
         <div class="col-md-7">
             <!-- The fileinput-button span is used to style the file input field as button -->
             <span class="btn btn-success fileinput-button dz-clickable">
             <i class="glyphicon glyphicon-plus"></i>
-            <span>Add files...</span>
+            <span>@lang('dashboard.radio.files.upload.add')</span>
         </span>
             <button type="submit" class="btn btn-primary start">
                 <i class="glyphicon glyphicon-upload"></i>
-                <span>Start upload</span>
+                <span>@lang('dashboard.radio.files.upload.start')</span>
             </button>
             <button type="reset" class="btn btn-warning cancel">
                 <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel upload</span>
+                <span>@lang('dashboard.radio.files.upload.cancel')</span>
             </button>
         </div>
 
@@ -75,15 +75,15 @@
                     <div>
                         <button class="btn btn-primary start">
                             <i class="glyphicon glyphicon-upload"></i>
-                            <span>Start</span>
+                            <span>@lang('dashboard.radio.files.upload.startSingle')</span>
                         </button>
                         <button data-dz-remove class="btn btn-warning cancel">
                             <i class="glyphicon glyphicon-ban-circle"></i>
-                            <span>Cancel</span>
+                            <span>@lang('dashboard.radio.files.upload.cancelSingle')</span>
                         </button>
                         <button data-dz-remove class="btn btn-danger delete">
                             <i class="glyphicon glyphicon-trash"></i>
-                            <span>Delete</span>
+                            <span>@lang('dashboard.radio.files.upload.deleteSingle')</span>
                         </button>
                     </div>
                 </div>

@@ -22,23 +22,23 @@
                     Sort by <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="desc">Descending</a></li>
-                    <li><a href="asc">Ascending</a></li>
+                    <li><a href="desc">@lang('dashboard.news.sort.desc')</a></li>
+                    <li><a href="asc">@lang('dashboard.news.sort.asc')</a></li>
                 </ul>
             </li>
             <li role="presentation" class="dropdown text-center" >
-                <button type="button" class="btn btn-info new-item">Add new</button>
+                <button type="button" class="btn btn-info new-item">@lang('dashboard.news.new')</button>
             </li>
             <li role="presentation" class="dropdown" id="orderby">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     Order By <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="id">Identity</a></li>
-                    <li><a href="created_at">Created</a></li>
-                    <li><a href="updated_at">Updated</a></li>
-                    <li><a href="title_long">Long Title</a></li>
-                    <li><a href="title_short">Short Title</a></li>
+                    <li><a href="id">@lang('dashboard.news.sort.id')</a></li>
+                    <li><a href="created_at">@lang('dashboard.news.sort.created')</a></li>
+                    <li><a href="updated_at">@lang('dashboard.news.sort.updated')</a></li>
+                    <li><a href="title_long">@lang('dashboard.news.sort.titleLong')</a></li>
+                    <li><a href="title_short">@lang('dashboard.news.sort.titleShort')</a></li>
                 </ul>
             </li>
 
@@ -76,30 +76,30 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">ID #<span></span></h4>
+                    <h4 class="modal-title">@lang('dashboard.news.modal.id') #<span></span></h4>
                 </div>
                 <div class="modal-body">
                     <form data-update="{{route('newsUpdate')}}" data-add="{{route('newsAdd')}}">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="long">Long Title</label>
-                            <input type="text" class="form-control" id="long" placeholder="Full Title" name="title_long">
-                            <p class="help-block">Max length: 300</p>
+                            <label for="long">@lang('dashboard.news.sort.titleLong')</label>
+                            <input type="text" class="form-control" id="long" placeholder="@lang('dashboard.news.sort.titleLong')" name="title_long">
+                            <p class="help-block">@lang('dashboard.news.modal.length'): 300</p>
                         </div>
                         <div class="form-group">
-                            <label for="short">Short Title</label>
-                            <input type="text" class="form-control" id="short" placeholder="Short Title" name="title_short">
-                            <p class="help-block">Max length: 100</p>
+                            <label for="short">@lang('dashboard.news.sort.titleShort')</label>
+                            <input type="text" class="form-control" id="short" placeholder="@lang('dashboard.news.sort.titleShort')" name="title_short">
+                            <p class="help-block">@lang('dashboard.news.modal.length'): 100</p>
                         </div>
                         <div class="form-group">
-                            <label for="article">News Text</label>
+                            <label for="article">@lang('dashboard.news.modal.text')</label>
                             <textarea class="form-control" rows="12" id="article" name="article"></textarea>
-                            <p class="help-block">Max length: 2500</p>
+                            <p class="help-block">@lang('dashboard.news.modal.length'): 2500</p>
                         </div>
                         <div class="form-group">
-                            <label for="image">Select Image</label>
+                            <label for="image">@lang('dashboard.news.modal.image')</label>
                             <input type="file" id="image" name="image_url">
-                            <p class="help-block">PNG, JPEG, JPG and not more than 1MB.</p>
+                            <p class="help-block">@lang('dashboard.news.modal.imageDesc')</p>
                             <img class="img-thumbnail" src="" alt="" id="preview">
                         </div>
                         <div class="form-group">
@@ -109,9 +109,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left delete-user">Delete</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary save-changes">Save changes</button>
+                    <button type="button" class="btn btn-danger pull-left delete-user">@lang('dashboard.core.buttons.delete')</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('dashboard.core.buttons.close')</button>
+                    <button type="button" class="btn btn-primary save-changes">@lang('dashboard.core.buttons.save')</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

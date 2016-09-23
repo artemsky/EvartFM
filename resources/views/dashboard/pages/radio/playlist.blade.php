@@ -20,12 +20,12 @@
 @section('content')
     <div class="row">
         <div class="col-sm-6 col-md-offset-1 col-md-5 col-lg-offset-2 col-lg-4">
-            <h1>Playlist</h1>
+            <h1>@lang('dashboard.radio.playlist.playlist.title')</h1>
                 <ul class="nav nav-tabs" role="tablist">
                     <?php $isFirst = true?>
                         <li role="presentation" class="dropdown active">
-                            <a href="#" class="dropdown-toggle" id="playlist" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">
-                                Select Playlist
+                            <a href="#" class="dropdown-toggle" id="playlist" data-toggle="dropdown" aria-expanded="false">
+                                @lang('dashboard.radio.playlist.select')
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="playlist" id="playlist-contents">
@@ -55,15 +55,15 @@
                                 </div>
                             @endforeach
                         </div>
-                        <button type="button" class="btn btn-warning w100 delete-current" data-url="{{route("radio.playlist.delete")}}">Delete this list</button>
+                        <button type="button" class="btn btn-warning w100 delete-current" data-url="{{route("radio.playlist.delete")}}">@lang('dashboard.radio.playlist.delete')</button>
                     </div>
                     <?php $isFirst = false?>
                     @endforeach
                 </div>
         </div>
         <div class="col-sm-6 col-md-5 col-lg-4">
-            <h1>Files</h1>
-            <h6 class="mb30"><strong>Drag files</strong> to the <strong>playlist</strong> on the left</h6>
+            <h1>@lang('dashboard.radio.playlist.files.title')</h1>
+            <h6 class="mb30">@lang('dashboard.radio.playlist.files.titleDesc')</h6>
             <div class="sortable files">
                 @foreach($Files as $file)
                     <div class="item">
@@ -80,8 +80,8 @@
     </div>
     <div class="row">
         <div class="col-sm-12 mt20 text-center">
-            <button class="btn btn-info new-list">New Playlist</button>
-            <button class="btn btn-success save-changes" data-url="{{route("radio.playlist.save")}}">Save changes</button>
+            <button class="btn btn-info new-list">@lang('dashboard.radio.playlist.new')</button>
+            <button class="btn btn-success save-changes" data-url="{{route("radio.playlist.save")}}">@lang('dashboard.core.buttons.save')</button>
         </div>
         <!-- /.col-sm-12 -->
     </div>
