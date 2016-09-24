@@ -10,8 +10,25 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+use App\Http\Controllers\ContentController;
 
 Route::group(['middleware' => ['web', 'locale']], function () {
+
+
+    Route::group(['prefix' => '/'], function () {
+        Route::get('/', function(ContentController $content){
+//            return response()->json([
+//                'Slider' => $content->getComponent('Slider'),
+//                'Events' => $content->getComponent('Events')
+//            ]);
+            return view('public.index')->with([
+                'Slider' => $content->getComponent('Slider'),
+                'Events' => $content->getComponent('Events'),
+                'Blockquote' => $content->getComponent('Blockquote'),
+                'Video' => $content->getComponent('Video')
+            ]);
+        });
+    });
 
 
     Route::get('/login', [

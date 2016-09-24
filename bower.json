@@ -16,7 +16,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.5.7",
     "bootstrap": "^3.3.6",
     "iCheck": "^1.0.2",
     "Ionicons": "ionicons#^2.0.1",
@@ -26,6 +25,7 @@
     "underscore": "^1.8.3",
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "datetimepicker": "^2.5.4",
-    "dropzone": "^4.3.0"
+    "dropzone": "^4.3.0",
+    "moment": "momentjs#2.14.1"
   }
 }

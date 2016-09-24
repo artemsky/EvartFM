@@ -10,8 +10,7 @@ class ContentController extends Controller
         return view('dashboard.pages.content.index');
     }
 
-    //Components
-    public function getComponent($component, $dataOnly = false){
+    public function getComponent($component){
         $componentName = 'App\\Components\\' . $component;
         $data = $componentName::all();
 
@@ -24,7 +23,7 @@ class ContentController extends Controller
             'schema' => $schema->getTableColumns()
         ];
 
-        return $dataOnly ? $data ?? null : view('public.components.' . $component)->with([$component => $data]);
+        return $data;
     }
     public function getComponentsData(){
         $Components = array_map(
@@ -42,7 +41,7 @@ class ContentController extends Controller
         );
         $data = [];
         foreach($Components as $component){
-            $data[$component] = $this->getComponent($component, true);
+            $data[$component] = $this->getComponent($component);
         }
         return response()->json($data);
     }
