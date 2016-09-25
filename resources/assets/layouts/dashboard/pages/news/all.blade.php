@@ -104,7 +104,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left delete-user">@lang('dashboard.core.buttons.delete')</button>
+                    <button type="button" class="btn btn-danger pull-left delete-item" data-url="{{route('newsDelete')}}">@lang('dashboard.core.buttons.delete')</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">@lang('dashboard.core.buttons.close')</button>
                     <button type="button" class="btn btn-primary save-changes">@lang('dashboard.core.buttons.save')</button>
                 </div>

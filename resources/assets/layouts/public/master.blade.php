@@ -67,7 +67,7 @@
                             <div class="nav-container">
                                 <ul class="nav nav-mainnav navbar-nav navbar-right">
                                     <li><a href="/">Главная</a></li>
-                                    <li><a href="news.php">Новости & Информация</a></li>
+                                    <li><a href="{{route('news')}}">Новости & Информация</a></li>
                                     <li><a href="contacts.html">Контакты</a></li>
                                 </ul>
                             </div>

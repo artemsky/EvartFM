@@ -11,6 +11,7 @@
 |
 */
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\NewsController;
 
 Route::group(['middleware' => ['web', 'locale']], function () {
 
@@ -27,7 +28,14 @@ Route::group(['middleware' => ['web', 'locale']], function () {
                 'Blockquote' => $content->getComponent('Blockquote'),
                 'Video' => $content->getComponent('Video')
             ]);
-        });
+        })->name("base");
+
+        Route::get('/news', function(NewsController $content){
+
+            return view('public.news')->with([
+                'News' => $content->getAllNews('desc', 'id', true)
+            ]);
+        })->name("news");
     });
 
 
@@ -110,6 +118,11 @@ Route::group(['middleware' => ['web', 'locale']], function () {
             Route::post('/add', [
                 'as' => 'newsAdd',
                 'uses' => 'NewsController@postAddNews'
+            ]);
+
+            Route::delete('/delete', [
+                'as' => 'newsDelete',
+                'uses' => 'NewsController@deleteNews'
             ]);
 
 

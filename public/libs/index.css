@@ -1179,7 +1179,7 @@ main {
       height: 800px;
       background-repeat: no-repeat;
       background-position: left center;
-      background-size: contain;
+      background-size: cover;
       position: relative; }
       main #video .owl-theme .owl-stage-outer .item .slider-inner {
         position: absolute;

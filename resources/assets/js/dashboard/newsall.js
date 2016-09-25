@@ -108,6 +108,21 @@ $(function(){
         modal.modal('show');
     });
 
+    $(".delete-item").on("click", function(){
+        var id = modal.find("#id").val();
+        $.ajax($(this).attr('data-url'), {
+            type: "DELETE",
+            data: {id: id },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(){
+                $('[data-id="'+id+'"]').parent().remove();
+                modal.modal('hide');
+            }
+        });
+    });
+
 
     
 });

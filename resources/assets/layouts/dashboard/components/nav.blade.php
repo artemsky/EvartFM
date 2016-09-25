@@ -50,6 +50,7 @@
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{route('base')}}" target="_blank">Evart.FM</a></li>
                 <li role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         @lang('dashboard.core.navigation.language') <span class="caret"></span>

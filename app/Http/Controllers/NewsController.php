@@ -11,10 +11,12 @@ use Illuminate\Support\Facades\Storage;
 class NewsController extends Controller
 {
     use Traits\Validate;
-    public function getAllNews($sort = 'desc', $order = 'id'){
+    public function getAllNews($sort = 'desc', $order = 'id', $dataOnly = false){
         $news = DB::table('news')
             ->orderBy($order, $sort)
             ->paginate(10);
+        if($dataOnly)
+            return $news;
         return view('dashboard.pages.news.all', ['news' => $news]);
     }
 
@@ -83,6 +85,10 @@ class NewsController extends Controller
         $newsItem->save();
 
         return response()->json($newsItem, 200);
+    }
+
+    public function deleteNews(Request $request){
+        return response()->json(News::destroy($request['id']));
     }
 
 //    public function rename(){
