@@ -1,19 +1,16 @@
 @extends('dashboard.main')
 
 @section('styles')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/jquery.datetimepicker.min.css" onerror="onErrorLoader(this, '{{ URL::to('vendor/datetimepicker/build/jquery.datetimepicker.min.css') }}')">
-    <link rel="stylesheet" href="{{ URL::to('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('libs/vendor/datetimepicker/jquery.datetimepicker.css') }}">
 @endsection
 
 @section('scripts')
-    <script src="{{ URL::to('js/jquery-ui.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/moment/moment.js') }}')"></script>
-    <script src="{{ URL::to('vendor/moment/locale/en-gb.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/datetimepicker/build/jquery.datetimepicker.full.min.js') }}')"></script>
-    <script src="{{ URL::to('js/notify.min.js') }}"></script>
-    <script src="{{ URL::to('js/components.js') }}"></script>
-
+    <script src="{{ URL::to('libs/dashboard/jquery-ui.min.js') }}"></script>
+    <script src="{{ URL::to('libs/vendor/moment/moment.js') }}"></script>
+    <script src="{{ URL::to('libs/vendor/moment/locale/en-gb.js') }}"></script>
+    <script src="{{ URL::to('libs/vendor/datetimepicker/build/jquery.datetimepicker.full.js') }}"></script>
+    <script src="{{ URL::to('libs/dashboard/notify.min.js') }}"></script>
+    <script src="{{ URL::to('libs/dashboard/components.js') }}"></script>
 @endsection
 
 @section('navigation')

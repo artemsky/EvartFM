@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>@yield('title')</title>
 
@@ -31,11 +32,9 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <script src="{{ URL::asset('js/onErrorLoader.js') }}"></script>
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" onerror="onErrorLoader(this, '{{ URL::to('vendor/bootstrap/dist/css/bootstrap.css') }}')">
-
+        <link rel="stylesheet" href="{{ URL::to('libs/vendor/bootstrap/dist/css/bootstrap.css') }}">
         @yield('styles')
+        <link rel="stylesheet" href="{{ URL::to('libs/dashboard.css') }}">
 
     </head>
     <body class="@yield('body-class')">
@@ -46,8 +45,8 @@
             </div>
         </main>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" onerror="onErrorLoader(this, '{{ URL::to('js/dist/jquery.js') }}')"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous" onerror="onErrorLoader(this, '{{ URL::to('vendor/bootstrap/dist/js/bootstrap.js') }}')"></script>
+        <script src="{{ URL::to('libs/vendor/jquery/dist/jquery.js') }}"></script>
+        <script src="{{ URL::to('libs/vendor/bootstrap/dist/js/bootstrap.js') }}"></script>
         @yield('scripts')
     </body>
 </html>

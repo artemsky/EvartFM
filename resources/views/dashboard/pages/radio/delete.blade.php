@@ -1,15 +1,9 @@
 @extends('dashboard.main')
 
 @section('scripts')
-    <script src="{{asset('js/jquery-ui.min.js')}}"></script>
-    <script src="{{asset('js/notify.min.js')}}"></script>
-    <script src="{{asset('js/radio/delete.js')}}"></script>
-@endsection
-
-
-@section('styles')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ URL::asset('css/dashboard.css') }}">
+    <script src="{{asset('libs/dashboard/jquery-ui.min.js')}}"></script>
+    <script src="{{asset('libs/dashboard/notify.min.js')}}"></script>
+    <script src="{{asset('libs/dashboard/radio/delete.js')}}"></script>
 @endsection
 
 @section('navigation')

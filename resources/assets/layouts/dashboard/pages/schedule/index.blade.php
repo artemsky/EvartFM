@@ -1,28 +1,26 @@
 @extends('dashboard.main')
 
 @section('styles')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="lang" content="{{ \Session::get('locale') }}">
-    <link rel="stylesheet" href="{{ URL::to('css/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ URL::to('vendor/icheck/skins/square/blue.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css" onerror="onErrorLoader(this, '{{ URL::to('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}')">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/jquery.datetimepicker.min.css" onerror="onErrorLoader(this, '{{ URL::to('vendor/datetimepicker/build/jquery.datetimepicker.min.css') }}')">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" onerror="onErrorLoader(this, '{{ URL::to('vendor/bootstrap-select/dist/css/bootstrap-select.css') }}')">
+    <link rel="stylesheet" href="{{ URL::to('libs/vendor/icheck/skins/square/blue.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('libs/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('libs/vendor/datetimepicker/jquery.datetimepicker.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('libs/vendor/bootstrap-select/dist/css/bootstrap-select.css') }}">
 
 @endsection
 
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/moment/moment.js') }}')"></script>
-    <script src="{{ URL::to('vendor/moment/locale/en-gb.js') }}"></script>
-    <script src="{{ URL::to('js/moment-ru.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/underscore/underscore.js') }}')"></script>
+    <script src="{{ URL::to('libs/vendor/moment/moment.js') }}"></script>
+    <script src="{{ URL::to('libs/vendor/moment/locale/en-gb.js') }}"></script>
+    <script src="{{ URL::to('libs/dashboard/moment-ru.js') }}"></script>
+    <script src="{{ URL::to('libs/vendor/underscore/underscore.js') }}"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/bootstrap-select/dist/js/bootstrap-select.js') }}')"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}')"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js" onerror="onErrorLoader(this, '{{ URL::to('vendor/datetimepicker/build/jquery.datetimepicker.full.min.js') }}')"></script>
-    <script src="{{ URL::asset('vendor/clndr/src/clndr.js') }}"></script>
-    <script src="{{ URL::asset('vendor/iCheck/icheck.js') }}"></script>
-    <script src="{{ URL::to('js/schedule.js') }}"></script>
+    <script src="{{ URL::to('libs/vendor/bootstrap-select/dist/js/bootstrap-select.js') }}"></script>
+    <script src="{{ URL::to('libs/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js') }}"></script>
+    <script src="{{ URL::to('libs/vendor/datetimepicker/build/jquery.datetimepicker.full.js') }}"></script>
+    <script src="{{ URL::asset('libs/vendor/clndr/src/clndr.js') }}"></script>
+    <script src="{{ URL::asset('libs/vendor/iCheck/icheck.js') }}"></script>
+    <script src="{{ URL::to('libs/dashboard/schedule.js') }}"></script>
 @endsection
 
 @section('navigation')

@@ -3,14 +3,14 @@
 @section('title', 'Evart.FM')
 @section('styles')
 
-    <link rel="stylesheet" href="{{asset('public/css/vendor/owl.carousel.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('public/css/vendor/perfect-scrollbar.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('libs/vendor/owl.carousel/dist/assets/owl.carousel.css')}}" />
+    <link rel="stylesheet" href="{{asset('libs/vendor/perfect-scrollbar/css/perfect-scrollbar.css')}}" />
 @endsection
 @section('scripts')
-    <script type="text/javascript" src="{{asset('public/js/vendor/owl.carousel.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('public/js/vendor/rangeslider.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('public/js/vendor/perfect-scrollbar.jquery.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('public/js/app.js')}}"></script>
+    <script type="text/javascript" src="{{asset('libs/vendor/owl.carousel/dist/owl.carousel.js')}}"></script>
+    <script type="text/javascript" src="{{asset('libs/vendor/rangeslider.js/dist/rangeslider.js')}}"></script>
+    <script type="text/javascript" src="{{asset('libs/vendor/perfect-scrollbar/js/perfect-scrollbar.jquery.js')}}"></script>
+    <script type="text/javascript" src="{{asset('libs/app.js')}}"></script>
 @endsection
 
 @section('header')
@@ -112,7 +112,6 @@
 
     @include('public.components.Video')
 
-    @include('public.components.Contacts')
 
     </main>
 @endsection

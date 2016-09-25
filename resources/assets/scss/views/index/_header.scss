@@ -1,0 +1,8 @@
+header{
+  @media (max-width: 1200px){
+    >.container{
+      width: 100%;
+    }
+  }
+  @import "slider/main-slider";
+}

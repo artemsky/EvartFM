@@ -1,12 +1,7 @@
 @extends('dashboard.main')
 
 @section('scripts')
-    <script src="{{ URL::to('js/newsall.js') }}"></script>
-@endsection
-
-@section('styles')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ URL::asset('css/dashboard.css') }}">
+    <script src="{{ URL::to('libs/dashboard/newsall.js') }}"></script>
 @endsection
 
 @section('navigation')

@@ -26,6 +26,10 @@
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "datetimepicker": "^2.5.4",
     "dropzone": "^4.3.0",
-    "moment": "momentjs#2.14.1"
+    "moment": "momentjs#2.14.1",
+    "owl.carousel": "^2.1.5",
+    "rangeslider.js": "^2.1.1",
+    "perfect-scrollbar": "^0.6.11",
+    "lodash": "2.4.1"
   }
 }

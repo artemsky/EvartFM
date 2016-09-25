@@ -1,11 +1,7 @@
 @extends('dashboard.main')
 
-@section('styles')
-    <link rel="stylesheet" href="{{ URL::to('css/dashboard.css') }}">
-@endsection
-
 @section('scripts')
-    <script src="{{ URL::to('js/login.js') }}"></script>
+    <script src="{{ URL::to('libs/dashboard/login.js') }}"></script>
 @endsection
 
 @section('body-class', 'login-page')

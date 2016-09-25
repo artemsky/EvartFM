@@ -1,16 +1,11 @@
 @extends('dashboard.main')
 
 @section('scripts')
-    <script src="{{asset('js/jquery-ui.min.js')}}"></script>
-    <script src="{{asset('js/notify.min.js')}}"></script>
-    <script src="{{asset('js/radio/playlist.js')}}"></script>
+    <script src="{{asset('libs/dashboard/jquery-ui.min.js')}}"></script>
+    <script src="{{asset('libs/dashboard/notify.min.js')}}"></script>
+    <script src="{{asset('libs/dashboard/radio/playlist.js')}}"></script>
 @endsection
 
-
-@section('styles')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ URL::asset('css/dashboard.css') }}">
-@endsection
 
 @section('navigation')
     @include('dashboard.components.nav')

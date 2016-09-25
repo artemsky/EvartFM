@@ -1,17 +1,15 @@
 @extends('dashboard.main')
 
 @section('scripts')
-    <script src="{{asset('vendor/dropzone/dist/dropzone.js')}}"></script>
-    <script src="{{ URL::to('js/notify.min.js') }}"></script>
-    <script src="{{ URL::to('js/radio/upload.js') }}"></script>
+    <script src="{{asset('libs/vendor/dropzone/dist/dropzone.js')}}"></script>
+    <script src="{{ URL::to('libs/dashboard/notify.min.js') }}"></script>
+    <script src="{{ URL::to('libs/dashboard/radio/upload.js') }}"></script>
 @endsection
 
 
 @section('styles')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ URL::asset('vendor/dropzone/dist/dropzone.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('vendor/dropzone/dist/basic.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('libs/vendor/dropzone/dist/dropzone.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('libs/vendor/dropzone/dist/basic.css') }}">
 @endsection
 
 @section('navigation')
