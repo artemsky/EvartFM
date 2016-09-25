@@ -26,7 +26,8 @@ return [
             'icecast' => 'sudo killall icecast2',
             'ezstream' => 'sudo killall ezstream'
         ],
-        'refresh' => 'sudo killall -SIGHUP ezstream && sudo killall -SIGUSR1 ezstream'
+        'refresh' => 'sudo killall -SIGHUP ezstream && sudo killall -SIGUSR1 ezstream',
+        'next' => 'sudo killall -SIGUSR1 ezstream'
     ],
 
 ];

@@ -16,6 +16,7 @@ return [
     'core' => [
         'welcome' => 'Welcome to Evart.FM Dashboard',
         'navigation' => [
+            'online' => 'Listen Evart radio',
             'title' => 'Dashboard',
             'users' => [
                 'title' => 'Users',

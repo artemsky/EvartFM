@@ -533,6 +533,11 @@
 .page-components .stars .active {
   color: #000; }
 
+.page-components p {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; }
+
 .radio-ctrl .thumbnail .icon {
   font-size: 165px;
   line-height: 215px;

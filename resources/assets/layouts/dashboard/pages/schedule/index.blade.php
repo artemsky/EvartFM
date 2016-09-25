@@ -14,6 +14,7 @@
     <script src="{{ URL::to('libs/vendor/moment/locale/en-gb.js') }}"></script>
     <script src="{{ URL::to('libs/dashboard/moment-ru.js') }}"></script>
     <script src="{{ URL::to('libs/vendor/underscore/underscore.js') }}"></script>
+    <script src="{{ URL::to('libs/dashboard/notify.min.js') }}"></script>
 
     <script src="{{ URL::to('libs/vendor/bootstrap-select/dist/js/bootstrap-select.js') }}"></script>
     <script src="{{ URL::to('libs/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js') }}"></script>

@@ -37,12 +37,15 @@ class EventsController extends Controller
     public function postUpdate(Request $request){
 
         $events = $request['events'];
-
+        $processedIDs = [];
         foreach ($events as $event) {
             $id = $event['id'];
             $e = Event::find($id);
             if(!$e) {
-                $this->createNewItem($event);
+                $processedIDs[] = [
+                    'old' => $id,
+                    'new' => $this->createNewItem($event)
+                ];
                 continue;
             }
             $e->playlist = intval($event['playlist']) > 0 ? $event['playlist'] : null;
@@ -58,7 +61,7 @@ class EventsController extends Controller
 
         }
 
-        return response()->json($events);
+        return response()->json($processedIDs);
     }
 
     private function createNewItem($event){
@@ -74,6 +77,7 @@ class EventsController extends Controller
             $e->repeat->$key = $repeat;
         }
         $e->repeat->save();
+        return $e->id;
     }
 
     public function getDelete($id){

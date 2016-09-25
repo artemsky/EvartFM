@@ -80,9 +80,9 @@
             }
             return this;
         },
-        save: function(){
+        save: function(callback){
             this.set('events', this.target.object);
-            this.ajaxUpdate();
+            this.ajaxUpdate(callback);
         },
         whereDate: function(date){
             if(!date)
@@ -189,7 +189,7 @@
             }
             return result;
         },
-        ajaxUpdate: function(){
+        ajaxUpdate: function(callback){
             var ajaxOptions = {
                 type: "POST",
                 cache: false,
@@ -197,12 +197,12 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response){
-                    console.log('success', response);
+                    $.notify('Successfully saved', "success");
+                    callback(response);
                 },
                 error: function(response){
-                    console.log('error', response);
-
-                    $("body").html(response.responseText)
+                    var w = window.open('', ':Error Message', 'menubar=no, location=no');
+                    w.document.write(response.responseText);
                 },
                 data: {
                     events: this.get('events').target.object
@@ -338,10 +338,23 @@
             everyDay: isDayRepeat,
             everyWeek: isWeekRepeat,
             days: daysRepeat
-        }).save();
+        }).save(function(response){
+           storage.set('events', (function(){
+               return storage.get('events').result().map(function(event){
+                   response.forEach(function(processedId){
+                       event.id = event.id == processedId.old ? processedId.new : event.id;
+                   });
+                   return event;
+               });
+           })());
+            console.log( storage.get('events').result());
+            clndr.setEvents(storage.get('events').getRendered(60));
+            modal.modal('hide');
+        });
+
+
         
-        clndr.setEvents(storage.get('events').getRendered(60));
-        modal.modal('hide');
+
     };
 
     //Init playlist

@@ -47,6 +47,17 @@
 
         <script src="{{ URL::to('libs/vendor/jquery/dist/jquery.js') }}"></script>
         <script src="{{ URL::to('libs/vendor/bootstrap/dist/js/bootstrap.js') }}"></script>
+        <script>
+            $("#online").on('click', function(e){
+                e.preventDefault();
+                window.open(
+                        $(this).attr("href"),
+                        'Evart.FM Online',
+                        'menubar=no, location=no, width=400, height=50, resizable=no, status=no, top=100, left=100'
+                );
+                return false;
+            });
+        </script>
         @yield('scripts')
     </body>
 </html>

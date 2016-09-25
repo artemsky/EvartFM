@@ -104,7 +104,7 @@ Route::group(['middleware' => ['web', 'locale']], function () {
             ]);
         });
 
-        Route::group(['prefix' => 'news', 'middleware' => ['auth', 'role:super,writer']], function () {
+        Route::group(['prefix' => 'news', 'middleware' => ['auth', 'role:super,writer,admin']], function () {
             Route::get('/{sort?}/{order?}', [
                 'as' => 'allnews',
                 'uses' => 'NewsController@getAllNews',
@@ -132,7 +132,7 @@ Route::group(['middleware' => ['web', 'locale']], function () {
 
         });
 
-        Route::group(['prefix' => 'schedule', 'middleware' => ['auth', 'role:super,writer']], function () {
+        Route::group(['prefix' => 'schedule', 'middleware' => ['auth', 'role:super,admin,dj']], function () {
 
             Route::get('/', [
                 'as' => 'schedule.index',
@@ -160,7 +160,7 @@ Route::group(['middleware' => ['web', 'locale']], function () {
 
         });
 
-        Route::group(['prefix' => 'broadcast', 'middleware' => ['auth', 'role:super,dj']], function () {
+        Route::group(['prefix' => 'broadcast', 'middleware' => ['auth', 'role:super,admin,dj']], function () {
 
             Route::get('/', [
                 'as' => 'radio.index',
@@ -214,7 +214,7 @@ Route::group(['middleware' => ['web', 'locale']], function () {
 
     });
 
-    Route::group(['prefix' => '/dashboard/content', 'middleware' => ['auth', 'role:super,writer,dj']], function () {
+    Route::group(['prefix' => '/dashboard/content', 'middleware' => ['auth', 'role:super,admin,writer']], function () {
         Route::get('/', [
             'as' => 'content.index',
             'uses' => 'ContentController@getIndex',

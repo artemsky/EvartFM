@@ -95,6 +95,11 @@ APPLICATION.Broadcasting = new function(){
             self.Global.requestOptions.type = "POST";
             $.ajax(self.Helper.getURL().switch, self.Global.requestOptions);
         });
+        $(".radio-next").on("click", function(){
+            self.Global.requestOptions.data = {action: "next"};
+            self.Global.requestOptions.type = "POST";
+            $.ajax(self.Helper.getURL().switch, self.Global.requestOptions);
+        });
         self.Helper.ServerStatusCheck();
         setInterval(self.Helper.ServerStatusCheck, 5000);
     };

@@ -21,4 +21,9 @@
       color: #000;
     }
   }
+  p{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 }

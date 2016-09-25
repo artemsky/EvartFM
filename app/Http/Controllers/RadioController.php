@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Playlist;
 use App\Services\ProcessService;
 use App\Services\MP3FileService;
+use League\Flysystem\Exception;
 
 class RadioController extends Controller
 {
@@ -57,7 +58,7 @@ class RadioController extends Controller
 
     public function postAction(Request $request){
         $this->isValid($request, [
-            'action' => 'required|in:on,off,refresh'
+            'action' => 'required|in:on,off,refresh,next'
         ]);
 
         switch($request['action']){
@@ -73,6 +74,9 @@ class RadioController extends Controller
                 break;
             case 'refresh':
                 ProcessService::startProcess(config('radio.script.refresh'));
+                return $this->serverStatus();
+            case 'next':
+                ProcessService::startProcess(config('radio.script.next'));
                 return $this->serverStatus();
         }
     }

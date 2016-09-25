@@ -43,13 +43,14 @@
 
                 @endif
 
-                @if(str_contains('super, admin', $userRole))
+                @if(str_contains('super, admin, dj', $userRole))
                     <li><a href="{{route('radio.index')}}">@lang('dashboard.core.navigation.broadcast')</a></li>
 
                 @endif
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li><a id="online" href="{{URL::to('/')}}:8000/play">@lang('dashboard.core.navigation.online')</a></li>
                 <li><a href="{{route('base')}}" target="_blank">Evart.FM</a></li>
                 <li role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

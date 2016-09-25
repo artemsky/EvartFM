@@ -16,6 +16,7 @@ return [
     'core' => [
         'welcome' => 'Добро пожаловать в Панель Управления Evart.FM',
         'navigation' => [
+            'online' => 'Слушать радио Evart',
             'title' => 'Панель управления',
             'users' => [
                 'title' => 'Пользователи',
