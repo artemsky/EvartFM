@@ -101,6 +101,34 @@
         <span class="glyphicon glyphicon-ok"></span>
         @lang('dashboard.core.buttons.save')
     </button>
+    <button class="btn btn-info mr20" type="button" data-toggle="collapse" data-target="#componentsControl" aria-expanded="false" aria-controls="componentsControl">
+        Components Control
+    </button>
+    <div class="collapse" id="componentsControl" data-url="{{route('content.activate')}}">
+        <div class="well">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class="text-left">Component</th>
+                    <th class="text-right">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($Components as $component)
+                    <tr>
+                        <td class="text-left">{{$component['component']}}</td>
+                        <td class="text-right">
+                            <label class="switch">
+                                <input type="checkbox" class="isActive" {{$component['active'] != 0 ? 'checked' : ''}} data-id="{{$component->id}}">
+                                <div class="slider"></div>
+                            </label>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <!-- /.text-right -->
 

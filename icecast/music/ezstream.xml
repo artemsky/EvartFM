@@ -1,0 +1,16 @@
+<ezstream>
+<url>http://127.0.0.1:8000/play</url>
+<sourcepassword>root</sourcepassword>
+<format>MP3</format>
+<filename>/vagrant/storage/app/broadcast/playlist.txt</filename>
+<shuffle>0</shuffle>
+<playlist_program>0</playlist_program>
+<svrinfoname>Name</svrinfoname>
+<svrinfourl>http://evart.fm/play</svrinfourl>
+<svrinfogenre>Ofther</svrinfogenre>
+<svrinfodescription>Description</svrinfodescription>
+<svrinfobitrate>128</svrinfobitrate>
+<svrinfochannels>2</svrinfochannels>
+<svrinfosamplerate>44100</svrinfosamplerate>
+<svrinfopublic>1</svrinfopublic>
+</ezstream>

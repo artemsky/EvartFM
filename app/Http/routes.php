@@ -18,10 +18,6 @@ Route::group(['middleware' => ['web', 'locale']], function () {
 
     Route::group(['prefix' => '/'], function () {
         Route::get('/', function(ContentController $content){
-//            return response()->json([
-//                'Slider' => $content->getComponent('Slider'),
-//                'Events' => $content->getComponent('Events')
-//            ]);
             return view('public.index')->with([
                 'Slider' => $content->getComponent('Slider'),
                 'Events' => $content->getComponent('Events'),
@@ -225,6 +221,11 @@ Route::group(['middleware' => ['web', 'locale']], function () {
 
         Route::post('/component/update/all', [
             'uses' => 'ContentController@postUpdateComponentsData',
+        ]);
+
+        Route::post('/component/update/status', [
+            'as' => 'content.activate',
+            'uses' => 'ContentController@postActive',
         ]);
 
     });

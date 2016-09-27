@@ -1,3 +1,4 @@
+@if(  App\Components::where('component', 'Events')->first()->active)
 <section id="efir-upper">
     <div class="owl-carousel owl-efir">
         @foreach($Events['data'] as $event)
@@ -17,3 +18,4 @@
 
     </div>
 </section><!-- /#efir-upper -->
+@endif

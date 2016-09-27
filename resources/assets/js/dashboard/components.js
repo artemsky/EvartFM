@@ -10,7 +10,6 @@ APPLICATION.Components = new function(){
         $this.RootURL = "content/component/";
         $this.requestOptions = {
             headers: {
-                'type': "POST",
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             error: function(response){
@@ -330,6 +329,22 @@ APPLICATION.Components = new function(){
         else{
             $.notify('Nothing changed', "info");
         }
+        $.ajax($("#componentsControl").attr('data-url'), {
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: (function(){
+                var data = [];
+                $(".isActive").each(function(i, obj){
+                    data.push({
+                        id: $(obj).attr("data-id"),
+                        active: $(obj).prop('checked')
+                    });
+                });
+                return {data: data};
+            })(),
+        });
     }
 
 };

@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Components;
 class ContentController extends Controller
 {
     public function getIndex(){
-        return view('dashboard.pages.content.index');
+        return view('dashboard.pages.content.index')->with(['Components' => Components::all()]);
     }
 
     public function getComponent($component){
@@ -45,7 +46,6 @@ class ContentController extends Controller
         }
         return response()->json($data);
     }
-
     public function postUpdateComponentsData(Request $request){
         $result = [];
         if($request->forSave){
@@ -63,7 +63,6 @@ class ContentController extends Controller
         return response()->json($result);
 
     }
-
     private function postComponent($component, $data){
         if(!count($data))
             return false;
@@ -101,7 +100,6 @@ class ContentController extends Controller
         }
         return $result;
     }
-
     private function postDeleteComponent($component, $data){
         $componentName = 'App\\Components\\' . $component;
         $image = [];
@@ -112,7 +110,6 @@ class ContentController extends Controller
             Storage::delete($image);
 
     }
-
     private function fromBase64toImage($base64){
         $pos  = strpos($base64, ';');
         $type = explode(':', substr($base64, 0, $pos))[1];
@@ -127,4 +124,11 @@ class ContentController extends Controller
         ];
     }
 
+    public function postActive(Request $request){
+        foreach ($request['data'] as $componentData){
+            $component = Components::find($componentData['id']);
+            $component->active = json_decode($componentData['active']);
+            $component->save();
+        }
+    }
 }

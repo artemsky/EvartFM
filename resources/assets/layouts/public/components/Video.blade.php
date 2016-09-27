@@ -1,3 +1,4 @@
+@if(  App\Components::where('component', 'Video')->first()->active)
 <section id="video">
     <div class="owl-carousel owl-theme">
     @foreach($Video['data'] as $slide)
@@ -23,6 +24,6 @@
         </div>
         <!-- /.item -->
     @endforeach
-
     </div>
 </section><!-- /#video -->
+@endif

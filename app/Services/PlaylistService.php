@@ -47,7 +47,6 @@ class PlaylistService{
     }
 
     public function generatePlaylistForNow(){
-        Storage::put(config('radio.music.relative') . '/check.txt', Carbon::now()->toDateTimeString());
         $id = $this->getPlaylistByNow();
         $playlist = Playlist::find($id);
         if(!$playlist) return false;

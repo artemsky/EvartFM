@@ -1,3 +1,4 @@
+@if(  App\Components::where('component', 'Blockquote')->first()->active)
 <section id="blockquote">
     <div class="owl-carousel owl-theme">
 
@@ -40,3 +41,4 @@
 
     </div>
 </section><!-- /#blockquote -->
+@endif

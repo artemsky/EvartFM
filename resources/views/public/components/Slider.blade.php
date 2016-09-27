@@ -1,3 +1,4 @@
+@if(  App\Components::where('component', 'Slider')->first()->active)
 <section id="main-slider">
     <div class="owl-carousel owl-theme">
         @foreach($Slider['data'] as $slide)
@@ -26,3 +27,4 @@
         @endforeach
     </div>
 </section><!-- /#main-slider -->
+@endif
