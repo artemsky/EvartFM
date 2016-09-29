@@ -1,0 +1,95 @@
+.radio-ctrl{
+  .thumbnail{
+    .icon{
+      font-size: 165px;
+      line-height: 215px;
+      text-align: center;
+      span{
+        vertical-align: middle;
+      }
+    }
+    &:hover{
+      background-color: #ebfaff;
+    }
+  }
+  button{
+    margin-bottom: 5px;
+  }
+}
+
+.radio-delete{
+  .ui-selectable {
+    -ms-touch-action: none;
+    touch-action: none;
+  }
+  .ui-selectable-helper {
+    position: absolute;
+    z-index: 100;
+    border: 1px dotted black;
+  }
+  .ui-sortable-handle {
+    -ms-touch-action: none;
+    touch-action: none;
+  }
+  .selectable{
+    display: flex;
+    flex-flow: column;
+    background: #f9f9f9;
+    padding: 10px 15px;
+    width: 100%;
+    border-radius: 5px;
+    border: 2px dashed #77777b;
+  }
+  .selectable .ui-selecting {
+    background: #FECA40;
+  }
+  .selectable .ui-selected {
+    background: #ff0000;
+    color: white;
+  }
+  .delete{
+    display: none;
+    margin-top: 20px;
+  }
+}
+
+.playlist-manager{
+  .mb30{
+    margin-bottom: 30px;
+  }
+  .mt20{
+    margin-top: 20px;
+  }
+  .w100{
+    width: 100%;
+  }
+  .sortable{
+    background: #fff8e7;
+    padding-bottom: 20px;
+    max-height: 500px;
+    overflow: auto;
+    .item{
+      border: 1px dashed #1b6d85;
+      padding: 0.5em;
+      border-radius: 10px;
+      margin: 0 0 2px;
+      display: table;
+      table-layout: fixed;
+      width: 100%;
+      span{
+        vertical-align: middle;
+      }
+      .name{
+        display: table-cell;
+        width: 80%;
+      }
+      .duration{
+        display: table-cell;
+        width: 20%;
+      }
+    }
+    .ui-sortable-helper{
+      background: #ffe4c4;
+    }
+  }
+}

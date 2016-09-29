@@ -1,0 +1,171 @@
+.audioplayer{
+  display: table;
+  background: #ffffff;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0px 7px 10px 0px rgba(0, 0, 0, 0.15);
+
+  margin-top: -60px;
+  margin-bottom: 40px;
+  z-index: 999;
+  position: relative;
+
+  @media (max-width: 768px){
+    width: 100%;
+  }
+
+  @import "../../controller/rangeslider";
+  span{
+    color: #bbbbbb;
+    font-size: 20px;
+    top: 2px;
+  }
+  p{
+    font-family: "HelveticaNeueCyr-Roman";
+    font-size: 14px;
+    margin-bottom: 0;
+    &.description{
+      color: #657a8b;
+    }
+    &.name{
+      color: #6d8fd9;
+    }
+  }
+  .tablerow{
+    display: table-row;
+    &.track{
+      height: 50px;
+      .tablecell{
+        border-bottom: 1px solid #e9e9e9;
+      }
+    }
+    &.volume-control{
+      height: 60px;
+    }
+  }
+  .tablecell{
+    display: table-cell;
+    vertical-align: middle;
+    background: #f6f6f6;
+    &.play{
+      padding: 5px 15px;
+      border-right: 1px solid #e9e9e9;
+      span{
+        left: 2px;
+        cursor: pointer;
+        &:hover{
+          color: #000000;
+        }
+      }
+    }
+    &.song{
+      padding: 2px 10px;
+    }
+    &.volume-down, &.volume-up{
+      padding: 5px 15px;
+      cursor: pointer;
+      span{
+        left: 6px;
+      }
+    }
+    &.toggle{
+      padding: 10px 20px;
+      background: #fff;
+      @media (max-width: 400px) {
+        display: table-row;
+        text-align: center;
+      }
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 190px;
+        height: 85px;
+        margin-bottom: 0;
+        vertical-align: middle;
+        @media (max-width: 400px) {
+          width: 100%;
+        }
+        input {
+          display:none;
+        }
+      }
+
+      .slider {
+        font-family: 'Glyphicons Halflings';
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #e9e9e9;
+        border-radius: 20px;
+        transition: .4s;
+        &:before {
+          position: absolute;
+          content: "";
+          height: 85px;
+          width: calc(190px/2);
+          left: 0;
+          bottom: 0;
+          background: #d4d2d2 url(../img/player-volume.png) no-repeat center;
+          border-radius: 20px;
+          transition: .4s;
+        }
+        &:after{
+          font-family: 'HelveticaNeueCyr-Roman';
+          color: #657a8b;
+          font-size: 18px;
+          position: absolute;
+          padding: 18px 5px;
+          text-align: center;
+          content: attr(data-off);
+          height: 85px;
+          width: calc(190px/2);
+          right: 0;
+          bottom: 0;
+          border-radius: 20px;
+          transition: .1s;
+        }
+        @media (max-width: 400px) {
+          &:before {
+            width: 50%;
+          }
+          &:after{
+            width: 50%;
+          }
+        }
+      }
+
+      input:checked{
+        + .slider {
+          background-color: #e9e9e9;
+          &:before {
+            background-color: #52aff7;
+            transform: translateX(calc(190px/2));
+          }
+          &:after{
+            position: absolute;
+            padding: 20px 5px;
+            color: #2f9a4c;
+            content: attr(data-on);
+            transform: translateX( calc( -190px / 2 ));
+            transition: .1s;
+          }
+          @media (max-width: 400px) {
+            &:before {
+              transform: translateX(100%)
+            }
+            &:after{
+              transform: translateX(-100%)
+            }
+          }
+        }
+      }
+    }
+  }
+  .volume{
+    width: 300px;
+  }
+
+}
