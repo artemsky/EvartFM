@@ -6,9 +6,8 @@ use App\TrackList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Playlist;
-use App\Services\ProcessService;
 use App\Services\MP3FileService;
-use League\Flysystem\Exception;
+use App\Services\RadioService;
 
 class RadioController extends Controller
 {
@@ -30,7 +29,7 @@ class RadioController extends Controller
                     $request->file('file')->getClientOriginalName()
                 )
             )
-        . '.' . $request->file('file')->getClientOriginalExtension();
+            . '.' . $request->file('file')->getClientOriginalExtension();
 
         $result = Storage::put(
             $filepath,
@@ -60,41 +59,20 @@ class RadioController extends Controller
         $this->isValid($request, [
             'action' => 'required|in:on,off,refresh,next'
         ]);
-
+        $rs = new RadioService();
         switch($request['action']){
             case 'on':
-                ProcessService::startProcess(config('radio.script.run.icecast'));
-                ProcessService::startBackgroundProcess(config('radio.script.run.ezstream'));
-                return $this->serverStatus();
-                break;
+                $rs->turnOn();
+                return response()->json($rs->getStatus());
             case 'off':
-                ProcessService::startProcess(config('radio.script.shutdown.ezstream'));
-                ProcessService::startProcess(config('radio.script.shutdown.icecast'));
-                return $this->serverStatus();
-                break;
+                $rs->turnOff();
+                return response()->json($rs->getStatus());
             case 'refresh':
-                ProcessService::startProcess(config('radio.script.refresh'));
-                return $this->serverStatus();
+                $rs->refresh();
+                return response()->json($rs->getStatus());
             case 'next':
-                ProcessService::startProcess(config('radio.script.next'));
-                return $this->serverStatus();
-        }
-    }
-
-    public function serverStatus(){
-        $SERVER = 'localhost:8000';
-        $STATS_FILE = '/play.xspf';
-        $ch = curl_init($SERVER . $STATS_FILE);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 2);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_exec($ch);
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        if($httpcode>=200 && $httpcode<300){
-            return response()->json(true);
-        } else {
-            return response()->json(false);
+                $rs->nextTrack();
+                return response()->json($rs->getStatus());
         }
     }
 

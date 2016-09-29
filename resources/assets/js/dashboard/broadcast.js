@@ -12,8 +12,7 @@ APPLICATION.Broadcasting = new function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             error: function(response){
-                var w = window.open('', ':Error Message', 'menubar=no, location=no');
-                w.document.write(response.responseText);
+                console.log(response);
             }
         };
     };

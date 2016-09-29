@@ -12,17 +12,20 @@
 */
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\NewsController;
+use App\Services\PlaylistService;
 
 Route::group(['middleware' => ['web', 'locale']], function () {
 
 
     Route::group(['prefix' => '/'], function () {
         Route::get('/', function(ContentController $content){
+            $ps = new PlaylistService();
             return view('public.index')->with([
                 'Slider' => $content->getComponent('Slider'),
                 'Events' => $content->getComponent('Events'),
                 'Blockquote' => $content->getComponent('Blockquote'),
-                'Video' => $content->getComponent('Video')
+                'Video' => $content->getComponent('Video'),
+                'Playlist' => $ps->getPlaylistsByToday()
             ]);
         })->name("base");
 
@@ -32,6 +35,10 @@ Route::group(['middleware' => ['web', 'locale']], function () {
                 'News' => $content->getAllNews('desc', 'id', true)
             ]);
         })->name("news");
+
+        Route::get('/contacts', function(){
+            return view('public.contacts');
+        })->name("contacts");
     });
 
 
@@ -55,7 +62,7 @@ Route::group(['middleware' => ['web', 'locale']], function () {
 
     Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
         Route::get('/', [
-            'as' => 'home',
+            'as' => 'dashboard.home',
             'uses' => 'UserController@getDashboardPage'
         ]);
 
@@ -203,7 +210,10 @@ Route::group(['middleware' => ['web', 'locale']], function () {
 
             Route::get('/server/status', [
                 'as' => 'radio.server.status',
-                'uses' => 'RadioController@serverStatus'
+                function(){
+                    $rs = new App\Services\RadioService();
+                    return response()->json($rs->getStatus());
+                }
             ]);
 
         });
@@ -226,6 +236,16 @@ Route::group(['middleware' => ['web', 'locale']], function () {
         Route::post('/component/update/status', [
             'as' => 'content.activate',
             'uses' => 'ContentController@postActive',
+        ]);
+
+        Route::get('/contacts', [
+            'as' => 'content.contacts.get',
+            'uses' => 'ContentController@getContacts',
+        ]);
+
+        Route::post('/contacts', [
+            'as' => 'content.contacts.update',
+            'uses' => 'ContentController@postContacts',
         ]);
 
     });

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class PlaylistService{
 
-    public function getPlaylistByNow(){
+    private function getPlaylistsForToday(){
         $events = Event::all();
         $now = Carbon::now();
         $filtered = $events->filter(function($value) use ($now){
@@ -30,15 +30,50 @@ class PlaylistService{
             return false;
         })->sortBy('date');
 
-        $dates = [];
+        return $filtered;
+    }
+
+    public function getPlaylistsByToday(){
+        $filtered = $this->getPlaylistsForToday();
+        $now = Carbon::now();
+
+        $sorted = $filtered->map(function ($item) use ($now){
+            $date = Carbon::parse($item->date);
+            $date->day = $now->day;
+            $item->date = $date->format('Y-m-d H:i:s');
+            return $item;
+        })->sortBy('date');
+
+
+        $dates = ['all' => [], 'current' => 0];
+        foreach (array_values($sorted->toArray()) as $key=>$event){
+            $date = Carbon::parse($event['date']);
+            $tmp = [];
+            $tmp['title'] = $event['title'];
+            $tmp['description'] = $event['description'];
+            $tmp['time'] = $date->format("H:i");
+            $tmp['status'] = 0;
+
+            if($date->gte($now)) {
+                $tmp['status'] = 1;
+            }
+            else if($date->lte($now)){
+                $tmp['status'] = -1;
+                $dates['current'] = $key;
+            }
+
+            $dates['all'][] = $tmp;
+        }
+        return $dates;
+    }
+
+    public function getPlaylistByNow(){
+        $filtered = $this->getPlaylistsForToday();
+
+        $now = Carbon::now();
+
         foreach ($filtered as $event){
             $date = Carbon::parse($event->date);
-            $dates[$event->id] = [
-                'event' => ['h' => $date->hour, 'm' => $date->minute],
-                'now' => ['h' => $now->hour, 'm' => $now->minute],
-                'true' => $date->hour == $now->hour && $date->minute == $now->minute
-            ];
-
             if($date->hour == $now->hour && $date->minute == $now->minute) {
                 return $event->playlist;
             }

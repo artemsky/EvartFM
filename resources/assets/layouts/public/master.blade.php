@@ -68,7 +68,7 @@
                                 <ul class="nav nav-mainnav navbar-nav navbar-right">
                                     <li><a href="/">Главная</a></li>
                                     <li><a href="{{route('news')}}">Новости & Информация</a></li>
-                                    <li><a href="contacts.html">Контакты</a></li>
+                                    <li><a href="{{route('contacts')}}">Контакты</a></li>
                                 </ul>
                             </div>
                         </div><!-- /.navbar-collapse -->
@@ -103,8 +103,6 @@
 
         </div>
     </footer>
-
-    <audio lang="ua" title="Evart FM" id="evartplayer" src="{{url()->current()}}:8000/play"></audio>
     <script src="{{ URL::to('libs/vendor/jquery/dist/jquery.js') }}"></script>
     <script src="{{ URL::to('libs/vendor/bootstrap/dist/js/bootstrap.js') }}"></script>
     @yield('scripts')

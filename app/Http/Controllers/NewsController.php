@@ -80,7 +80,7 @@ class NewsController extends Controller
             file_get_contents($request->file('image_url')->getRealPath())
         );
 
-        $newsItem->image_url = $filepath;
+        $newsItem->image_url = 'app/' . $filepath;
 
         $newsItem->save();
 

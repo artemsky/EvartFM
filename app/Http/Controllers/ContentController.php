@@ -131,4 +131,22 @@ class ContentController extends Controller
             $component->save();
         }
     }
+
+    public function getContacts(){
+        $file = file_get_contents(resource_path('views/public/components/Contacts/Contacts.blade.php'));
+        $match = [];
+        preg_match_all('/^(?>\@section\(\'contacts-)([\w]+)\',\s\'(.*)\'\)/m', $file, $match);
+        return view('dashboard.pages.contacts.index')->with([
+            'Data' => array_combine($match[1], $match[2])
+        ]);
+    }
+
+    public function postContacts(Request $request){
+        $file = "@extends('public.components.Contacts.Contacts_template')" . PHP_EOL;
+        foreach ($request['data'] as $field=>$value){
+            $value = strlen($value) > 0 ? $value : " ";
+            $file .= "@section('contacts-$field', '$value')" . PHP_EOL;
+        }
+        return file_put_contents(resource_path('views/public/components/Contacts/Contacts.blade.php'), $file);
+    }
 }

@@ -20,9 +20,9 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Login</th>
-                    <th>Role</th>
-                    <th>Name</th>
+                    <th>@lang('dashboard.users.login')</th>
+                    <th>@lang('dashboard.users.role')</th>
+                    <th>@lang('dashboard.users.name')</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,7 +45,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">User Information</h4>
+                    <h4 class="modal-title">@lang('dashboard.users.userInfo')</h4>
                 </div>
                 <div class="modal-body">
                     <form>
@@ -56,7 +56,7 @@
                                     <td class="user_id"><p></p></td>
                                 </tr>
                                 <tr>
-                                    <td>Login</td>
+                                    <td>@lang('dashboard.users.login')</td>
                                     <td class="user_login">
                                         <p></p>
                                         <div class="form-group">
@@ -65,7 +65,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Role</td>
+                                    <td>@lang('dashboard.users.role')</td>
                                     <td class="user_role">
                                         <p></p>
                                         <div class="form-group">
@@ -79,7 +79,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Password</td>
+                                    <td>@lang('dashboard.users.password')</td>
                                     <td class="user_password">
                                         <p>***********</p>
                                         <div class="form-group">
@@ -91,7 +91,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Name</td>
+                                    <td>@lang('dashboard.users.name')</td>
                                     <td class="user_name">
                                         <p></p>
                                         <div class="form-group">
@@ -100,7 +100,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Email</td>
+                                    <td>@lang('dashboard.users.email')</td>
                                     <td class="user_email">
                                         <p></p>
                                         <div class="form-group">
@@ -113,9 +113,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left delete-user">Delete</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary save-changes">Save changes</button>
+                    <button type="button" class="btn btn-danger pull-left delete-user">@lang('dashboard.core.buttons.delete')</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('dashboard.core.buttons.close')</button>
+                    <button type="button" class="btn btn-primary save-changes">@lang('dashboard.core.buttons.save')</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

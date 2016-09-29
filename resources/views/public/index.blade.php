@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{asset('libs/vendor/perfect-scrollbar/css/perfect-scrollbar.css')}}" />
 @endsection
 @section('scripts')
+    <audio lang="ua" title="Evart FM" id="evartplayer" src="{{url()->current()}}:8000/play"></audio>
     <script type="text/javascript" src="{{asset('libs/vendor/owl.carousel/dist/owl.carousel.js')}}"></script>
     <script type="text/javascript" src="{{asset('libs/vendor/rangeslider.js/dist/rangeslider.js')}}"></script>
     <script type="text/javascript" src="{{asset('libs/vendor/perfect-scrollbar/js/perfect-scrollbar.jquery.js')}}"></script>
@@ -34,8 +35,8 @@
                                                 <span class="glyphicon glyphicon-play"></span>
                                             </div>
                                             <div class="tablecell song">
-                                                <p class="description"></p>
-                                                <p class="name">{{--{{nowplaying}}--}}</p>
+                                                <p class="description">{{$Playlist['all'][$Playlist['current']]['description']}}</p>
+                                                <p class="name">{{$Playlist['all'][$Playlist['current']]['title']}}</p>
                                             </div>
                                             <div class="tablecell"></div>
                                         </div>
@@ -57,8 +58,8 @@
                                     </div>
                                     <div class="tablecell toggle">
                                         <label class="switch">
-                                            <input type="checkbox" {{--{{islive}}--}}>
-                                            <div class="slider" data-off="Слушать прямой эфир" data-on="Прямой эфир"></div>
+                                            <input type="checkbox" checked disabled>
+                                            <div class="slider" data-off="Evart.FM Offline" data-on="Evart.FM Online"></div>
                                         </label>
                                     </div>
                                 </div><!-- /.audioplayer -->
@@ -78,7 +79,25 @@
                                     <div class="body">
                                         <div id="program">
                                             <ul class="nav" >
-                                                {{--{{playlist}}--}}
+                                                @foreach($Playlist['all'] as $key=>$value)
+                                                    <li>
+                                                        <div class='num'>{{$key+1}}
+
+                                                            @if($key < $Playlist['current'])
+                                                                <span class='glyphicon glyphicon-minus'></span>
+                                                            @elseif($key == $Playlist['current'])
+                                                                <span class='glyphicon glyphicon-triangle-right'></span>
+                                                            @else
+                                                                <span class='glyphicon glyphicon-triangle-top'></span>
+                                                            @endif
+                                                        </div>
+                                                        <div class='text'>
+                                                            <h6>{{$value['title']}}</h6>
+                                                            <p>{{$value['description']}}</p>
+                                                        </div>
+                                                        <time>{{$value['time']}}</time>
+                                                    </li>
+                                                    @endforeach
                                             </ul>
                                         </div>
                                     </div>
@@ -112,6 +131,7 @@
 
     @include('public.components.Video')
 
+    @include('public.components.Contacts.Contacts')
 
     </main>
 @endsection

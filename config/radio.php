@@ -8,7 +8,9 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-
+    'icecast' => [
+        'port' => 8000
+    ],
     'music' => [
         'full' => storage_path('app/broadcast/music'),
         'relative' => 'broadcast/music'

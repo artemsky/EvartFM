@@ -117,7 +117,7 @@
           color: #657a8b;
           font-size: 18px;
           position: absolute;
-          padding: 5px 5px;
+          padding: 18px 5px;
           text-align: center;
           content: attr(data-off);
           height: 85px;
@@ -149,7 +149,7 @@
             padding: 20px 5px;
             color: #2f9a4c;
             content: attr(data-on);
-            transform: translateX(-(calc(190px/2)));
+            transform: translateX( calc( -190px / 2 ));
             transition: .1s;
           }
           @media (max-width: 400px) {

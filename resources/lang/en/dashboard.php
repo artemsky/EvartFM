@@ -12,7 +12,10 @@ return [
     | другие, которые лучше подходят для вашего приложения.
     |
     */
-
+    'stats' => [
+        'empty' => 'Broadcasting server offline. No data available',
+        'title' => 'Evart.FM broadcast info'
+    ],
     'core' => [
         'welcome' => 'Welcome to Evart.FM Dashboard',
         'navigation' => [
@@ -27,7 +30,8 @@ return [
             'content' => [
                 'title' => 'Content management',
                 'news' => 'News',
-                'components' => 'Components'
+                'components' => 'Components',
+                'contacts' => 'Contacts'
             ],
             'broadcast' => 'Broadcast management',
             'language' => 'Language',
@@ -95,9 +99,10 @@ return [
     'news' => [
         'new' => 'Add new',
         'sort' => [
+            'sort' => 'Sort by',
             'asc' => 'Ascending',
             'desc' => 'Descending',
-            'order' => 'Order By',
+            'order' => 'Order by',
             'id' => 'Identity',
             'created' => 'Created',
             'updated' => 'Updated',
@@ -109,7 +114,8 @@ return [
             'length' => 'Max length',
             'image' => 'Select Image',
             'imageDesc' => 'PNG, JPEG, JPG and not more than 2MB.',
-            'text' => 'News text'
+            'text' => 'News text',
+            'date' => 'Date'
 
         ]
 
@@ -175,6 +181,7 @@ return [
         'namePlaceholder' => 'Enter username',
         'role' => 'Role',
         'add' => 'Add user',
+        'userInfo' => 'User Information',
     ],
     'login' => [
         'title' => 'Admin Panel',

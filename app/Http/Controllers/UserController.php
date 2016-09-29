@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Services\RadioService;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 use App\User;
@@ -57,7 +58,10 @@ class UserController extends Controller{
     }
     
     public function getDashboardPage(){
-        return view('dashboard.pages.home');
+        $rs = new RadioService();
+        return view('dashboard.pages.home')->with([
+            'Stats' => $rs->getData()
+        ]);
     }
 
     public function getLoginPage(){

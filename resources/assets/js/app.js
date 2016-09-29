@@ -36,41 +36,26 @@ jQuery(function($) {
         var player = $("#player");
         var audioplayer = $("#evartplayer");
         var playbtn = player.find(".audioplayer .tablecell.play span");
-        var switchbtn = player.find(".switch input");
-        var liveframe = '<iframe id="liveplayer" src="https://mixlr.com/users/5218043/embed?color=1c4563&autoplay=true" style="display:block" width="400px" height="146px" scrolling="no" frameborder="no" marginheight="0" marginwidth="0"></iframe>';
-        var audiolabel = $(".audioplayer .tablecell:first .tablerow");
+        var selfPause = false;
+
 
         var playerAction = function(){
             if($(this).hasClass("glyphicon-play")){
                 $(this).removeClass("glyphicon-play").addClass("glyphicon-pause");
                 audioplayer.get(0).play();
+                selfPause = false;
             } else {
                 $(this).removeClass("glyphicon-pause").addClass("glyphicon-play");
                 audioplayer.get(0).pause();
+                selfPause = true;
             }
         };
-        var switchAction = function(){
-            if($(this).is(":checked")){
-                audiolabel.hide();
-                audioplayer.get(0).pause();
-                playbtn.removeClass("glyphicon-pause").addClass("glyphicon-play");
-                audiolabel.parent().append(liveframe);
-                return true;
-            }
-            else{
-                audiolabel.show();
-                audioplayer.get(0).play();
-                playbtn.removeClass("glyphicon-play").addClass("glyphicon-pause");
-                audiolabel.parent().find("#liveplayer").remove();
-                return false;
-            }
-        };
+
         var rangeslider = player.find('input[type="range"]').rangeslider({
             polyfill: false,
 
             // Callback function
             onInit: function() {
-                switchAction.call(switchbtn);
                 audioplayer.get(0).volume = .5;
                 playbtn.click(playerAction);
             },
@@ -90,66 +75,20 @@ jQuery(function($) {
             rangeslider.val(100).change();
         });
 
+        playbtn.trigger('click');
 
-        switchbtn.change(switchAction);
+        setInterval(function(){
+            console.log(audioplayer.get(0).paused);
+            console.log(selfPause);
+            if(audioplayer.get(0).paused && !selfPause)
+                audioplayer.get(0).play();
+        }, 3000)
+
 
         
     });
     
-    //Program
-    $(function(){
-        var list = $("#program .nav");
-        var now = new Date;
-        var timezone = +3;
-        var currentTime = {
-            hours: now.getUTCHours() + timezone,
-            minutes: now.getUTCMinutes()
-        };
 
-        var listParser = function(){
-            var timeList = list.find("li time");
-            var newList = [];
-
-            var replaceItem = function($that){
-                var newLi = $that.clone();
-                newLi.appendTo(list);
-                newLi.find(".num .glyphicon").removeClass("glyphicon-triangle-top").addClass("glyphicon-minus")
-                $that.remove();
-
-            };
-
-            timeList.each(function(i, $this){
-                var time = $($this).text().split(":");
-                var thisListTime = {
-                    hours: parseInt(time[0]),
-                    minutes: parseInt(time[1])
-                };
-
-
-                if(thisListTime.hours < currentTime.hours){
-                        newList.push($(this).parent());
-                }else if(thisListTime.hours === currentTime.hours){
-                    if(thisListTime.minutes < currentTime.minutes){
-                        newList.push($(this).parent());
-                    }
-                }else{
-                    if(!newList.length) {
-                        var tmp = timeList.last().parent().clone();
-                        tmp.find(".num .glyphicon").removeClass("glyphicon-triangle-top").addClass("glyphicon-triangle-right");
-                        timeList.last().parent().parent().prepend(tmp);
-                        timeList.last().parent().remove();
-                        return false;
-                    }
-                    for(var item = 0; item < newList.length-1; item++)
-                        replaceItem(newList[item]);
-                    newList[item].find(".num .glyphicon").removeClass("glyphicon-triangle-top").addClass("glyphicon-triangle-right");
-                    $("#player .song .name").text(newList[item].find(".text h6").text());
-                    return false;
-                }
-            })
-        };
-        listParser();
-    });
 
     //Scrollbar
     $(document).ready(function() {

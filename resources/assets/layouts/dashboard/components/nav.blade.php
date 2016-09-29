@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">@lang('dashboard.core.navigation.title')</a>
+            <a class="navbar-brand" href="{{route('dashboard.home')}}">@lang('dashboard.core.navigation.title')</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -38,6 +38,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{route('allnews')}}">@lang('dashboard.core.navigation.content.news')</a></li>
                             <li><a href="{{route('content.index')}}">@lang('dashboard.core.navigation.content.components')</a></li>
+                            <li><a href="{{route('content.contacts.get')}}">@lang('dashboard.core.navigation.content.contacts')</a></li>
                         </ul>
                     </li>
 

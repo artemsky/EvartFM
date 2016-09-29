@@ -14,7 +14,7 @@
         <ul class="nav nav-pills nav-justified">
             <li role="presentation" class="dropdown" id="sortby">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    Sort by <span class="caret"></span>
+                    @lang('dashboard.news.sort.sort')  <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="desc">@lang('dashboard.news.sort.desc')</a></li>
@@ -26,7 +26,7 @@
             </li>
             <li role="presentation" class="dropdown" id="orderby">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    Order By <span class="caret"></span>
+                    @lang('dashboard.news.sort.order') <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="id">@lang('dashboard.news.sort.id')</a></li>
@@ -98,7 +98,7 @@
                             <img class="img-thumbnail" src="" alt="" id="preview">
                         </div>
                         <div class="form-group">
-                            <label for="date">Date</label>
+                            <label for="date">@lang('dashboard.news.modal.date')</label>
                             <input class="form-control" type="date" id="date" name="created_at">
                         </div>
                     </form>
