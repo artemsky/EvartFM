@@ -24,7 +24,7 @@ class UserController extends Controller{
             'password' => $request['password']
         ])){
             return response()->json([
-                'redirect' => route('home')
+                'redirect' => route('dashboard.home')
             ], 200);
         }
 

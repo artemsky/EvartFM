@@ -1,13 +1,0 @@
-ezstream: Connected to http://127.0.0.1:8000/play
-ezstream: Streaming ``DubStep - All Is Lost (Memtrix Remix)''
-ezstream: SIGHUP signal received, will reread playlist after this file
-ezstream: SIGHUP signal received, will reread playlist after this file
-ezstream: SIGHUP signal received, will reread playlist after this file
-ezstream: SIGHUP signal received, will reread playlist after this file
-ezstream: SIGHUP signal received, will reread playlist after this file
-ezstream: SIGHUP signal received, will reread playlist after this file
-ezstream: shout_send(): Socket error
-ezstream: Connection to http://127.0.0.1:8000/play lost
-ezstream: Attempting reconnection #1: FAILED: Couldn't connect
-ezstream: Waiting 5s for http://127.0.0.1:8000/play to come back ...
-ezstream: SIGINT or SIGTERM received

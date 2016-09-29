@@ -2,7 +2,7 @@
 
 @section('styles')
     <meta name="lang" content="{{ \Session::get('locale') }}">
-    <link rel="stylesheet" href="{{ URL::to('libs/vendor/icheck/skins/square/blue.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('libs/vendor/iCheck/skins/square/blue.css') }}">
     <link rel="stylesheet" href="{{ URL::to('libs/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css') }}">
     <link rel="stylesheet" href="{{ URL::to('libs/vendor/datetimepicker/jquery.datetimepicker.css') }}">
     <link rel="stylesheet" href="{{ URL::to('libs/vendor/bootstrap-select/dist/css/bootstrap-select.css') }}">

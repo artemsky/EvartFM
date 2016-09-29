@@ -51,7 +51,7 @@
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a id="online" href="{{URL::to('/')}}:8000/play">@lang('dashboard.core.navigation.online')</a></li>
+                <li><a id="online" href="{{URL::to('/')}}:{{config('radio.icecast.port')}}/live">@lang('dashboard.core.navigation.online')</a></li>
                 <li><a href="{{route('base')}}" target="_blank">Evart.FM</a></li>
                 <li role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

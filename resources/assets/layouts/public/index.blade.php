@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{asset('libs/vendor/perfect-scrollbar/css/perfect-scrollbar.css')}}" />
 @endsection
 @section('scripts')
-    <audio lang="ua" title="Evart FM" id="evartplayer" src="{{url()->current()}}:8000/play"></audio>
+    <audio lang="ua" title="Evart FM" id="evartplayer" src="{{url()->current()}}:{{config('radio.icecast.port')}}/play"></audio>
     <script type="text/javascript" src="{{asset('libs/vendor/owl.carousel/dist/owl.carousel.js')}}"></script>
     <script type="text/javascript" src="{{asset('libs/vendor/rangeslider.js/dist/rangeslider.js')}}"></script>
     <script type="text/javascript" src="{{asset('libs/vendor/perfect-scrollbar/js/perfect-scrollbar.jquery.js')}}"></script>

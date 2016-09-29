@@ -1,4 +1,5 @@
 *
 !news/
 !public/
+!broadcast/playlist.txt
 !.gitignore

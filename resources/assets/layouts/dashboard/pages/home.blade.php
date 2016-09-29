@@ -12,25 +12,27 @@
                 <thead>
                     <th>@lang('dashboard.stats.title')</th>
                 </thead>
-            @foreach(array_get($Stats, 'source') as $key=>$value)
-                @if(is_array($value))
-                        <tr>
-                            <td class="danger"></td>
-                            <td class="danger"></td>
-                        </tr>
-                    @foreach($value as $itemKey=>$itemValue)
+            @if(array_key_exists('source', $Stats))
+                @foreach(array_get($Stats, 'source') as $key=>$value)
+                    @if(is_array($value))
                             <tr>
-                                <td>{{$itemKey}}</td>
-                                <td>{{$itemValue}}</td>
+                                <td class="danger"></td>
+                                <td class="danger"></td>
                             </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td>{{$key}}</td>
-                        <td>{{$value}}</td>
-                    </tr>
-                @endif
-            @endforeach
+                        @foreach($value as $itemKey=>$itemValue)
+                                <tr>
+                                    <td>{{$itemKey}}</td>
+                                    <td>{{$itemValue}}</td>
+                                </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td>{{$key}}</td>
+                            <td>{{$value}}</td>
+                        </tr>
+                    @endif
+                @endforeach
+            @endif
             </table>
         @else
             <h3>{{$Stats}}</h3>
