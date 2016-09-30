@@ -46,7 +46,9 @@ class RadioController extends Controller
 
     public function postDelete(Request $request){
         $files = array_map(function($value){
+            TrackList::where('track', $value)->delete();
             return  config('radio.music.relative') . '/' . $value;
+
         }, $request->delete);
 
         if(Storage::delete($files)){

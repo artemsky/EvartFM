@@ -1,7 +1,7 @@
 "use strict";
 const gulp = require('gulp'),
     $ = require('gulp-load-plugins')({
-        pattern: ['gulp-*', 'gulp.*', 'main-*', 'del']
+        pattern: ['gulp-*', 'gulp.*', 'main-*']
     }),
 
     dir = {
@@ -66,7 +66,7 @@ gulp.task('setDev', (done) =>{
 
 //Clean before build
 gulp.task('cls', (done) => {
-    $.del([`${dir.build}/**`]);
+    require('del')(`${dir.build}/**`);
     return done();
 });
 

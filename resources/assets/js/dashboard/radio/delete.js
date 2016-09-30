@@ -9,12 +9,10 @@ $(function(){
             forDelete = forDelete.filter(function(el){
                 return el != deletetable;
             });
-            console.log(2);
         },
         selected: function( event, ui ) {
             var selected = $(ui.selected).find('span').text();
             forDelete.push(selected);
-            console.log(1);
         },
         stop: function(){
             if(forDelete.length)
@@ -22,7 +20,6 @@ $(function(){
             else{
                 btnDelete.hide();
             }
-            console.log(forDelete);
         }
     });
 

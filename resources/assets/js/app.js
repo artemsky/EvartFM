@@ -78,9 +78,8 @@ jQuery(function($) {
         playbtn.trigger('click');
 
         setInterval(function(){
-            console.log(audioplayer.get(0).paused);
-            console.log(selfPause);
             if(audioplayer.get(0).paused && !selfPause)
+                audioplayer.get(0).load();
                 audioplayer.get(0).play();
         }, 3000)
 

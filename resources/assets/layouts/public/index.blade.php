@@ -35,8 +35,10 @@
                                                 <span class="glyphicon glyphicon-play"></span>
                                             </div>
                                             <div class="tablecell song">
+                                                @if(count($Playlist['all']) > 0)
                                                 <p class="description">{{$Playlist['all'][$Playlist['current']]['description']}}</p>
                                                 <p class="name">{{$Playlist['all'][$Playlist['current']]['title']}}</p>
+                                                @endif
                                             </div>
                                             <div class="tablecell"></div>
                                         </div>
