@@ -10,7 +10,7 @@
                             <div class="row">
                                 <div class="carousel-content">
                                     <p>{{$slide['title']}}</p>
-                                    <h1>{{$slide['description']}}</h1>
+                                    <h2>{{$slide['description']}}</h2>
                                     <!--<div class="event-handler">-->
                                     <!--<time datetime="2016-01-31 20:00">31/05</time>-->
                                     <!--<span>-->

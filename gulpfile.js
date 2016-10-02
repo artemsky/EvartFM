@@ -116,41 +116,19 @@ gulp.task('fonts', () => {
 gulp.task('bower', () => {
     const css = $.filter('**/*.css', {restore: true});
     const js = $.filter('**/*.js', {restore: true});
-    const img = $.filter('**/*.{png,jpg,bmp,ico,gif}', {restore: true});
-    const font = $.filter('**/*.{ttf,eot,woff,woff2,svg}');
 
     if(DevMode)
         return gulp.src($.mainBowerFiles({ "overrides": overrides}), { base: './bower_components' })
             .pipe(gulp.dest(dir.build+dir.vendor));
 
-    return gulp.src($.mainBowerFiles({ "overrides": overrides}))
+    return gulp.src($.mainBowerFiles({ "overrides": overrides}), { base: './bower_components' })
         .pipe(css)
-        .pipe($.cssUrls((url) => {
-            var prepend = '';
-            if(url.includes("font")
-                || url.includes(".eot")
-                || url.includes(".woff")
-                || url.includes(".ttf"))
-                prepend = dir.fonts;
-            else
-                prepend = dir.img;
-            return prepend + url.substring(url.lastIndexOf('/')+1);
-
-        }))
-        .pipe($.concat(filename.vendorCss))
         .pipe($.cssnano())
-        .pipe(gulp.dest(`${dir.build}/${dir.vendor}`))
         .pipe(css.restore)
         .pipe(js)
-        .pipe($.concat(filename.vendorJs))
-        .pipe($.if(!DevMode, $.uglify().on('error', (e)=>{console.log(e.message);})))
-        .pipe(gulp.dest(`${dir.build}/${dir.vendor}`))
+        .pipe($.uglify().on('error', (e)=>{console.log(e.message);}))
         .pipe(js.restore)
-        .pipe(img)
-        .pipe(gulp.dest(`${dir.build}/${dir.vendor}/${dir.img}`))
-        .pipe(img.restore)
-        .pipe(font)
-        .pipe(gulp.dest(`${dir.build}/${dir.vendor}/${dir.fonts}`));
+        .pipe(gulp.dest(dir.build+dir.vendor))
 
 });
 

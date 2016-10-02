@@ -70,14 +70,6 @@
                         <div class="col-sm-offset-2 col-sm-8 col-md-offset-1 col-md-5 col-lg-offset-0 col-lg-5">
                             <div class="row">
                                 <div class="program">
-                                    <!--<div class="head">-->
-                                    <!--<select>-->
-                                    <!--<option value="program">Program</option>-->
-                                    <!--<option value="program">Program</option>-->
-                                    <!--<option value="program">Program</option>-->
-                                    <!--</select>-->
-                                    <!--<span class="glyphicon glyphicon-search"></span>-->
-                                    <!--</div>-->
                                     <div class="body">
                                         <div id="program">
                                             <ul class="nav" >

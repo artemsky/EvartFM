@@ -98,16 +98,15 @@ class NewsController extends Controller
 //            $arr = explode ('.', $oldFilename);
 //            $extension = $arr[count($arr)-1];
 //            $newFilename = $item->id .'.'. $extension;
-//            Storage::copy($oldFilename, 'newnews/'. $newFilename);
+//            Storage::move(substr($oldFilename, 3), 'newss/'. $newFilename);
 //
 //            DB::table('news')
 //                ->where('id', $item->id)
 //                ->update([
-//                    'image_url' => 'news/'. $newFilename
+//                    'image_url' => 'app/news/'. $newFilename
 //                ]);
 //        }
-//
-//        return response()->json([ 'lenght' => $newFilename]);
+//        return 'success';
 //
 //    }
 }

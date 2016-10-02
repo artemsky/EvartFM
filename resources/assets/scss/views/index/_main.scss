@@ -396,6 +396,18 @@ main{
   }
 
   #news{
+    .pagination li a{
+      background: #212c34;
+      color: #fff;
+      border-color: #3e4a52;
+    }
+    .pagination .disabled span {
+      color: #828181;
+      cursor: not-allowed;
+      background-color: #293035;
+      border-color: #4d4e4e;
+    }
+
     hr{
       border: none;
       height: 1px;

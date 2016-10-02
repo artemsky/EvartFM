@@ -75,6 +75,7 @@ jQuery(function($) {
             rangeslider.val(100).change();
         });
 
+        audioplayer.get(0).src = audioplayer.attr('data-src');
         playbtn.trigger('click');
 
         setInterval(function(){

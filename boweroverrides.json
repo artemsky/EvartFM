@@ -1,158 +1,74 @@
 {
   "bootstrap": {
-    "main": {
-      "development": ["./dist/js/bootstrap.js", "./dist/css/bootstrap.css", "./dist/fonts/**"],
-      "production": ["./dist/js/bootstrap.min.js", "./dist/css/bootstrap.min.css", "./dist/fonts/**"]
-    }
+    "main": ["./dist/js/bootstrap.js", "./dist/css/bootstrap.css", "./dist/fonts/**"]
   },
   "jquery":{
-    "main":{
-      "development": "./dist/jquery.js",
-      "production": "./dist/jquery.min.js"
-    }
+    "main": "./dist/jquery.js"
   },
   "wow":{
-    "main":{
-      "development": "./dist/wow.js",
-      "production": "./dist/wow.min.js"
-    }
+    "main": "./dist/wow.js"
   },
   "animate.css":{
-    "main":{
-      "development": "./animate.css",
-      "production": "./animate.min.css"
-    }
+    "main": "./animate.css"
   },
   "owl.carousel":{
-    "main":{
-      "development" : [
-        "./dist/owl.carousel.js",
-        "./dist/assets/owl.carousel.css"
-      ],
-      "production" : [
-        "./dist/owl.carousel.min.js",
-        "./dist/assets/owl.carousel.min.css"
-      ]
-    }
+    "main": ["./dist/owl.carousel.js", "./dist/assets/owl.carousel.css"]
   },
   "perfect-scrollbar":{
-    "main":{
-      "development" : [
-        "./js/perfect-scrollbar.jquery.js",
-        "./css/perfect-scrollbar.css"
-      ],
-      "production" : [
-        "./js/perfect-scrollbar.jquery.min.js",
-        "./css/perfect-scrollbar.min.css"
-      ]
-    }
+    "main":["./js/perfect-scrollbar.jquery.js", "./css/perfect-scrollbar.css"]
   },
   "rangeslider.js":{
-    "main":{
-      "development": "./dist/rangeslider.js",
-      "production": "./dist/rangeslider.min.js"
-    }
+    "main": "./dist/rangeslider.js"
   },
   "jquery.countdown":{
-    "main":{
-      "development": "./dist/jquery.countdown.js",
-      "production": "./dist/jquery.countdown.min.js"
-    }
+    "main": "./dist/jquery.countdown.js"
   },
   "lodash":{
-    "main":{
-      "development": "./dist/lodash.js",
-      "production": "./dist/lodash.min.js"
-    }
+    "main": "./dist/lodash.js"
   },
   "angular":{
-    "main":{
-      "development": "./angular.js",
-      "production": "./angular.min.js"
-    }
+    "main": "./angular.js"
   },
   "iCheck":{
-    "main":{
-      "development": ["./icheck.js", "./skins/square/blue.css", "./skins/square/blue.png", "./skins/square/blue@2x.png"],
-      "production": ["./icheck.min.js", "./skins/square/blue.css", "./skins/square/blue.png", "./skins/square/blue@2x.png"]
-    }
+    "main": ["./icheck.js", "./skins/square/blue.css", "./skins/square/blue.png", "./skins/square/blue@2x.png"]
   },
   "Ionicons":{
-    "main":{
-      "development": ["./css/ionicons.css", "./fonts/**"],
-      "production": ["./css/ionicons.min.css", "./fonts/**"]
-    }
+    "main": ["./css/ionicons.css", "./fonts/**"]
   },
   "font-awesome":{
-    "main":{
-      "development": ["./css/font-awesome.css", "./fonts/**"],
-      "production": ["./css/font-awesome.min.css", "./fonts/**"]
-    }
+    "main":["./css/font-awesome.css", "./fonts/**"]
   },
   "bootstrap-select":{
-    "main":{
-      "development": ["./dist/css/bootstrap-select.css", "./dist/js/bootstrap-select.js"],
-      "production": ["./dist/css/bootstrap-select.min.css", "./dist/js/bootstrap-select.min.js"]
-    }
+    "main":["./dist/css/bootstrap-select.css", "./dist/js/bootstrap-select.js"]
   },
   "clndr":{
-    "main":{
-      "development": "./src/clndr.js",
-      "production": "./clndr.min.js"
-    }
+    "main": "./src/clndr.js"
   },
   "moment":{
-    "main":{
-      "development": ["./moment.js", "./locale/en-gb.js", "./locale/ru.js"],
-      "production": ["./min/moment.min.js", "./locale/en-gb.js", "./locale/ru.js"]
-    }
+    "main": ["./moment.js", "./locale/en-gb.js", "./locale/ru.js"]
   },
   "underscore":{
-    "main":{
-      "development": "./underscore.js",
-      "production": "./underscore-min.js"
-    }
+    "main": "./underscore.js"
   },
   "malihu-custom-scrollbar-plugin":{
-    "main":{
-      "development": ["./jquery.mCustomScrollbar.js", "./jquery.mCustomScrollbar.css", "./mCSB_buttons.png"],
-      "production": ["./jquery.mCustomScrollbar.concat.min.js", "./jquery.mCustomScrollbar.min.css", "./mCSB_buttons.png"]
-    }
+    "main": ["./jquery.mCustomScrollbar.js", "./jquery.mCustomScrollbar.css", "./mCSB_buttons.png"]
   },
   "jquery-mousewheel":{
-    "main":{
-      "development": "./jquery.mousewheel.js",
-      "production": "./jquery.mousewheel.min.js"
-    }
+    "main": "./jquery.mousewheel.js"
   },
   "jt.timepicker":{
-    "main":{
-      "development": ["./jquery.timepicker.js", "./jquery.timepicker.css"],
-      "production": ["./jquery.timepicker.min.js", "./jquery.timepicker.css"]
-    }
+    "main": ["./jquery.timepicker.js", "./jquery.timepicker.css"]
   },
   "datetimepicker":{
-    "main":{
-      "development": ["./build/jquery.datetimepicker.full.js", "./jquery.datetimepicker.css"],
-      "production": ["./build/jquery.datetimepicker.full.min.js", "./build/jquery.datetimepicker.min.css"]
-    }
+    "main":["./build/jquery.datetimepicker.full.js", "./jquery.datetimepicker.css"]
   },
   "blueimp-file-upload":{
-    "main":{
-      "development": ["./js/jquery.fileupload.js", "./js/jquery.fileupload-audio.js", "./js/vendor/jquery.ui.widget.js", "./js/jquery.fileupload-process.js", "./js/jquery.fileupload-validate.js"],
-      "production": ["./js/jquery.fileupload.js", "./js/jquery.fileupload-audio.js", "./js/vendor/jquery.ui.widget.js", "./js/jquery.fileupload-process.js", "./js/jquery.fileupload-validate.js"]
-    }
+    "main":["./js/jquery.fileupload.js", "./js/jquery.fileupload-audio.js", "./js/vendor/jquery.ui.widget.js", "./js/jquery.fileupload-process.js", "./js/jquery.fileupload-validate.js"]
   },
   "blueimp-load-image":{
-    "main":{
-      "development": ["./js/load-image.all.min.js"],
-      "production": ["./js/load-image.all.min.js"]
-    }
+    "main": ["./js/load-image.all.min.js"]
   },
   "dropzone":{
-    "main":{
-      "development": ["./dist/basic.css", "./dist/dropzone.css", "./dist/dropzone.js" ],
-      "production": ["./dist/min/basic.min.css", "./dist/min/dropzone.min.css", "./dist/min/dropzone.min.js"]
-    }
+    "main": ["./dist/basic.css", "./dist/dropzone.css", "./dist/dropzone.js" ]
   }
 }
