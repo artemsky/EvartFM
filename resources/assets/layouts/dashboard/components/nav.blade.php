@@ -23,7 +23,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{{route('user')}}">@lang('dashboard.core.navigation.users.all')</a></li>
-                            <li><a href="{{route('adduser')}}">@lang('dashboard.core.navigation.users.add')</a></li>
+                            <li><a href="{{route('user.add')}}">@lang('dashboard.core.navigation.users.add')</a></li>
                         </ul>
                     </li>
                 @endif
@@ -62,7 +62,7 @@
                         <li><a href="/dashboard/lang/ru">Рус</a></li>
                     </ul>
                 </li>
-                <li><a href="{{route('logout')}}">@lang('dashboard.core.navigation.logout')</a></li>
+                <li><a href="{{route('dashboard.logout')}}">@lang('dashboard.core.navigation.logout')</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

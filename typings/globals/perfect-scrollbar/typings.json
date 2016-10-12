@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/a1769ac42af931b508ae94b7a833a2654594e815/perfect-scrollbar/perfect-scrollbar.d.ts",
+    "raw": "registry:dt/perfect-scrollbar#0.6.12+20160925180126",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/a1769ac42af931b508ae94b7a833a2654594e815/perfect-scrollbar/perfect-scrollbar.d.ts"
+  }
+}

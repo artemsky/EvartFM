@@ -12,7 +12,7 @@
     "main": "./animate.css"
   },
   "owl.carousel":{
-    "main": ["./dist/owl.carousel.js", "./dist/assets/owl.carousel.css"]
+    "main": ["./dist/owl.carousel.js", "./dist/assets/owl.carousel.css", "./dist/assets/owl.theme.default.css", "./dist/assets/ajax-loader.gif", "./dist/assets/owl.video.play.png"]
   },
   "perfect-scrollbar":{
     "main":["./js/perfect-scrollbar.jquery.js", "./css/perfect-scrollbar.css"]
@@ -70,5 +70,8 @@
   },
   "dropzone":{
     "main": ["./dist/basic.css", "./dist/dropzone.css", "./dist/dropzone.js" ]
+  },
+  "tether-select":{
+    "main": ["./dist/js/select.js", "./dist/css/select-theme-chosen.css", "./dist/css/select-theme-dark.css" , "./dist/css/select-theme-default.css" ]
   }
 }

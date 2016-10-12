@@ -33,6 +33,10 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
+        <script src="{{ URL::asset('libs/vendor/system.js/dist/system.js')}}"></script>
+        <!-- 2. Configure SystemJS -->
+        <script src="{{ URL::asset('libs/dashboard/systemjs.config.js')}}"></script>
+
         <link rel="stylesheet" href="{{ URL::to('libs/vendor/bootstrap/dist/css/bootstrap.css') }}">
         @yield('styles')
         <link rel="stylesheet" href="{{ URL::to('libs/dashboard.css') }}">
@@ -46,18 +50,16 @@
             </div>
         </main>
 
-        <script src="{{ URL::to('libs/vendor/jquery/dist/jquery.js') }}"></script>
-        <script src="{{ URL::to('libs/vendor/bootstrap/dist/js/bootstrap.js') }}"></script>
         <script>
-            $("#online").on('click', function(e){
-                e.preventDefault();
-                window.open(
-                        $(this).attr("href"),
-                        'Evart.FM Online',
-                        'menubar=no, location=no, width=400, height=50, resizable=no, status=no, top=100, left=100'
-                );
-                return false;
-            });
+//            $("#online").on('click', function(e){
+//                e.preventDefault();
+//                window.open(
+//                        $(this).attr("href"),
+//                        'Evart.FM Online',
+//                        'menubar=no, location=no, width=400, height=50, resizable=no, status=no, top=100, left=100'
+//                );
+//                return false;
+//            });
         </script>
         @yield('scripts')
     </body>

@@ -1,7 +1,13 @@
 @extends('dashboard.main')
 
 @section('scripts')
-    <script src="{{ URL::to('libs/dashboard/login.js') }}"></script>
+    <script>
+        System.import('components/login.component').catch(function(err){ console.error(err); });
+    </script>
+@endsection
+
+@section('styles')
+    <link rel="stylesheet" href="{{asset('libs/vendor/notie/dist/notie.css')}}">
 @endsection
 
 @section('body-class', 'login-page')
@@ -11,7 +17,7 @@
                 <div class="card"></div>
                 <div class="card">
                     <h1 class="title">@lang('dashboard.login.title')</h1>
-                    <form action="{{route('signIn')}}" method="post">
+                    <form action="{{route('dashboard.login.post')}}" method="post">
                         <div class="input-container">
                             <input type="text" id="login" required="required" name="login"/>
                             <label for="Username">@lang('dashboard.login.username')</label>
@@ -22,7 +28,6 @@
                             <label for="Password">@lang('dashboard.login.password')</label>
                             <div class="bar"></div>
                         </div>
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="button-container">
                             <button type="submit"><span>@lang('dashboard.login.enter')</span></button>
                         </div>

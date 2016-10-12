@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Lang;
 
 class UserController extends Controller{
 
-    use Traits\SuperUserActions;
     use Traits\Validate;
     public function postSignIn(Request $request){
 
@@ -24,26 +23,25 @@ class UserController extends Controller{
             'password' => $request['password']
         ])){
             return response()->json([
-                'redirect' => route('dashboard.home')
+                'message' => trans('auth.succeed'),
+                'redirectURL' => route('dashboard.home')
             ], 200);
         }
 
         return response()->json([
-            'msg' => Lang::get('auth.failed')
+            'message' => Lang::get('auth.failed')
         ], 422);
     }
     public function postRegister(Request $request){
 
-        $validator = Validator::make($request->all(), [
+        $this->isValid($request, [
             'login' => 'required|unique:users|min:4|max:16',
             'password' => 'required|min:6|max:32|confirmed',
-            'password_confirmation' => 'required',
+            'password_confirmation' => 'required|min:6|max:32',
             'role' => 'required|in:super,admin,writer,dj',
             'email' => 'email'
         ]);
 
-        if($validator->fails())
-            return response()->json($validator->getMessageBag(), 406);
 
         $user = new User();
         $user->login = $request['login'];
@@ -70,11 +68,40 @@ class UserController extends Controller{
 
     public function getLogout(){
         Auth::logout();
-        return redirect()->route('login');
+        return redirect()->route('dashboard.login.get');
     }
     
     public function getAddUsers(){
         return view('dashboard.pages.user.add');
+    }
+
+    public function getAllUsers(){
+        return view('dashboard.pages.user.all', ['users' => User::all()]);
+    }
+
+    public function deleteUser(Request $request){
+        $user = User::find($request['id']);
+        if($user->delete())
+            return response()->json([
+                'message' => "User [{$user->login}] successfully deleted"
+            ]);
+        return response()->json([
+            'message' => "Error occurred! Try again later"
+        ], 403);
+    }
+
+    public function postUpdateUser(Request $request){
+        $user = User::find($request['id']);
+        $user->role = $request['role'];
+        $user->name = $request['name'];
+        $user->email = $request['email'];
+        if(array_key_exists('password', $request->all())){
+            $user->password = bcrypt($request['password']);
+        }
+        $user->save();
+        return response()->json([
+            'message' => "User [{$user->login}] successfully updated"
+        ]);
     }
 
     

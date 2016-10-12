@@ -32,7 +32,10 @@
     "gulp-ttf2eot": "^1.1.1",
     "gulp-ttf2woff": "^1.1.0",
     "gulp-ttf2woff2": "^2.0.2",
+    "gulp-typescript": "^3.0.2",
     "gulp-uglify": "^1.5.3",
-    "main-bower-files": "^2.13.1"
+    "main-bower-files": "^2.13.1",
+    "typescript": "^2.0.3",
+    "typings": "^1.4.0"
   }
 }

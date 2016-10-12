@@ -2,13 +2,15 @@
 
 
 @section('scripts')
-    <script src="{{ URL::to('libs/vendor/bootstrap-select/dist/js/bootstrap-select.js') }}"></script>
-    <script src="{{ URL::to('libs/dashboard/useradd.js') }}"></script>
+    <script>
+        System.import('components/userAdd.component').catch(function(err){ console.error(err); });
+    </script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ URL::to('libs/vendor/bootstrap-select/dist/css/bootstrap-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/vendor/notie/dist/notie.css') }}">
 @endsection
+
 
 @section('navigation')
     @include('dashboard.components.nav')
@@ -28,7 +30,7 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-user"></span>
                             </span>
-                            <input type="text" class="form-control" placeholder="@lang('dashboard.users.loginPlaceholder')" name="login" id="login">
+                            <input id="user-login" type="text" class="form-control" placeholder="@lang('dashboard.users.loginPlaceholder')" autocomplete="off" spellcheck="false">
                         </div><!-- /input-group -->
                     </div>
                 </div>
@@ -40,7 +42,7 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon glyphicon-lock"></span>
                             </span>
-                            <input type="text" class="form-control" placeholder="@lang('dashboard.users.passwordPlaceholder')" name="password" id="password">
+                            <input id="user-password" type="password" class="form-control" placeholder="@lang('dashboard.users.passwordPlaceholder')" autocomplete="off" spellcheck="false">
                         </div><!-- /input-group -->
                     </div>
                 </div>
@@ -52,7 +54,7 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon glyphicon-lock"></span>
                             </span>
-                            <input type="text" class="form-control" placeholder="@lang('dashboard.users.passwordRepeatPlaceholder')" name="password_confirmation" id="password_confirmation">
+                            <input id="user-passwordConfirmation"type="password" class="form-control" placeholder="@lang('dashboard.users.passwordRepeatPlaceholder')" autocomplete="off" spellcheck="false">
                         </div><!-- /input-group -->
                     </div>
                 </div>
@@ -65,7 +67,7 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </span>
-                            <input type="text" class="form-control" placeholder="@lang('dashboard.users.emailPlaceholder')" name="email" id="email">
+                            <input id="user-email" type="enail" class="form-control" placeholder="@lang('dashboard.users.emailPlaceholder')" autocomplete="off" spellcheck="false">
                         </div><!-- /input-group -->
                     </div>
                 </div>
@@ -77,7 +79,7 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon glyphicon-sunglasses"></span>
                             </span>
-                            <input type="text" class="form-control" placeholder="@lang('dashboard.users.namePlaceholder')" name="name" id="name">
+                            <input id="user-name" type="text" class="form-control" placeholder="@lang('dashboard.users.namePlaceholder')" autocomplete="off" spellcheck="false">
                         </div><!-- /input-group -->
                     </div>
                 </div>
@@ -85,20 +87,20 @@
                 <div class="form-group">
                     <label for="role" class="col-sm-2 control-label required">@lang('dashboard.users.role')</label>
                     <div class="col-sm-10">
-                        <select class="selectpicker" id="role" name="role">
-                            <option value="super">Super Admin</option>
-                            <option value="admin">Admin</option>
-                            <option value="writer">Writer</option>
-                            <option value="dj">DJ</option>
-                        </select>
+                        <div class="form-group" style="margin: 0">
+                            <select id="user-role" class="form-control">
+                                <option value="super">Super Admin</option>
+                                <option value="admin">Admin</option>
+                                <option value="writer">Writer</option>
+                                <option value="dj">DJ</option>
+                            </select>
+                        </div><!-- /input-group -->
                     </div>
                 </div>
 
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">@lang('dashboard.users.add')</button>
+                        <button type="button" id="user-add" class="btn btn-primary pull-right" data-url="{{route("user.register")}}">@lang('dashboard.users.add')</button>
                     </div>
                 </div>
             </form>

@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "rootDir": "./resources/assets/ts",
+    "baseUrl": "./resources/assets/ts"
+  },
+  "exclude": [
+    "./node_modules",
+    "./typings/main",
+    "./typings/main.d.ts"
+  ],
+  "typeRoots": [
+    "./typings"
+  ]
+}

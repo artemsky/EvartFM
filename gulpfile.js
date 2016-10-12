@@ -101,6 +101,16 @@ gulp.task('javascript', () => {
         .pipe(gulp.dest(`${dir.build}/${dir.libs}`))
 });
 
+//Typescript
+gulp.task('typescript', () => {
+    var tsProject = $.typescript.createProject('./tsconfig.json');
+    return gulp.src([`${dir.src}js/**/*.ts`, './typings/index.d.ts'])
+        .pipe(tsProject())
+        .pipe(gulp.dest(`${dir.build}/${dir.libs}`));
+
+
+});
+
 //Fonts
 gulp.task('fonts', () => {
     return gulp.src(`${dir.src}/${dir.fonts}/**/*.ttf`, {since: gulp.lastRun('fonts')})
@@ -159,7 +169,8 @@ gulp.task('watch', () =>{
     gulp.watch(`${dir.src}/scss/**/*.*`, gulp.series('styles'));
     gulp.watch(`${dir.src}/dependencies/**/*.*`, gulp.series('copydeps'));
     gulp.watch(`${dir.src}/${dir.img}/**/*.*`, gulp.series('images'));
-    gulp.watch(`${dir.src}/${dir.js}/**/*.*`, gulp.series('javascript'));
+    gulp.watch(`${dir.src}/${dir.js}/**/*.js`, gulp.series('javascript'));
+    gulp.watch(`${dir.src}${dir.js}/**/*.ts`, gulp.series('typescript'));
     gulp.watch(`${dir.src}/${dir.fonts}/**/*.*`, gulp.series('fonts'));
     gulp.watch(`${dir.src}/layouts/**/*.*`, gulp.series('layouts'));
     gulp.watch('./bower_components/**/*.*', gulp.series('bower'));

@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/f595687773d7204e3b3f55da364ddf16fe76a9ac/notie/notie.d.ts",
+    "raw": "registry:dt/notie#0.0.0+20160301182503",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/f595687773d7204e3b3f55da364ddf16fe76a9ac/notie/notie.d.ts"
+  }
+}

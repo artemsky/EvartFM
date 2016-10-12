@@ -15,8 +15,6 @@ use App\Http\Controllers\NewsController;
 use App\Services\PlaylistService;
 
 Route::group(['middleware' => ['web', 'locale']], function () {
-
-
     Route::group(['prefix' => '/'], function () {
         Route::get('/', function(ContentController $content){
             $ps = new PlaylistService();
@@ -43,18 +41,18 @@ Route::group(['middleware' => ['web', 'locale']], function () {
 
 
     Route::get('/login', [
-        'as' => 'login',
+        'as' => 'dashboard.login.get',
         'uses' => 'UserController@getLoginPage',
         'middleware' => 'guest'
     ]);
 
     Route::get('/logout', [
-        'as' => 'logout',
+        'as' => 'dashboard.logout',
         'uses' => 'UserController@getLogout'
     ]);
 
     Route::post('/login', [
-        'as' => 'signIn',
+        'as' => 'dashboard.login.post',
         'uses' => 'UserController@postSignIn',
         'middleware' => 'throttle:3,1'
     ]);
@@ -81,28 +79,23 @@ Route::group(['middleware' => ['web', 'locale']], function () {
                 'uses' => 'UserController@getAllUsers',
             ]);
 
-            Route::post('/edit', [
-                'as' => 'useredit',
-                'uses' => 'UserController@postEditUser',
-            ]);
-
             Route::post('/update', [
-                'as' => 'userupdate',
+                'as' => 'user.update',
                 'uses' => 'UserController@postUpdateUser',
             ]);
 
-            Route::post('/delete', [
-                'as' => 'userdelete',
-                'uses' => 'UserController@postDeleteUser',
+            Route::delete('/delete', [
+                'as' => 'user.delete',
+                'uses' => 'UserController@deleteUser',
             ]);
 
             Route::get('/add', [
-                'as' => 'adduser',
+                'as' => 'user.add',
                 'uses' => 'UserController@getAddUsers'
             ]);
 
             Route::post('/register', [
-                'as' => 'register',
+                'as' => 'user.register',
                 'uses' => 'UserController@postRegister'
             ]);
         });

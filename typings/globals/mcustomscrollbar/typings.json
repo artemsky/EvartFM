@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/3e104123c79cf53778caf3d97f4db71457fa160e/mCustomScrollbar/mCustomScrollbar.d.ts",
+    "raw": "registry:dt/mcustomscrollbar#2.8.2+20160604165202",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/3e104123c79cf53778caf3d97f4db71457fa160e/mCustomScrollbar/mCustomScrollbar.d.ts"
+  }
+}

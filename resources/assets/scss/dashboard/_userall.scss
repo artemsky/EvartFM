@@ -16,6 +16,7 @@
             font-weight: bold;
             width: 15%;
             border-right: 1px solid #ddd;
+            vertical-align: middle;
           }
           &:nth-child(even){
             position: relative;
@@ -26,23 +27,13 @@
               background-color: #d9edf7;
             }
           }
-          p{
-            padding: 8px;
-            margin: 0;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-          }
-          .bootstrap-select{
-            width: 100%;
-          }
-          .form-group{
-            display: none;
-            margin-bottom: 5px;
-          }
         }
+      }
+      //select{
+      //  width: 100%;
+      //}
+      .form-group{
+        margin: 0;
       }
     }
   }

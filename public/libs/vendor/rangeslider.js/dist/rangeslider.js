@@ -1,1 +1,486 @@
-!function(t){"use strict";"function"==typeof define&&define.amd?define(["jquery"],t):"object"==typeof exports?module.exports=t(require("jquery")):t(jQuery)}(function(t){"use strict";function i(){var t=document.createElement("input");return t.setAttribute("type","range"),"text"!==t.type}function e(t,i){var e=Array.prototype.slice.call(arguments,2);return setTimeout(function(){return t.apply(null,e)},i)}function n(t,i){return i=i||100,function(){if(!t.debouncing){var e=Array.prototype.slice.apply(arguments);t.lastReturnVal=t.apply(window,e),t.debouncing=!0}return clearTimeout(t.debounceTimeout),t.debounceTimeout=setTimeout(function(){t.debouncing=!1},i),t.lastReturnVal}}function o(t){return t&&(0===t.offsetWidth||0===t.offsetHeight||t.open===!1)}function s(t){for(var i=[],e=t.parentNode;o(e);)i.push(e),e=e.parentNode;return i}function r(t,i){function e(t){"undefined"!=typeof t.open&&(t.open=!t.open)}var n=s(t),o=n.length,r=[],h=t[i];if(o){for(var a=0;a<o;a++)r[a]=n[a].style.cssText,n[a].style.setProperty?n[a].style.setProperty("display","block","important"):n[a].style.cssText+=";display: block !important",n[a].style.height="0",n[a].style.overflow="hidden",n[a].style.visibility="hidden",e(n[a]);h=t[i];for(var l=0;l<o;l++)n[l].style.cssText=r[l],e(n[l])}return h}function h(t,i){var e=parseFloat(t);return Number.isNaN(e)?i:e}function a(t){return t.charAt(0).toUpperCase()+t.substr(1)}function l(i,o){if(this.$window=t(window),this.$document=t(document),this.$element=t(i),this.options=t.extend({},f,o),this.polyfill=this.options.polyfill,this.orientation=this.$element[0].getAttribute("data-orientation")||this.options.orientation,this.onInit=this.options.onInit,this.onSlide=this.options.onSlide,this.onSlideEnd=this.options.onSlideEnd,this.DIMENSION=c.orientation[this.orientation].dimension,this.DIRECTION=c.orientation[this.orientation].direction,this.DIRECTION_STYLE=c.orientation[this.orientation].directionStyle,this.COORDINATE=c.orientation[this.orientation].coordinate,this.polyfill&&p)return!1;this.identifier="js-"+d+"-"+u++,this.startEvent=this.options.startEvent.join("."+this.identifier+" ")+"."+this.identifier,this.moveEvent=this.options.moveEvent.join("."+this.identifier+" ")+"."+this.identifier,this.endEvent=this.options.endEvent.join("."+this.identifier+" ")+"."+this.identifier,this.toFixed=(this.step+"").replace(".","").length-1,this.$fill=t('<div class="'+this.options.fillClass+'" />'),this.$handle=t('<div class="'+this.options.handleClass+'" />'),this.$range=t('<div class="'+this.options.rangeClass+" "+this.options[this.orientation+"Class"]+'" id="'+this.identifier+'" />').insertAfter(this.$element).prepend(this.$fill,this.$handle),this.$element.css({position:"absolute",width:"1px",height:"1px",overflow:"hidden",opacity:"0"}),this.handleDown=t.proxy(this.handleDown,this),this.handleMove=t.proxy(this.handleMove,this),this.handleEnd=t.proxy(this.handleEnd,this),this.init();var s=this;this.$window.on("resize."+this.identifier,n(function(){e(function(){s.update(!1,!1)},300)},20)),this.$document.on(this.startEvent,"#"+this.identifier+":not(."+this.options.disabledClass+")",this.handleDown),this.$element.on("change."+this.identifier,function(t,i){if(!i||i.origin!==s.identifier){var e=t.target.value,n=s.getPositionFromValue(e);s.setPosition(n)}})}Number.isNaN=Number.isNaN||function(t){return"number"==typeof t&&t!==t};var d="rangeslider",u=0,p=i(),f={polyfill:!0,orientation:"horizontal",rangeClass:"rangeslider",disabledClass:"rangeslider--disabled",horizontalClass:"rangeslider--horizontal",verticalClass:"rangeslider--vertical",fillClass:"rangeslider__fill",handleClass:"rangeslider__handle",startEvent:["mousedown","touchstart","pointerdown"],moveEvent:["mousemove","touchmove","pointermove"],endEvent:["mouseup","touchend","pointerup"]},c={orientation:{horizontal:{dimension:"width",direction:"left",directionStyle:"left",coordinate:"x"},vertical:{dimension:"height",direction:"top",directionStyle:"bottom",coordinate:"y"}}};return l.prototype.init=function(){this.update(!0,!1),this.onInit&&"function"==typeof this.onInit&&this.onInit()},l.prototype.update=function(t,i){t=t||!1,t&&(this.min=h(this.$element[0].getAttribute("min"),0),this.max=h(this.$element[0].getAttribute("max"),100),this.value=h(this.$element[0].value,Math.round(this.min+(this.max-this.min)/2)),this.step=h(this.$element[0].getAttribute("step"),1)),this.handleDimension=r(this.$handle[0],"offset"+a(this.DIMENSION)),this.rangeDimension=r(this.$range[0],"offset"+a(this.DIMENSION)),this.maxHandlePos=this.rangeDimension-this.handleDimension,this.grabPos=this.handleDimension/2,this.position=this.getPositionFromValue(this.value),this.$element[0].disabled?this.$range.addClass(this.options.disabledClass):this.$range.removeClass(this.options.disabledClass),this.setPosition(this.position,i)},l.prototype.handleDown=function(t){if(this.$document.on(this.moveEvent,this.handleMove),this.$document.on(this.endEvent,this.handleEnd),!((" "+t.target.className+" ").replace(/[\n\t]/g," ").indexOf(this.options.handleClass)>-1)){var i=this.getRelativePosition(t),e=this.$range[0].getBoundingClientRect()[this.DIRECTION],n=this.getPositionFromNode(this.$handle[0])-e,o="vertical"===this.orientation?this.maxHandlePos-(i-this.grabPos):i-this.grabPos;this.setPosition(o),i>=n&&i<n+this.handleDimension&&(this.grabPos=i-n)}},l.prototype.handleMove=function(t){t.preventDefault();var i=this.getRelativePosition(t),e="vertical"===this.orientation?this.maxHandlePos-(i-this.grabPos):i-this.grabPos;this.setPosition(e)},l.prototype.handleEnd=function(t){t.preventDefault(),this.$document.off(this.moveEvent,this.handleMove),this.$document.off(this.endEvent,this.handleEnd),this.$element.trigger("change",{origin:this.identifier}),this.onSlideEnd&&"function"==typeof this.onSlideEnd&&this.onSlideEnd(this.position,this.value)},l.prototype.cap=function(t,i,e){return t<i?i:t>e?e:t},l.prototype.setPosition=function(t,i){var e,n;void 0===i&&(i=!0),e=this.getValueFromPosition(this.cap(t,0,this.maxHandlePos)),n=this.getPositionFromValue(e),this.$fill[0].style[this.DIMENSION]=n+this.grabPos+"px",this.$handle[0].style[this.DIRECTION_STYLE]=n+"px",this.setValue(e),this.position=n,this.value=e,i&&this.onSlide&&"function"==typeof this.onSlide&&this.onSlide(n,e)},l.prototype.getPositionFromNode=function(t){for(var i=0;null!==t;)i+=t.offsetLeft,t=t.offsetParent;return i},l.prototype.getRelativePosition=function(t){var i=a(this.COORDINATE),e=this.$range[0].getBoundingClientRect()[this.DIRECTION],n=0;return"undefined"!=typeof t["page"+i]?n=t["page"+i]:"undefined"!=typeof t.originalEvent["client"+i]?n=t.originalEvent["client"+i]:t.originalEvent.touches&&t.originalEvent.touches[0]&&"undefined"!=typeof t.originalEvent.touches[0]["page"+i]?n=t.originalEvent.touches[0]["page"+i]:t.currentPoint&&"undefined"!=typeof t.currentPoint[this.COORDINATE]&&(n=t.currentPoint[this.COORDINATE]),n-e},l.prototype.getPositionFromValue=function(t){var i,e;return i=(t-this.min)/(this.max-this.min),e=Number.isNaN(i)?0:i*this.maxHandlePos},l.prototype.getValueFromPosition=function(t){var i,e;return i=t/(this.maxHandlePos||1),e=this.step*Math.round(i*(this.max-this.min)/this.step)+this.min,Number(e.toFixed(this.toFixed))},l.prototype.setValue=function(t){t===this.value&&""!==this.$element[0].value||this.$element.val(t).trigger("input",{origin:this.identifier})},l.prototype.destroy=function(){this.$document.off("."+this.identifier),this.$window.off("."+this.identifier),this.$element.off("."+this.identifier).removeAttr("style").removeData("plugin_"+d),this.$range&&this.$range.length&&this.$range[0].parentNode.removeChild(this.$range[0])},t.fn[d]=function(i){var e=Array.prototype.slice.call(arguments,1);return this.each(function(){var n=t(this),o=n.data("plugin_"+d);o||n.data("plugin_"+d,o=new l(this,i)),"string"==typeof i&&o[i].apply(o,e)})},"rangeslider.js is available in jQuery context e.g $(selector).rangeslider(options);"});
+/*! rangeslider.js - v2.2.1 | (c) 2016 @andreruffert | MIT license | https://github.com/andreruffert/rangeslider.js */
+(function(factory) {
+    'use strict';
+
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if (typeof exports === 'object') {
+        // CommonJS
+        module.exports = factory(require('jquery'));
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function($) {
+    'use strict';
+
+    // Polyfill Number.isNaN(value)
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN
+    Number.isNaN = Number.isNaN || function(value) {
+        return typeof value === 'number' && value !== value;
+    };
+
+    /**
+     * Range feature detection
+     * @return {Boolean}
+     */
+    function supportsRange() {
+        var input = document.createElement('input');
+        input.setAttribute('type', 'range');
+        return input.type !== 'text';
+    }
+
+    var pluginName = 'rangeslider',
+        pluginIdentifier = 0,
+        hasInputRangeSupport = supportsRange(),
+        defaults = {
+            polyfill: true,
+            orientation: 'horizontal',
+            rangeClass: 'rangeslider',
+            disabledClass: 'rangeslider--disabled',
+            horizontalClass: 'rangeslider--horizontal',
+            verticalClass: 'rangeslider--vertical',
+            fillClass: 'rangeslider__fill',
+            handleClass: 'rangeslider__handle',
+            startEvent: ['mousedown', 'touchstart', 'pointerdown'],
+            moveEvent: ['mousemove', 'touchmove', 'pointermove'],
+            endEvent: ['mouseup', 'touchend', 'pointerup']
+        },
+        constants = {
+            orientation: {
+                horizontal: {
+                    dimension: 'width',
+                    direction: 'left',
+                    directionStyle: 'left',
+                    coordinate: 'x'
+                },
+                vertical: {
+                    dimension: 'height',
+                    direction: 'top',
+                    directionStyle: 'bottom',
+                    coordinate: 'y'
+                }
+            }
+        };
+
+    /**
+     * Delays a function for the given number of milliseconds, and then calls
+     * it with the arguments supplied.
+     *
+     * @param  {Function} fn   [description]
+     * @param  {Number}   wait [description]
+     * @return {Function}
+     */
+    function delay(fn, wait) {
+        var args = Array.prototype.slice.call(arguments, 2);
+        return setTimeout(function(){ return fn.apply(null, args); }, wait);
+    }
+
+    /**
+     * Returns a debounced function that will make sure the given
+     * function is not triggered too much.
+     *
+     * @param  {Function} fn Function to debounce.
+     * @param  {Number}   debounceDuration OPTIONAL. The amount of time in milliseconds for which we will debounce the function. (defaults to 100ms)
+     * @return {Function}
+     */
+    function debounce(fn, debounceDuration) {
+        debounceDuration = debounceDuration || 100;
+        return function() {
+            if (!fn.debouncing) {
+                var args = Array.prototype.slice.apply(arguments);
+                fn.lastReturnVal = fn.apply(window, args);
+                fn.debouncing = true;
+            }
+            clearTimeout(fn.debounceTimeout);
+            fn.debounceTimeout = setTimeout(function(){
+                fn.debouncing = false;
+            }, debounceDuration);
+            return fn.lastReturnVal;
+        };
+    }
+
+    /**
+     * Check if a `element` is visible in the DOM
+     *
+     * @param  {Element}  element
+     * @return {Boolean}
+     */
+    function isHidden(element) {
+        return (
+            element && (
+                element.offsetWidth === 0 ||
+                element.offsetHeight === 0 ||
+                // Also Consider native `<details>` elements.
+                element.open === false
+            )
+        );
+    }
+
+    /**
+     * Get hidden parentNodes of an `element`
+     *
+     * @param  {Element} element
+     * @return {[type]}
+     */
+    function getHiddenParentNodes(element) {
+        var parents = [],
+            node    = element.parentNode;
+
+        while (isHidden(node)) {
+            parents.push(node);
+            node = node.parentNode;
+        }
+        return parents;
+    }
+
+    /**
+     * Returns dimensions for an element even if it is not visible in the DOM.
+     *
+     * @param  {Element} element
+     * @param  {String}  key     (e.g. offsetWidth …)
+     * @return {Number}
+     */
+    function getDimension(element, key) {
+        var hiddenParentNodes       = getHiddenParentNodes(element),
+            hiddenParentNodesLength = hiddenParentNodes.length,
+            inlineStyle             = [],
+            dimension               = element[key];
+
+        // Used for native `<details>` elements
+        function toggleOpenProperty(element) {
+            if (typeof element.open !== 'undefined') {
+                element.open = (element.open) ? false : true;
+            }
+        }
+
+        if (hiddenParentNodesLength) {
+            for (var i = 0; i < hiddenParentNodesLength; i++) {
+
+                // Cache style attribute to restore it later.
+                inlineStyle[i] = hiddenParentNodes[i].style.cssText;
+
+                // visually hide
+                if (hiddenParentNodes[i].style.setProperty) {
+                    hiddenParentNodes[i].style.setProperty('display', 'block', 'important');
+                } else {
+                    hiddenParentNodes[i].style.cssText += ';display: block !important';
+                }
+                hiddenParentNodes[i].style.height = '0';
+                hiddenParentNodes[i].style.overflow = 'hidden';
+                hiddenParentNodes[i].style.visibility = 'hidden';
+                toggleOpenProperty(hiddenParentNodes[i]);
+            }
+
+            // Update dimension
+            dimension = element[key];
+
+            for (var j = 0; j < hiddenParentNodesLength; j++) {
+
+                // Restore the style attribute
+                hiddenParentNodes[j].style.cssText = inlineStyle[j];
+                toggleOpenProperty(hiddenParentNodes[j]);
+            }
+        }
+        return dimension;
+    }
+
+    /**
+     * Returns the parsed float or the default if it failed.
+     *
+     * @param  {String}  str
+     * @param  {Number}  defaultValue
+     * @return {Number}
+     */
+    function tryParseFloat(str, defaultValue) {
+        var value = parseFloat(str);
+        return Number.isNaN(value) ? defaultValue : value;
+    }
+
+    /**
+     * Capitalize the first letter of string
+     *
+     * @param  {String} str
+     * @return {String}
+     */
+    function ucfirst(str) {
+        return str.charAt(0).toUpperCase() + str.substr(1);
+    }
+
+    /**
+     * Plugin
+     * @param {String} element
+     * @param {Object} options
+     */
+    function Plugin(element, options) {
+        this.$window            = $(window);
+        this.$document          = $(document);
+        this.$element           = $(element);
+        this.options            = $.extend( {}, defaults, options );
+        this.polyfill           = this.options.polyfill;
+        this.orientation        = this.$element[0].getAttribute('data-orientation') || this.options.orientation;
+        this.onInit             = this.options.onInit;
+        this.onSlide            = this.options.onSlide;
+        this.onSlideEnd         = this.options.onSlideEnd;
+        this.DIMENSION          = constants.orientation[this.orientation].dimension;
+        this.DIRECTION          = constants.orientation[this.orientation].direction;
+        this.DIRECTION_STYLE    = constants.orientation[this.orientation].directionStyle;
+        this.COORDINATE         = constants.orientation[this.orientation].coordinate;
+
+        // Plugin should only be used as a polyfill
+        if (this.polyfill) {
+            // Input range support?
+            if (hasInputRangeSupport) { return false; }
+        }
+
+        this.identifier = 'js-' + pluginName + '-' +(pluginIdentifier++);
+        this.startEvent = this.options.startEvent.join('.' + this.identifier + ' ') + '.' + this.identifier;
+        this.moveEvent  = this.options.moveEvent.join('.' + this.identifier + ' ') + '.' + this.identifier;
+        this.endEvent   = this.options.endEvent.join('.' + this.identifier + ' ') + '.' + this.identifier;
+        this.toFixed    = (this.step + '').replace('.', '').length - 1;
+        this.$fill      = $('<div class="' + this.options.fillClass + '" />');
+        this.$handle    = $('<div class="' + this.options.handleClass + '" />');
+        this.$range     = $('<div class="' + this.options.rangeClass + ' ' + this.options[this.orientation + 'Class'] + '" id="' + this.identifier + '" />').insertAfter(this.$element).prepend(this.$fill, this.$handle);
+
+        // visually hide the input
+        this.$element.css({
+            'position': 'absolute',
+            'width': '1px',
+            'height': '1px',
+            'overflow': 'hidden',
+            'opacity': '0'
+        });
+
+        // Store context
+        this.handleDown = $.proxy(this.handleDown, this);
+        this.handleMove = $.proxy(this.handleMove, this);
+        this.handleEnd  = $.proxy(this.handleEnd, this);
+
+        this.init();
+
+        // Attach Events
+        var _this = this;
+        this.$window.on('resize.' + this.identifier, debounce(function() {
+            // Simulate resizeEnd event.
+            delay(function() { _this.update(false, false); }, 300);
+        }, 20));
+
+        this.$document.on(this.startEvent, '#' + this.identifier + ':not(.' + this.options.disabledClass + ')', this.handleDown);
+
+        // Listen to programmatic value changes
+        this.$element.on('change.' + this.identifier, function(e, data) {
+            if (data && data.origin === _this.identifier) {
+                return;
+            }
+
+            var value = e.target.value,
+                pos = _this.getPositionFromValue(value);
+            _this.setPosition(pos);
+        });
+    }
+
+    Plugin.prototype.init = function() {
+        this.update(true, false);
+
+        if (this.onInit && typeof this.onInit === 'function') {
+            this.onInit();
+        }
+    };
+
+    Plugin.prototype.update = function(updateAttributes, triggerSlide) {
+        updateAttributes = updateAttributes || false;
+
+        if (updateAttributes) {
+            this.min    = tryParseFloat(this.$element[0].getAttribute('min'), 0);
+            this.max    = tryParseFloat(this.$element[0].getAttribute('max'), 100);
+            this.value  = tryParseFloat(this.$element[0].value, Math.round(this.min + (this.max-this.min)/2));
+            this.step   = tryParseFloat(this.$element[0].getAttribute('step'), 1);
+        }
+
+        this.handleDimension    = getDimension(this.$handle[0], 'offset' + ucfirst(this.DIMENSION));
+        this.rangeDimension     = getDimension(this.$range[0], 'offset' + ucfirst(this.DIMENSION));
+        this.maxHandlePos       = this.rangeDimension - this.handleDimension;
+        this.grabPos            = this.handleDimension / 2;
+        this.position           = this.getPositionFromValue(this.value);
+
+        // Consider disabled state
+        if (this.$element[0].disabled) {
+            this.$range.addClass(this.options.disabledClass);
+        } else {
+            this.$range.removeClass(this.options.disabledClass);
+        }
+
+        this.setPosition(this.position, triggerSlide);
+    };
+
+    Plugin.prototype.handleDown = function(e) {
+        this.$document.on(this.moveEvent, this.handleMove);
+        this.$document.on(this.endEvent, this.handleEnd);
+
+        // If we click on the handle don't set the new position
+        if ((' ' + e.target.className + ' ').replace(/[\n\t]/g, ' ').indexOf(this.options.handleClass) > -1) {
+            return;
+        }
+
+        var pos         = this.getRelativePosition(e),
+            rangePos    = this.$range[0].getBoundingClientRect()[this.DIRECTION],
+            handlePos   = this.getPositionFromNode(this.$handle[0]) - rangePos,
+            setPos      = (this.orientation === 'vertical') ? (this.maxHandlePos - (pos - this.grabPos)) : (pos - this.grabPos);
+
+        this.setPosition(setPos);
+
+        if (pos >= handlePos && pos < handlePos + this.handleDimension) {
+            this.grabPos = pos - handlePos;
+        }
+    };
+
+    Plugin.prototype.handleMove = function(e) {
+        e.preventDefault();
+        var pos = this.getRelativePosition(e);
+        var setPos = (this.orientation === 'vertical') ? (this.maxHandlePos - (pos - this.grabPos)) : (pos - this.grabPos);
+        this.setPosition(setPos);
+    };
+
+    Plugin.prototype.handleEnd = function(e) {
+        e.preventDefault();
+        this.$document.off(this.moveEvent, this.handleMove);
+        this.$document.off(this.endEvent, this.handleEnd);
+
+        // Ok we're done fire the change event
+        this.$element.trigger('change', { origin: this.identifier });
+
+        if (this.onSlideEnd && typeof this.onSlideEnd === 'function') {
+            this.onSlideEnd(this.position, this.value);
+        }
+    };
+
+    Plugin.prototype.cap = function(pos, min, max) {
+        if (pos < min) { return min; }
+        if (pos > max) { return max; }
+        return pos;
+    };
+
+    Plugin.prototype.setPosition = function(pos, triggerSlide) {
+        var value, newPos;
+
+        if (triggerSlide === undefined) {
+            triggerSlide = true;
+        }
+
+        // Snapping steps
+        value = this.getValueFromPosition(this.cap(pos, 0, this.maxHandlePos));
+        newPos = this.getPositionFromValue(value);
+
+        // Update ui
+        this.$fill[0].style[this.DIMENSION] = (newPos + this.grabPos) + 'px';
+        this.$handle[0].style[this.DIRECTION_STYLE] = newPos + 'px';
+        this.setValue(value);
+
+        // Update globals
+        this.position = newPos;
+        this.value = value;
+
+        if (triggerSlide && this.onSlide && typeof this.onSlide === 'function') {
+            this.onSlide(newPos, value);
+        }
+    };
+
+    // Returns element position relative to the parent
+    Plugin.prototype.getPositionFromNode = function(node) {
+        var i = 0;
+        while (node !== null) {
+            i += node.offsetLeft;
+            node = node.offsetParent;
+        }
+        return i;
+    };
+
+    Plugin.prototype.getRelativePosition = function(e) {
+        // Get the offset DIRECTION relative to the viewport
+        var ucCoordinate = ucfirst(this.COORDINATE),
+            rangePos = this.$range[0].getBoundingClientRect()[this.DIRECTION],
+            pageCoordinate = 0;
+
+        if (typeof e['page' + ucCoordinate] !== 'undefined') {
+            pageCoordinate = e['page' + ucCoordinate];
+        }
+        // IE8 support :)
+        else if (typeof e.originalEvent['client' + ucCoordinate] !== 'undefined') {
+            pageCoordinate = e.originalEvent['client' + ucCoordinate];
+        }
+        else if (e.originalEvent.touches && e.originalEvent.touches[0] && typeof e.originalEvent.touches[0]['page' + ucCoordinate] !== 'undefined') {
+            pageCoordinate = e.originalEvent.touches[0]['page' + ucCoordinate];
+        }
+        else if(e.currentPoint && typeof e.currentPoint[this.COORDINATE] !== 'undefined') {
+            pageCoordinate = e.currentPoint[this.COORDINATE];
+        }
+
+        return pageCoordinate - rangePos;
+    };
+
+    Plugin.prototype.getPositionFromValue = function(value) {
+        var percentage, pos;
+        percentage = (value - this.min)/(this.max - this.min);
+        pos = (!Number.isNaN(percentage)) ? percentage * this.maxHandlePos : 0;
+        return pos;
+    };
+
+    Plugin.prototype.getValueFromPosition = function(pos) {
+        var percentage, value;
+        percentage = ((pos) / (this.maxHandlePos || 1));
+        value = this.step * Math.round(percentage * (this.max - this.min) / this.step) + this.min;
+        return Number((value).toFixed(this.toFixed));
+    };
+
+    Plugin.prototype.setValue = function(value) {
+        if (value === this.value && this.$element[0].value !== '') {
+            return;
+        }
+
+        // Set the new value and fire the `input` event
+        this.$element
+            .val(value)
+            .trigger('input', { origin: this.identifier });
+    };
+
+    Plugin.prototype.destroy = function() {
+        this.$document.off('.' + this.identifier);
+        this.$window.off('.' + this.identifier);
+
+        this.$element
+            .off('.' + this.identifier)
+            .removeAttr('style')
+            .removeData('plugin_' + pluginName);
+
+        // Remove the generated markup
+        if (this.$range && this.$range.length) {
+            this.$range[0].parentNode.removeChild(this.$range[0]);
+        }
+    };
+
+    // A really lightweight plugin wrapper around the constructor,
+    // preventing against multiple instantiations
+    $.fn[pluginName] = function(options) {
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        return this.each(function() {
+            var $this = $(this),
+                data  = $this.data('plugin_' + pluginName);
+
+            // Create a new instance.
+            if (!data) {
+                $this.data('plugin_' + pluginName, (data = new Plugin(this, options)));
+            }
+
+            // Make it possible to access methods from public.
+            // e.g `$element.rangeslider('method');`
+            if (typeof options === 'string') {
+                data[options].apply(data, args);
+            }
+        });
+    };
+
+    return 'rangeslider.js is available in jQuery context e.g $(selector).rangeslider(options);';
+
+}));

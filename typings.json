@@ -1,0 +1,17 @@
+{
+  "name": "EvartFM",
+  "dependencies": {},
+  "globalDependencies": {
+    "bootstrap": "registry:dt/bootstrap#3.3.5+20160619023404",
+    "dropzone": "registry:dt/dropzone#4.3.0+20160923131451",
+    "icheck": "registry:dt/icheck#0.8.0+20160316155526",
+    "jquery": "registry:dt/jquery#1.10.0+20160929162922",
+    "jqueryui": "registry:dt/jqueryui#1.11.0+20160727153854",
+    "mcustomscrollbar": "registry:dt/mcustomscrollbar#2.8.2+20160604165202",
+    "moment": "registry:dt/moment#2.11.1+20160829143156",
+    "node": "registry:env/node#6.0.0+20160918225031",
+    "notie": "registry:dt/notie#0.0.0+20160301182503",
+    "perfect-scrollbar": "registry:dt/perfect-scrollbar#0.6.12+20160925180126",
+    "tether": "registry:dt/tether#1.1.0+20160316155526"
+  }
+}
